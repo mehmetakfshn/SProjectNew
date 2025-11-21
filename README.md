@@ -1,4 +1,4 @@
-# 4X STRATEGY GAME REPOSITORY
+#           4X STRATEGY GAME REPOSITORY
 
 *"Perseverance and spirit have done wonders in all ages."*
 ##### George Washington
