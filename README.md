@@ -2,7 +2,7 @@
 
 *"Perseverance and spirit have done wonders in all ages."*
 
-**George Washington, Founding Father of United States**
+**George Washington**
 
 ## Schedule
 * Alpha 1.0 / January 1, 2026
