@@ -4,6 +4,7 @@
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Engine/World.h"
 #include "Public/HexGridComponent.h"
+#include "CivGameMode.h"
 
 // ============================================================
 //  CONSTRUCTOR
@@ -194,25 +195,17 @@ void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData
         // ---------------------------------------------------
         // 2.2) CIV TINT (PerInstanceCustomData için)
         // ---------------------------------------------------
-        // Þimdilik basit bir palette; ileride gerçek civ renkleriyle deðiþtirebilirsin.
         FLinearColor CivTint = FLinearColor::White;
 
         if (Tile.OwnerCivIndex >= 0)
         {
-            // Statik renk paleti (örnek)
-            static const FLinearColor Palette[] =
+            ACivGameMode* GM = GetWorld()->GetAuthGameMode<ACivGameMode>();
+            if (GM)
             {
-                FLinearColor(0.90f, 0.20f, 0.20f, 1.f), // 0 - kýrmýzýmsý
-                FLinearColor(0.20f, 0.40f, 0.90f, 1.f), // 1 - mavi
-                FLinearColor(0.10f, 0.70f, 0.30f, 1.f), // 2 - yeþil
-                FLinearColor(0.90f, 0.80f, 0.20f, 1.f), // 3 - sarý
-                FLinearColor(0.70f, 0.20f, 0.80f, 1.f), // 4 - mor
-                FLinearColor(0.20f, 0.80f, 0.80f, 1.f), // 5 - turkuaz
-            };
-
-            const int32 NumColors = UE_ARRAY_COUNT(Palette);
-            CivTint = Palette[Tile.OwnerCivIndex % NumColors];
+                CivTint = GM->GetCivColor(Tile.OwnerCivIndex);
+            }
         }
+
 
         // Her ISM için PerInstanceCustomData (R,G,B) yazan yardýmcý lambda
         auto AddTintedInstance = [&CivTint](UInstancedStaticMeshComponent* ISM, const FTransform& InstanceTransform)

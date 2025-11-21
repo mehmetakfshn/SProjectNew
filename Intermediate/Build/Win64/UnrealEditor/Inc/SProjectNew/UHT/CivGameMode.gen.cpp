@@ -15,6 +15,7 @@ void EmptyLinkFunctionForGeneratedCodeCivGameMode() {}
 // ********** Begin Cross Module References ********************************************************
 COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FIntPoint();
+COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FLinearColor();
 ENGINE_API UClass* Z_Construct_UClass_AGameModeBase();
 SPROJECTNEW_API UClass* Z_Construct_UClass_ACivGameMode();
 SPROJECTNEW_API UClass* Z_Construct_UClass_ACivGameMode_NoRegister();
@@ -107,6 +108,52 @@ DEFINE_FUNCTION(ACivGameMode::execEndPlayerTurn)
 	P_NATIVE_END;
 }
 // ********** End Class ACivGameMode Function EndPlayerTurn ****************************************
+
+// ********** Begin Class ACivGameMode Function GetCivColor ****************************************
+struct Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics
+{
+	struct CivGameMode_eventGetCivColor_Parms
+	{
+		int32 CivIndex;
+		FLinearColor ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "CivGameMode.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_CivIndex;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::NewProp_CivIndex = { "CivIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CivGameMode_eventGetCivColor_Parms, CivIndex), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CivGameMode_eventGetCivColor_Parms, ReturnValue), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::NewProp_CivIndex,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ACivGameMode, nullptr, "GetCivColor", Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::PropPointers), sizeof(Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::CivGameMode_eventGetCivColor_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54820401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::Function_MetaDataParams), Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::CivGameMode_eventGetCivColor_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_ACivGameMode_GetCivColor()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ACivGameMode_GetCivColor_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(ACivGameMode::execGetCivColor)
+{
+	P_GET_PROPERTY(FIntProperty,Z_Param_CivIndex);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(FLinearColor*)Z_Param__Result=P_THIS->GetCivColor(Z_Param_CivIndex);
+	P_NATIVE_END;
+}
+// ********** End Class ACivGameMode Function GetCivColor ******************************************
 
 // ********** Begin Class ACivGameMode Function LoadGameFromSlot ***********************************
 struct Z_Construct_UFunction_ACivGameMode_LoadGameFromSlot_Statics
@@ -227,6 +274,7 @@ void ACivGameMode::StaticRegisterNativesACivGameMode()
 	static const FNameNativePtrPair Funcs[] = {
 		{ "ClaimTileForCiv", &ACivGameMode::execClaimTileForCiv },
 		{ "EndPlayerTurn", &ACivGameMode::execEndPlayerTurn },
+		{ "GetCivColor", &ACivGameMode::execGetCivColor },
 		{ "LoadGameFromSlot", &ACivGameMode::execLoadGameFromSlot },
 		{ "SaveGameToSlot", &ACivGameMode::execSaveGameToSlot },
 		{ "SpawnUnitAtTile", &ACivGameMode::execSpawnUnitAtTile },
@@ -331,6 +379,7 @@ struct Z_Construct_UClass_ACivGameMode_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_ACivGameMode_ClaimTileForCiv, "ClaimTileForCiv" }, // 4127016746
 		{ &Z_Construct_UFunction_ACivGameMode_EndPlayerTurn, "EndPlayerTurn" }, // 3892837187
+		{ &Z_Construct_UFunction_ACivGameMode_GetCivColor, "GetCivColor" }, // 469476385
 		{ &Z_Construct_UFunction_ACivGameMode_LoadGameFromSlot, "LoadGameFromSlot" }, // 3087733064
 		{ &Z_Construct_UFunction_ACivGameMode_SaveGameToSlot, "SaveGameToSlot" }, // 4061698983
 		{ &Z_Construct_UFunction_ACivGameMode_SpawnUnitAtTile, "SpawnUnitAtTile" }, // 2789158326
@@ -410,10 +459,10 @@ ACivGameMode::~ACivGameMode() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ACivGameMode, ACivGameMode::StaticClass, TEXT("ACivGameMode"), &Z_Registration_Info_UClass_ACivGameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACivGameMode), 3376706018U) },
+		{ Z_Construct_UClass_ACivGameMode, ACivGameMode::StaticClass, TEXT("ACivGameMode"), &Z_Registration_Info_UClass_ACivGameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACivGameMode), 3132747067U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h__Script_SProjectNew_229777466(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h__Script_SProjectNew_3457399564(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

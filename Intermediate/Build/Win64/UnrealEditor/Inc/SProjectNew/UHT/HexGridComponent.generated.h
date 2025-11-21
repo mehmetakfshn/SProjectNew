@@ -22,6 +22,8 @@ struct FHexTileData;
 
 // ********** Begin Class UHexGridComponent ********************************************************
 #define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execRecalculateAllTileYields); \
+	DECLARE_FUNCTION(execGetTileYieldAt); \
 	DECLARE_FUNCTION(execRequestRebuildVisual); \
 	DECLARE_FUNCTION(execSetRiverAtEdge); \
 	DECLARE_FUNCTION(execAddTileHeightLevel); \

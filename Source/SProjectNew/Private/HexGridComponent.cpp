@@ -405,7 +405,7 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
             }
         }
     }
-
+    RecalculateAllTileYields();
 }
 
 
@@ -756,6 +756,7 @@ bool UHexGridComponent::LoadGridFromDatabase()
         }
     }
 
+    RecalculateAllTileYields();
     return GridData.Num() > 0;
 }
 
@@ -906,6 +907,7 @@ void UHexGridComponent::InitializeEditorGrid()
     }
 
     UE_LOG(LogTemp, Log, TEXT("InitializeEditorGrid: %dx%d grid olusturuldu."), GridWidth, GridHeight);
+    RecalculateAllTileYields();
 }
 
 bool UHexGridComponent::IsValidCoords(int32 X, int32 Y) const
@@ -1520,8 +1522,109 @@ bool UHexGridComponent::LoadGridFromDatabaseWithName(const FString& InMapName)
     RequestRebuildVisual();
 
 
-
+    RecalculateAllTileYields();
     return true;
+}
+
+void UHexGridComponent::GetTileYieldAt(int32 X, int32 Y, int32& OutFood, int32& OutProduction, int32& OutGold) const
+{
+    OutFood = 0;
+    OutProduction = 0;
+    OutGold = 0;
+
+    const int32 Index = Y * GridWidth + X;
+    if (!GridData.IsValidIndex(Index))
+    {
+        return;
+    }
+
+    const FHexTileData& Tile = GridData[Index];
+    OutFood = Tile.BaseFood;
+    OutProduction = Tile.BaseProduction;
+    OutGold = Tile.BaseGold;
+}
+
+void UHexGridComponent::RecalculateAllTileYields()
+{
+    for (FHexTileData& Tile : GridData)
+    {
+        CalculateBaseYieldForTile(Tile);
+    }
+}
+
+void UHexGridComponent::CalculateBaseYieldForTile(FHexTileData& Tile) const
+{
+    int32 Food = 0;
+    int32 Prod = 0;
+    int32 Gold = 0;
+
+    // 1) Temel terrain'e göre baþlangýç deðerleri
+    switch (Tile.TileType)
+    {
+    case ETileType::TT_Grass:
+        Food = 2; Prod = 0; Gold = 0;
+        break;
+    case ETileType::TT_Plains:
+        Food = 1; Prod = 1; Gold = 0;
+        break;
+    case ETileType::TT_Desert:
+        Food = 0; Prod = 0; Gold = 1;
+        break;
+    case ETileType::TT_Tundra:
+        Food = 1; Prod = 0; Gold = 0;
+        break;
+    case ETileType::TT_Snow:
+        Food = 0; Prod = 0; Gold = 0;
+        break;
+    case ETileType::TT_Mountain:
+        // Þimdilik tamamen "unproductive" sayalým
+        Food = 0; Prod = 0; Gold = 0;
+        break;
+    case ETileType::TT_Water:
+        // Water için alttaki bIsLake/bIsOcean/bIsCoast'e göre ayarlayacaðýz
+        Food = 1; Prod = 0; Gold = 1;
+        break;
+    default:
+        break;
+    }
+
+    // 2) Hill bonusu (Civ tarzý: +1 Prod, gerekirse Food'u kýsmak istersin)
+    if (Tile.bIsHill && Tile.TileType != ETileType::TT_Mountain && Tile.TileType != ETileType::TT_Water)
+    {
+        Prod += 1;
+        // Ýstersen burada Food-- yapýp 0'ýn altýna düþmesini engelleyebilirsin
+        // Food = FMath::Max(Food - 1, 0);
+    }
+
+    // 3) Su tipine göre ince ayar
+    if (Tile.TileType == ETileType::TT_Water)
+    {
+        if (Tile.bIsLake)
+        {
+            // Göl: yüksek Food, az Gold
+            Food = 2;
+            Prod = 0;
+            Gold = 0;
+        }
+        else if (Tile.bIsOcean)
+        {
+            // Okyanus: biraz food + gold
+            Food = 1;
+            Prod = 0;
+            Gold = 2;
+        }
+        else if (Tile.bIsCoast)
+        {
+            // Kýyý: dengeli
+            Food = 1;
+            Prod = 0;
+            Gold = 1;
+        }
+    }
+
+    Tile.BaseFood = Food;
+    Tile.BaseProduction = Prod;
+    Tile.BaseGold = Gold;
 }
 
 

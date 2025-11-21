@@ -195,6 +195,18 @@ struct Z_Construct_UScriptStruct_FHexTileData_Statics
 		{ "Category", "HexTileData" },
 		{ "ModuleRelativePath", "Public/HexTileData.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BaseFood_MetaData[] = {
+		{ "Category", "Yield" },
+		{ "ModuleRelativePath", "Public/HexTileData.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BaseProduction_MetaData[] = {
+		{ "Category", "Yield" },
+		{ "ModuleRelativePath", "Public/HexTileData.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BaseGold_MetaData[] = {
+		{ "Category", "Yield" },
+		{ "ModuleRelativePath", "Public/HexTileData.h" },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_OwnerCivIndex_MetaData[] = {
 		{ "Category", "HexTileData" },
 		{ "ModuleRelativePath", "Public/HexTileData.h" },
@@ -238,6 +250,9 @@ struct Z_Construct_UScriptStruct_FHexTileData_Statics
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_CoastEdges_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_CoastEdges;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_BiomeColor;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_BaseFood;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_BaseProduction;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_BaseGold;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_OwnerCivIndex;
 	static void NewProp_bHasCity_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_bHasCity;
@@ -288,6 +303,9 @@ const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FHexTile
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_CoastEdges_Inner = { "CoastEdges", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), 0, nullptr, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_CoastEdges = { "CoastEdges", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FHexTileData, CoastEdges), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CoastEdges_MetaData), NewProp_CoastEdges_MetaData) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BiomeColor = { "BiomeColor", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FHexTileData, BiomeColor), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BiomeColor_MetaData), NewProp_BiomeColor_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BaseFood = { "BaseFood", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FHexTileData, BaseFood), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BaseFood_MetaData), NewProp_BaseFood_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BaseProduction = { "BaseProduction", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FHexTileData, BaseProduction), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BaseProduction_MetaData), NewProp_BaseProduction_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BaseGold = { "BaseGold", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FHexTileData, BaseGold), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BaseGold_MetaData), NewProp_BaseGold_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_OwnerCivIndex = { "OwnerCivIndex", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FHexTileData, OwnerCivIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_OwnerCivIndex_MetaData), NewProp_OwnerCivIndex_MetaData) };
 void Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_bHasCity_SetBit(void* Obj)
 {
@@ -315,6 +333,9 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FH
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_CoastEdges_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_CoastEdges,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BiomeColor,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BaseFood,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BaseProduction,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_BaseGold,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_OwnerCivIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_bHasCity,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FHexTileData_Statics::NewProp_CityName,
@@ -350,10 +371,10 @@ struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source
 		{ ETileType_StaticEnum, TEXT("ETileType"), &Z_Registration_Info_UEnum_ETileType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 197667489U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FHexTileData::StaticStruct, Z_Construct_UScriptStruct_FHexTileData_Statics::NewStructOps, TEXT("HexTileData"), &Z_Registration_Info_UScriptStruct_FHexTileData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FHexTileData), 3529019657U) },
+		{ FHexTileData::StaticStruct, Z_Construct_UScriptStruct_FHexTileData_Statics::NewStructOps, TEXT("HexTileData"), &Z_Registration_Info_UScriptStruct_FHexTileData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FHexTileData), 3892099238U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexTileData_h__Script_SProjectNew_1563889623(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexTileData_h__Script_SProjectNew_840542400(TEXT("/Script/SProjectNew"),
 	nullptr, 0,
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexTileData_h__Script_SProjectNew_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexTileData_h__Script_SProjectNew_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexTileData_h__Script_SProjectNew_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexTileData_h__Script_SProjectNew_Statics::EnumInfo));

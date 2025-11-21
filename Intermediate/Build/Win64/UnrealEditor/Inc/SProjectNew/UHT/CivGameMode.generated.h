@@ -18,10 +18,12 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 class AUnitBase;
 class UCivilizationManager;
+struct FLinearColor;
 
 // ********** Begin Class ACivGameMode *************************************************************
 #define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execClaimTileForCiv); \
+	DECLARE_FUNCTION(execGetCivColor); \
 	DECLARE_FUNCTION(execSpawnUnitAtTile); \
 	DECLARE_FUNCTION(execLoadGameFromSlot); \
 	DECLARE_FUNCTION(execSaveGameToSlot); \

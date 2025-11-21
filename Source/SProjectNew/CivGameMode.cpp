@@ -17,6 +17,7 @@
 #include "Public/CivilizationManager.h"
 #include "Public/CivilizationData.h" 
 #include "Public/HexGridActor.h"
+#include "Public/HexGridComponent.h"
 
 
 
@@ -182,25 +183,24 @@ void ACivGameMode::SaveGameToSlot()
         SaveGameInstance->SavedTurnNumber = GS->GetCurrentTurn();
     }
 
-    // 2) GRID DATA — BP_GridLogicNew üzerindeki GridData alýnýr
-    AActor* GridActor = UGameplayStatics::GetActorOfClass(GetWorld(),
-        StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/BP_GridLogicNew.BP_GridLogicNew_C"))
+    // 2) GRID DATA 
+    AHexGridActor* GridActor = Cast<AHexGridActor>(
+        UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass())
     );
 
-    if (GridActor)
+    if (GridActor && GridActor->HexGridComponent)
     {
-        FProperty* Property = GridActor->GetClass()->FindPropertyByName(TEXT("GridData"));
-        FArrayProperty* ArrayProp = CastField<FArrayProperty>(Property);
+        UHexGridComponent* HexComp = GridActor->HexGridComponent;
 
-        if (ArrayProp)
-        {
-            FScriptArrayHelper ArrayHelper(ArrayProp, ArrayProp->ContainerPtrToValuePtr<void>(GridActor));
-            for (int32 i = 0; i < ArrayHelper.Num(); i++)
-            {
-                FHexTileData* TilePtr = reinterpret_cast<FHexTileData*>(ArrayHelper.GetRawPtr(i));
-                SaveGameInstance->SavedGridData.Add(*TilePtr);
-            }
-        }
+        // Ek güvenlik: grid üzerindeki tüm tile'larýn yield'lerini güncelle
+        HexComp->RecalculateAllTileYields();
+
+        // GridData'yý doðrudan savegame'e kopyala
+        SaveGameInstance->SavedGridData = HexComp->GridData;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("SaveGameToSlot: HexGridActor veya HexGridComponent bulunamadi, grid kaydedilemedi."));
     }
 
     // 3) TÜM BÝRÝMLERÝ KAYDET
@@ -449,6 +449,7 @@ ACity* ACivGameMode::SpawnCity(UCivilizationManager* OwnerCiv, const FString& Ci
     if (!World)
         return nullptr;
 
+    // Þehrin world position'ý (þimdilik düz çarpan)
     FVector WorldPos(GridPos.X * 200.f, GridPos.Y * 200.f, 50.f);
 
     FActorSpawnParameters Params;
@@ -462,7 +463,9 @@ ACity* ACivGameMode::SpawnCity(UCivilizationManager* OwnerCiv, const FString& Ci
     if (!NewCity)
         return nullptr;
 
+    // ==============================================================
     // Þehir property’leri
+    // ==============================================================
     NewCity->CityName = CityName;
     NewCity->OwnerCivIndex = AllCivs.IndexOfByKey(OwnerCiv);
     NewCity->GridCoords = GridPos;
@@ -471,39 +474,56 @@ ACity* ACivGameMode::SpawnCity(UCivilizationManager* OwnerCiv, const FString& Ci
     OwnerCiv->AddCity(NewCity);
 
     // ==============================================================
-    // 1) Þehir merkez tile'ýný civ'e ver
+    // 1) Þehir merkez tile’ýný cive ver
     // ==============================================================
     ClaimTileForCiv(OwnerCiv, GridPos);
 
     // ==============================================================
-    // 2) Komþu tile'larý civ'e ver
+    // 2) GridActor + HexGridComponent al
     // ==============================================================
-    
+    AHexGridActor* GridActor = Cast<AHexGridActor>(
+        UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass())
+    );
 
-    // GridActor'ý al
-    TArray<AActor*> Found;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHexGridActor::StaticClass(), Found);
+    UHexGridComponent* HexComp = nullptr;
 
-    if (Found.Num() > 0)
+    if (GridActor)
+        HexComp = GridActor->HexGridComponent;
+
+    // ==============================================================
+    // 3) Komþu tile’larý cive ver
+    // ==============================================================
+    if (HexComp)
     {
-        AHexGridActor* GridActor = Cast<AHexGridActor>(Found[0]);
-        if (GridActor)
+        TArray<FIntPoint> Neighbors = HexComp->GetNeighbors(GridPos.X, GridPos.Y);
+        for (const FIntPoint& N : Neighbors)
         {
-            UHexGridComponent* HexComp = GridActor->HexGridComponent;
-            if (HexComp)
-            {
-                TArray<FIntPoint> Neighbors = HexComp->GetNeighbors(GridPos.X, GridPos.Y);
-                for (auto& N : Neighbors)
-                {
-                    ClaimTileForCiv(OwnerCiv, N);
-                }
-            }
+            ClaimTileForCiv(OwnerCiv, N);
         }
+
+        // ==============================================================
+        // 4) Þehrin WorkedTiles listesini oluþtur
+        // ==============================================================
+        NewCity->InitializeWorkedTiles(HexComp);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("SpawnCity: HexGridComponent bulunamadý!"));
     }
 
     return NewCity;
 }
 
+
+FLinearColor ACivGameMode::GetCivColor(int32 CivIndex) const
+{
+    if (AllCivs.IsValidIndex(CivIndex) && AllCivs[CivIndex] && AllCivs[CivIndex]->CivData)
+    {
+        return AllCivs[CivIndex]->CivData->CivColor;
+    }
+
+    return FLinearColor::White;
+}
 
 
 

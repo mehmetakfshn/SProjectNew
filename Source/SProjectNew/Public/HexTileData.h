@@ -75,6 +75,15 @@ struct FHexTileData
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FLinearColor BiomeColor = FLinearColor::White;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Yield")
+    int32 BaseFood = 0;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Yield")
+    int32 BaseProduction = 0;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Yield")
+    int32 BaseGold = 0;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 OwnerCivIndex = -1;  // -1 = boþ, 0+ = civ index

@@ -152,6 +152,15 @@ public:
 
     bool LoadGridFromDatabaseWithName(const FString& MapName);
 
+    // Belirli bir tile için BaseFood/BaseProduction/BaseGold hesaplar
+    UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Hex Grid|Yield")
+    void GetTileYieldAt(int32 X, int32 Y, int32& OutFood, int32& OutProduction, int32& OutGold) const;
+
+    // GridData içindeki tüm tile'larýn yield'lerini TileType + flag'lere göre yeniden hesaplar
+    UFUNCTION(BlueprintCallable, Category = "Hex Grid|Yield")
+    void RecalculateAllTileYields();
+
+
     TArray<FIntPoint> GetNeighbors(int32 X, int32 Y) const;
 
 
@@ -181,6 +190,9 @@ private:
 
     /** Bir hex tile merkezinin world offset'ini hesaplar */
     FVector GetHexOffset(int32 X, int32 Y) const;
+
+    private:
+        void CalculateBaseYieldForTile(FHexTileData& Tile) const;
 
     
 

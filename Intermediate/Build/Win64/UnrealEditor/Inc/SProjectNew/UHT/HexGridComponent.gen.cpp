@@ -149,7 +149,7 @@ struct Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics
 };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::NewProp_X = { "X", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileData_Parms, X), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::NewProp_Y = { "Y", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileData_Parms, Y), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileData_Parms, ReturnValue), Z_Construct_UScriptStruct_FHexTileData, METADATA_PARAMS(0, nullptr) }; // 3529019657
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileData_Parms, ReturnValue), Z_Construct_UScriptStruct_FHexTileData, METADATA_PARAMS(0, nullptr) }; // 3892099238
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::NewProp_X,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileData_Statics::NewProp_Y,
@@ -177,6 +177,75 @@ DEFINE_FUNCTION(UHexGridComponent::execGetTileData)
 	P_NATIVE_END;
 }
 // ********** End Class UHexGridComponent Function GetTileData *************************************
+
+// ********** Begin Class UHexGridComponent Function GetTileYieldAt ********************************
+struct Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics
+{
+	struct HexGridComponent_eventGetTileYieldAt_Parms
+	{
+		int32 X;
+		int32 Y;
+		int32 OutFood;
+		int32 OutProduction;
+		int32 OutGold;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Hex Grid|Yield" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Belirli bir tile i\xef\xbf\xbdin BaseFood/BaseProduction/BaseGold hesaplar\n" },
+#endif
+		{ "ModuleRelativePath", "Public/HexGridComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Belirli bir tile i\xef\xbf\xbdin BaseFood/BaseProduction/BaseGold hesaplar" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_X;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_Y;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_OutFood;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_OutProduction;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_OutGold;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_X = { "X", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileYieldAt_Parms, X), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_Y = { "Y", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileYieldAt_Parms, Y), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_OutFood = { "OutFood", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileYieldAt_Parms, OutFood), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_OutProduction = { "OutProduction", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileYieldAt_Parms, OutProduction), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_OutGold = { "OutGold", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTileYieldAt_Parms, OutGold), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_X,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_Y,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_OutFood,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_OutProduction,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::NewProp_OutGold,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UHexGridComponent, nullptr, "GetTileYieldAt", Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::PropPointers), sizeof(Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::HexGridComponent_eventGetTileYieldAt_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::Function_MetaDataParams), Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::HexGridComponent_eventGetTileYieldAt_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UHexGridComponent::execGetTileYieldAt)
+{
+	P_GET_PROPERTY(FIntProperty,Z_Param_X);
+	P_GET_PROPERTY(FIntProperty,Z_Param_Y);
+	P_GET_PROPERTY_REF(FIntProperty,Z_Param_Out_OutFood);
+	P_GET_PROPERTY_REF(FIntProperty,Z_Param_Out_OutProduction);
+	P_GET_PROPERTY_REF(FIntProperty,Z_Param_Out_OutGold);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->GetTileYieldAt(Z_Param_X,Z_Param_Y,Z_Param_Out_OutFood,Z_Param_Out_OutProduction,Z_Param_Out_OutGold);
+	P_NATIVE_END;
+}
+// ********** End Class UHexGridComponent Function GetTileYieldAt **********************************
 
 // ********** Begin Class UHexGridComponent Function GridToWorld ***********************************
 struct Z_Construct_UFunction_UHexGridComponent_GridToWorld_Statics
@@ -334,6 +403,42 @@ DEFINE_FUNCTION(UHexGridComponent::execIsValidCoords)
 	P_NATIVE_END;
 }
 // ********** End Class UHexGridComponent Function IsValidCoords ***********************************
+
+// ********** Begin Class UHexGridComponent Function RecalculateAllTileYields **********************
+struct Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Hex Grid|Yield" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// GridData i\xef\xbf\xbdindeki t\xef\xbf\xbdm tile'lar\xef\xbf\xbdn yield'lerini TileType + flag'lere g\xef\xbf\xbdre yeniden hesaplar\n" },
+#endif
+		{ "ModuleRelativePath", "Public/HexGridComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "GridData i\xef\xbf\xbdindeki t\xef\xbf\xbdm tile'lar\xef\xbf\xbdn yield'lerini TileType + flag'lere g\xef\xbf\xbdre yeniden hesaplar" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UHexGridComponent, nullptr, "RecalculateAllTileYields", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields_Statics::Function_MetaDataParams), Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields_Statics::Function_MetaDataParams)},  };
+UFunction* Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UHexGridComponent::execRecalculateAllTileYields)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->RecalculateAllTileYields();
+	P_NATIVE_END;
+}
+// ********** End Class UHexGridComponent Function RecalculateAllTileYields ************************
 
 // ********** Begin Class UHexGridComponent Function RequestRebuildVisual **************************
 struct Z_Construct_UFunction_UHexGridComponent_RequestRebuildVisual_Statics
@@ -628,9 +733,11 @@ void UHexGridComponent::StaticRegisterNativesUHexGridComponent()
 		{ "AddTileHeightLevel", &UHexGridComponent::execAddTileHeightLevel },
 		{ "GenerateGrid", &UHexGridComponent::execGenerateGrid },
 		{ "GetTileData", &UHexGridComponent::execGetTileData },
+		{ "GetTileYieldAt", &UHexGridComponent::execGetTileYieldAt },
 		{ "GridToWorld", &UHexGridComponent::execGridToWorld },
 		{ "InitializeEditorGrid", &UHexGridComponent::execInitializeEditorGrid },
 		{ "IsValidCoords", &UHexGridComponent::execIsValidCoords },
+		{ "RecalculateAllTileYields", &UHexGridComponent::execRecalculateAllTileYields },
 		{ "RequestRebuildVisual", &UHexGridComponent::execRequestRebuildVisual },
 		{ "SetRiverAtEdge", &UHexGridComponent::execSetRiverAtEdge },
 		{ "SetTileHeightLevel", &UHexGridComponent::execSetTileHeightLevel },
@@ -810,10 +917,12 @@ struct Z_Construct_UClass_UHexGridComponent_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UHexGridComponent_AddTileHeightLevel, "AddTileHeightLevel" }, // 2873296767
 		{ &Z_Construct_UFunction_UHexGridComponent_GenerateGrid, "GenerateGrid" }, // 684746355
-		{ &Z_Construct_UFunction_UHexGridComponent_GetTileData, "GetTileData" }, // 2073376036
+		{ &Z_Construct_UFunction_UHexGridComponent_GetTileData, "GetTileData" }, // 2481321851
+		{ &Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt, "GetTileYieldAt" }, // 656164117
 		{ &Z_Construct_UFunction_UHexGridComponent_GridToWorld, "GridToWorld" }, // 739618849
 		{ &Z_Construct_UFunction_UHexGridComponent_InitializeEditorGrid, "InitializeEditorGrid" }, // 260932655
 		{ &Z_Construct_UFunction_UHexGridComponent_IsValidCoords, "IsValidCoords" }, // 2196182018
+		{ &Z_Construct_UFunction_UHexGridComponent_RecalculateAllTileYields, "RecalculateAllTileYields" }, // 3042057806
 		{ &Z_Construct_UFunction_UHexGridComponent_RequestRebuildVisual, "RequestRebuildVisual" }, // 1278831046
 		{ &Z_Construct_UFunction_UHexGridComponent_SetRiverAtEdge, "SetRiverAtEdge" }, // 310872534
 		{ &Z_Construct_UFunction_UHexGridComponent_SetTileHeightLevel, "SetTileHeightLevel" }, // 3713904173
@@ -837,8 +946,8 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UHexGridCompon
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_SeaLevelThreshold = { "SeaLevelThreshold", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UHexGridComponent, SeaLevelThreshold), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SeaLevelThreshold_MetaData), NewProp_SeaLevelThreshold_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_MountainThreshold = { "MountainThreshold", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UHexGridComponent, MountainThreshold), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MountainThreshold_MetaData), NewProp_MountainThreshold_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_DesertLatitude = { "DesertLatitude", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UHexGridComponent, DesertLatitude), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DesertLatitude_MetaData), NewProp_DesertLatitude_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_GridData_Inner = { "GridData", nullptr, (EPropertyFlags)0x0000000000020000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FHexTileData, METADATA_PARAMS(0, nullptr) }; // 3529019657
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_GridData = { "GridData", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UHexGridComponent, GridData), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GridData_MetaData), NewProp_GridData_MetaData) }; // 3529019657
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_GridData_Inner = { "GridData", nullptr, (EPropertyFlags)0x0000000000020000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FHexTileData, METADATA_PARAMS(0, nullptr) }; // 3892099238
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_GridData = { "GridData", nullptr, (EPropertyFlags)0x0010000000020015, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UHexGridComponent, GridData), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GridData_MetaData), NewProp_GridData_MetaData) }; // 3892099238
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UHexGridComponent_Statics::NewProp_TileScale = { "TileScale", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UHexGridComponent, TileScale), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TileScale_MetaData), NewProp_TileScale_MetaData) };
 void Z_Construct_UClass_UHexGridComponent_Statics::NewProp_bUseDatabaseCache_SetBit(void* Obj)
 {
@@ -899,10 +1008,10 @@ UHexGridComponent::~UHexGridComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UHexGridComponent, UHexGridComponent::StaticClass, TEXT("UHexGridComponent"), &Z_Registration_Info_UClass_UHexGridComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UHexGridComponent), 2598610519U) },
+		{ Z_Construct_UClass_UHexGridComponent, UHexGridComponent::StaticClass, TEXT("UHexGridComponent"), &Z_Registration_Info_UClass_UHexGridComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UHexGridComponent), 1318634724U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_817915280(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_2101402034(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

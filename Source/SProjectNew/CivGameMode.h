@@ -58,6 +58,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Units")
 	TSubclassOf<AUnitBase> UnitBlueprintClass;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FLinearColor GetCivColor(int32 CivIndex) const;
+
 
 
 
@@ -85,5 +88,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Civilization|Territory")
 	void ClaimTileForCiv(UCivilizationManager* OwnerCiv, const FIntPoint& GridCoords);
+
+	
 
 };
