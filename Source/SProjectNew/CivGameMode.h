@@ -83,6 +83,7 @@ protected:
 
 	ACity* SpawnCity(UCivilizationManager* OwnerCiv, const FString& CityName, const FIntPoint& GridPos);
 
-
+	UFUNCTION(BlueprintCallable, Category = "Civilization|Territory")
+	void ClaimTileForCiv(UCivilizationManager* OwnerCiv, const FIntPoint& GridCoords);
 
 };

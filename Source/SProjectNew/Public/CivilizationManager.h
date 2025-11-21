@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,7 +5,10 @@
 #include "Database/DatabaseReader.h"
 #include "CivilizationManager.generated.h"
 
+
 class UCivilizationData;
+class AUnitBase;
+class ACity;
 
 UCLASS(BlueprintType)
 class SPROJECTNEW_API UCivilizationManager : public UObject
@@ -15,18 +17,38 @@ class SPROJECTNEW_API UCivilizationManager : public UObject
 
 public:
 
+    // CIV DATA
     UPROPERTY(BlueprintReadOnly)
     UCivilizationData* CivData = nullptr;
 
-    // Civ'i ham FCivInfo'dan kur
+    // === RUNTIME STATE ===
+
+    UPROPERTY(BlueprintReadWrite)
+    int32 Gold = 0;
+
+    UPROPERTY(BlueprintReadWrite)
+    int32 Science = 0;
+
+    UPROPERTY(BlueprintReadWrite)
+    int32 Culture = 0;
+
+    UPROPERTY(BlueprintReadOnly)
+    TSet<FIntPoint> OwnedTiles;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<AUnitBase*> Units;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<ACity*> Cities;
+
+public:
+
     UFUNCTION(BlueprintCallable)
     void Init(const FCivInfo& SelectedCiv);
 
-    // Bu civ bu unit tipini üretebilir mi?
     UFUNCTION(BlueprintCallable)
     bool CanProduceUnit(const FString& UnitType) const;
 
-    // Dýþarýya data eriþimi için getter
     UFUNCTION(BlueprintCallable)
     UCivilizationData* GetCivilizationData() const;
 
@@ -39,11 +61,6 @@ public:
     UFUNCTION(BlueprintCallable)
     void AddUnit(AUnitBase* Unit);
 
-    class ACity;
-
-    UPROPERTY(BlueprintReadOnly)
-    TArray<ACity*> Cities;
-    
+    UFUNCTION(BlueprintCallable)
     void AddCity(ACity* City);
-
 };

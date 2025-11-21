@@ -28,6 +28,7 @@ AHexGridVisualActor::AHexGridVisualActor()
     SnowISM = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("SnowISM"));
     HillISM = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("HillISM"));
     CliffISM = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("CliffISM"));
+    BorderISM = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("BorderISM"));
 
     // Attachments
     GrassISM->SetupAttachment(Root);
@@ -42,6 +43,7 @@ AHexGridVisualActor::AHexGridVisualActor()
     SnowISM->SetupAttachment(Root);
     HillISM->SetupAttachment(Root);
     CliffISM->SetupAttachment(Root);
+    BorderISM->SetupAttachment(RootComponent);
 
     // ============================================================
     // A5.4 — PER-INSTANCE CUSTOM DATA (BiomeColor için 4 float)
@@ -109,88 +111,143 @@ UInstancedStaticMeshComponent* AHexGridVisualActor::GetISMForType(ETileType Tile
 
 
 // ============================================================
-//  FONKSIYON: BuildFromGridData
+//  BuildFromGridData
 // ============================================================
 
 void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData)
 {
-    // Önce grid boyutlarýný ve mapping tablosunu doldur
+    // -------------------------------------------------------
+    // 0) Grid boyutu ve mapping tablosu
+    // -------------------------------------------------------
     GridWidth = 0;
     GridHeight = 0;
 
-    // Grid boyutunu bul (varsayým: GridData düzgün dolu)
     if (GridData.Num() > 0)
     {
         GridWidth = GridData.Last().Coordinates.X + 1;
         GridHeight = GridData.Last().Coordinates.Y + 1;
     }
 
-    // Mapping tablosu
     CoordToIndex.SetNum(GridWidth * GridHeight);
     for (int32 i = 0; i < GridData.Num(); ++i)
     {
         const FIntPoint C = GridData[i].Coordinates;
         const int32 Linear = C.Y * GridWidth + C.X;
-        CoordToIndex[Linear] = i;
+        if (CoordToIndex.IsValidIndex(Linear))
+        {
+            CoordToIndex[Linear] = i;
+        }
     }
 
     UE_LOG(LogTemp, Warning, TEXT("BuildFromGridData CALLED, Num = %d"), GridData.Num());
 
-    // Clear old instances
-    GrassISM->ClearInstances();
-    DesertISM->ClearInstances();
-    MountainISM->ClearInstances();
-    WaterISM->ClearInstances();
+    // -------------------------------------------------------
+    // 1) Eski instancelarý temizle (NULL korumalý)
+    // -------------------------------------------------------
+    if (GrassISM)    GrassISM->ClearInstances();
+    if (DesertISM)   DesertISM->ClearInstances();
+    if (MountainISM) MountainISM->ClearInstances();
+    if (WaterISM)    WaterISM->ClearInstances();
 
-    // Yeni eklediklerimiz:
-    if (OceanISM) OceanISM->ClearInstances();
-    if (LakeISM)  LakeISM->ClearInstances();
-    if (CoastISM) CoastISM->ClearInstances();
-    if (PlainsISM) PlainsISM->ClearInstances();
-    if (TundraISM) TundraISM->ClearInstances();
-    if (SnowISM)  SnowISM->ClearInstances();
-    if (HillISM) HillISM->ClearInstances();
-    if (CliffISM) CliffISM->ClearInstances();
-
-
-
+    if (OceanISM)    OceanISM->ClearInstances();
+    if (LakeISM)     LakeISM->ClearInstances();
+    if (CoastISM)    CoastISM->ClearInstances();
+    if (PlainsISM)   PlainsISM->ClearInstances();
+    if (TundraISM)   TundraISM->ClearInstances();
+    if (SnowISM)     SnowISM->ClearInstances();
+    if (HillISM)     HillISM->ClearInstances();
+    if (CliffISM)    CliffISM->ClearInstances();
+    // Ýleride BorderISM eklersen, burada da ClearInstances() çaðýr.
 
     UE_LOG(LogTemp, Warning, TEXT("Visual: Building %d tiles"), GridData.Num());
 
+    // -------------------------------------------------------
+    // 2) TILE LOOP
+    // -------------------------------------------------------
     for (const FHexTileData& Tile : GridData)
     {
-        // -------------------------------------------------------
-        // TILE TRANSFORM
-        // -------------------------------------------------------
+        // ---------------------------------------------------
+        // 2.1) Instance transform
+        // ---------------------------------------------------
         FTransform T;
         T.SetLocation(Tile.WorldPosition);
         T.SetRotation(FQuat(FRotator(0.f, 0.f, 0.f)));
         T.SetScale3D(FVector(TileScale));
 
-        // -------------------------------------------------------
-        // 1) WATER TYPES (Ocean / Lake / Fallback Water)
-        // -------------------------------------------------------
+        // Güvenlik: WorldPosition bozuk ise atla
+        if (Tile.WorldPosition.ContainsNaN())
+        {
+            UE_LOG(LogTemp, Error,
+                TEXT("BuildFromGridData: INVALID WorldPosition at (%d,%d): %s"),
+                Tile.Coordinates.X, Tile.Coordinates.Y,
+                *Tile.WorldPosition.ToString());
+            continue;
+        }
+
+        // ---------------------------------------------------
+        // 2.2) CIV TINT (PerInstanceCustomData için)
+        // ---------------------------------------------------
+        // Þimdilik basit bir palette; ileride gerçek civ renkleriyle deðiþtirebilirsin.
+        FLinearColor CivTint = FLinearColor::White;
+
+        if (Tile.OwnerCivIndex >= 0)
+        {
+            // Statik renk paleti (örnek)
+            static const FLinearColor Palette[] =
+            {
+                FLinearColor(0.90f, 0.20f, 0.20f, 1.f), // 0 - kýrmýzýmsý
+                FLinearColor(0.20f, 0.40f, 0.90f, 1.f), // 1 - mavi
+                FLinearColor(0.10f, 0.70f, 0.30f, 1.f), // 2 - yeþil
+                FLinearColor(0.90f, 0.80f, 0.20f, 1.f), // 3 - sarý
+                FLinearColor(0.70f, 0.20f, 0.80f, 1.f), // 4 - mor
+                FLinearColor(0.20f, 0.80f, 0.80f, 1.f), // 5 - turkuaz
+            };
+
+            const int32 NumColors = UE_ARRAY_COUNT(Palette);
+            CivTint = Palette[Tile.OwnerCivIndex % NumColors];
+        }
+
+        // Her ISM için PerInstanceCustomData (R,G,B) yazan yardýmcý lambda
+        auto AddTintedInstance = [&CivTint](UInstancedStaticMeshComponent* ISM, const FTransform& InstanceTransform)
+            {
+                if (!ISM)
+                {
+                    return;
+                }
+
+                const int32 InstanceId = ISM->AddInstance(InstanceTransform);
+
+                // Materyalde PerInstanceCustomData(0,1,2) kullanýyoruz.
+                ISM->SetCustomDataValue(InstanceId, 0, CivTint.R, false);
+                ISM->SetCustomDataValue(InstanceId, 1, CivTint.G, false);
+                ISM->SetCustomDataValue(InstanceId, 2, CivTint.B, true); // sonuncuda render state'i kirlet
+            };
+
+        // ---------------------------------------------------
+        // 2.3) WATER TYPES (Ocean / Lake / Fallback Water)
+        // ---------------------------------------------------
         if (Tile.TileType == ETileType::TT_Water)
         {
             if (Tile.bIsOcean && OceanISM)
             {
-                OceanISM->AddInstance(T);
+                AddTintedInstance(OceanISM, T);
             }
             else if (Tile.bIsLake && LakeISM)
             {
-                LakeISM->AddInstance(T);
+                AddTintedInstance(LakeISM, T);
             }
             else
             {
-                WaterISM->AddInstance(T);
+                AddTintedInstance(WaterISM, T);
             }
 
-            continue; // su tile'larý için aþaðýdaki kara kýsmýný geç
+            // su tile'larý için aþaðýdaki kara kýsmýný geç
+            continue;
         }
 
-        // -------------------------------------------------------
-        // 2) COAST CHECK (Land tile plus water neighbor)
-        // -------------------------------------------------------
+        // ---------------------------------------------------
+        // 2.4) COAST (kar + su komþu)
+        // ---------------------------------------------------
         if (Tile.bIsCoast && CoastISM)
         {
             FVector Center = Tile.WorldPosition;
@@ -211,96 +268,99 @@ void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData
                 // Coast mesh yüzeyi her zaman dýþarý dönük olmalý
                 FRotator Rot(0.f, e * 60.f, 0.f);
                 FT.SetRotation(FQuat(Rot));
-
                 FT.SetScale3D(FVector(TileScale));
 
-                CoastISM->AddInstance(FT);
+                AddTintedInstance(CoastISM, FT);
             }
 
             continue;
         }
 
-
-        // ---- HILL CHECK --------------------------------------------------
+        // ---------------------------------------------------
+        // 2.5) HILLS
+        // ---------------------------------------------------
         if (Tile.bIsHill)
         {
             if (HillISM)
             {
-                HillISM->AddInstance(T);
+                AddTintedInstance(HillISM, T);
             }
             else
             {
-                GrassISM->AddInstance(T); // fallback
+                AddTintedInstance(GrassISM, T); // fallback
             }
             continue;
         }
 
-        // -------------------------------------------------------
-        // 3) LAND TERRAIN (Grass / Desert / Mountain / Plains / Tundra / Snow)
-        // -------------------------------------------------------
+        // ---------------------------------------------------
+        // 2.6) LAND TERRAIN (Grass / Desert / Mountain / Plains / Tundra / Snow)
+        // ---------------------------------------------------
         switch (Tile.TileType)
         {
         case ETileType::TT_Grass:
-            GrassISM->AddInstance(T);
+            AddTintedInstance(GrassISM, T);
             break;
 
         case ETileType::TT_Desert:
-            DesertISM->AddInstance(T);
+            AddTintedInstance(DesertISM, T);
             break;
 
         case ETileType::TT_Mountain:
-            MountainISM->AddInstance(T);
+            AddTintedInstance(MountainISM, T);
             break;
 
         case ETileType::TT_Plains:
-            if (PlainsISM) PlainsISM->AddInstance(T);
-            else GrassISM->AddInstance(T); // fallback
+            if (PlainsISM)
+                AddTintedInstance(PlainsISM, T);
+            else
+                AddTintedInstance(GrassISM, T); // fallback
             break;
 
         case ETileType::TT_Tundra:
-            if (TundraISM) TundraISM->AddInstance(T);
-            else GrassISM->AddInstance(T); // fallback
+            if (TundraISM)
+                AddTintedInstance(TundraISM, T);
+            else
+                AddTintedInstance(GrassISM, T); // fallback
             break;
 
         case ETileType::TT_Snow:
-            if (SnowISM) SnowISM->AddInstance(T);
-            else GrassISM->AddInstance(T); // fallback
+            if (SnowISM)
+                AddTintedInstance(SnowISM, T);
+            else
+                AddTintedInstance(GrassISM, T); // fallback
             break;
 
         default:
-            GrassISM->AddInstance(T);
+            AddTintedInstance(GrassISM, T);
             break;
         }
 
-        // CLIFFS CHECK -------------------------------------------------------------------
+        // ---------------------------------------------------
+        // 2.7) CLIFFS
+        // ---------------------------------------------------
         if (Tile.bHasCliff && CliffISM)
         {
+            FVector Center = Tile.WorldPosition;
+            float TW = TileScale * 173.f;   // BaseTileWidth
+            float TH = TileScale * 200.f;   // BaseTileHeight
+
             for (int32 e = 0; e < 6; e++)
             {
                 if (!Tile.CliffEdges.IsValidIndex(e)) continue;
                 if (!Tile.CliffEdges[e]) continue;
 
-                // Hex midpoint
-                FVector Center = Tile.WorldPosition;
-                float TW = TileScale * 173.f;   // BaseTileWidth
-                float TH = TileScale * 200.f;   // BaseTileHeight
-
                 FVector Loc = GetEdgeMidpoint(Center, e, TW, TH);
-
 
                 FTransform FT;
                 FT.SetLocation(Loc);
 
-                // Yönlendirme
                 FRotator Rot(0.f, e * 60.f, 0.f);
                 FT.SetRotation(FQuat(Rot));
-
                 FT.SetScale3D(FVector(TileScale));
 
-                CliffISM->AddInstance(FT);
+                AddTintedInstance(CliffISM, FT);
             }
         }
-
 
         UE_LOG(LogTemp, Verbose,
             TEXT("Tile (%d,%d) -> WorldPos: %s"),
@@ -311,8 +371,8 @@ void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData
     UE_LOG(LogTemp, Warning, TEXT("Visual: Tile generation COMPLETE."));
 
     BuildRiversFromGridData(GridData, GridWidth, GridHeight, CoordToIndex);
-
 }
+
 
 void AHexGridVisualActor::BuildRiversFromGridData(
     const TArray<FHexTileData>& InGridData,

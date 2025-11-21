@@ -24,6 +24,48 @@ SPROJECTNEW_API UScriptStruct* Z_Construct_UScriptStruct_FCivInfo();
 UPackage* Z_Construct_UPackage__Script_SProjectNew();
 // ********** End Cross Module References **********************************************************
 
+// ********** Begin Class UCivilizationManager Function AddCity ************************************
+struct Z_Construct_UFunction_UCivilizationManager_AddCity_Statics
+{
+	struct CivilizationManager_eventAddCity_Parms
+	{
+		ACity* City;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_City;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::NewProp_City = { "City", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CivilizationManager_eventAddCity_Parms, City), Z_Construct_UClass_ACity_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::NewProp_City,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCivilizationManager, nullptr, "AddCity", Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::PropPointers), sizeof(Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::CivilizationManager_eventAddCity_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::CivilizationManager_eventAddCity_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCivilizationManager_AddCity()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCivilizationManager_AddCity_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCivilizationManager::execAddCity)
+{
+	P_GET_OBJECT(ACity,Z_Param_City);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->AddCity(Z_Param_City);
+	P_NATIVE_END;
+}
+// ********** End Class UCivilizationManager Function AddCity **************************************
+
 // ********** Begin Class UCivilizationManager Function AddOwnedTile *******************************
 struct Z_Construct_UFunction_UCivilizationManager_AddOwnedTile_Statics
 {
@@ -121,13 +163,7 @@ struct Z_Construct_UFunction_UCivilizationManager_CanProduceUnit_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// Bu civ bu unit tipini \xef\xbf\xbdretebilir mi?\n" },
-#endif
 		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Bu civ bu unit tipini \xef\xbf\xbdretebilir mi?" },
-#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_UnitType_MetaData[] = {
 		{ "NativeConst", "" },
@@ -180,13 +216,7 @@ struct Z_Construct_UFunction_UCivilizationManager_GetCivilizationData_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// D\xef\xbf\xbd\xef\xbf\xbd""ar\xef\xbf\xbdya data eri\xef\xbf\xbdimi i\xef\xbf\xbdin getter\n" },
-#endif
 		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "D\xef\xbf\xbd\xef\xbf\xbd""ar\xef\xbf\xbdya data eri\xef\xbf\xbdimi i\xef\xbf\xbdin getter" },
-#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ReturnValue;
@@ -227,13 +257,7 @@ struct Z_Construct_UFunction_UCivilizationManager_Init_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// Civ'i ham FCivInfo'dan kur\n" },
-#endif
 		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Civ'i ham FCivInfo'dan kur" },
-#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectedCiv_MetaData[] = {
 		{ "NativeConst", "" },
@@ -328,6 +352,7 @@ void UCivilizationManager::StaticRegisterNativesUCivilizationManager()
 {
 	UClass* Class = UCivilizationManager::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "AddCity", &UCivilizationManager::execAddCity },
 		{ "AddOwnedTile", &UCivilizationManager::execAddOwnedTile },
 		{ "AddUnit", &UCivilizationManager::execAddUnit },
 		{ "CanProduceUnit", &UCivilizationManager::execCanProduceUnit },
@@ -376,6 +401,38 @@ struct Z_Construct_UClass_UCivilizationManager_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CivData_MetaData[] = {
 		{ "Category", "CivilizationManager" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// CIV DATA\n" },
+#endif
+		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "CIV DATA" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Gold_MetaData[] = {
+		{ "Category", "CivilizationManager" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// === RUNTIME STATE ===\n" },
+#endif
+		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "=== RUNTIME STATE ===" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Science_MetaData[] = {
+		{ "Category", "CivilizationManager" },
+		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Culture_MetaData[] = {
+		{ "Category", "CivilizationManager" },
+		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_OwnedTiles_MetaData[] = {
+		{ "Category", "CivilizationManager" },
+		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Units_MetaData[] = {
+		{ "Category", "CivilizationManager" },
 		{ "ModuleRelativePath", "Public/CivilizationManager.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Cities_MetaData[] = {
@@ -384,16 +441,24 @@ struct Z_Construct_UClass_UCivilizationManager_Statics
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CivData;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_Gold;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_Science;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_Culture;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_OwnedTiles_ElementProp;
+	static const UECodeGen_Private::FSetPropertyParams NewProp_OwnedTiles;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Units_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_Units;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_Cities_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_Cities;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_UCivilizationManager_AddCity, "AddCity" }, // 2561529716
 		{ &Z_Construct_UFunction_UCivilizationManager_AddOwnedTile, "AddOwnedTile" }, // 1305736093
 		{ &Z_Construct_UFunction_UCivilizationManager_AddUnit, "AddUnit" }, // 2447645214
-		{ &Z_Construct_UFunction_UCivilizationManager_CanProduceUnit, "CanProduceUnit" }, // 1355318378
-		{ &Z_Construct_UFunction_UCivilizationManager_GetCivilizationData, "GetCivilizationData" }, // 3311799442
-		{ &Z_Construct_UFunction_UCivilizationManager_Init, "Init" }, // 2742869249
+		{ &Z_Construct_UFunction_UCivilizationManager_CanProduceUnit, "CanProduceUnit" }, // 2377039083
+		{ &Z_Construct_UFunction_UCivilizationManager_GetCivilizationData, "GetCivilizationData" }, // 3566621672
+		{ &Z_Construct_UFunction_UCivilizationManager_Init, "Init" }, // 438715530
 		{ &Z_Construct_UFunction_UCivilizationManager_OwnsTile, "OwnsTile" }, // 963163048
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -403,10 +468,25 @@ struct Z_Construct_UClass_UCivilizationManager_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_CivData = { "CivData", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, CivData), Z_Construct_UClass_UCivilizationData_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CivData_MetaData), NewProp_CivData_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Gold = { "Gold", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, Gold), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Gold_MetaData), NewProp_Gold_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Science = { "Science", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, Science), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Science_MetaData), NewProp_Science_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Culture = { "Culture", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, Culture), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Culture_MetaData), NewProp_Culture_MetaData) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_OwnedTiles_ElementProp = { "OwnedTiles", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FIntPoint, METADATA_PARAMS(0, nullptr) };
+static_assert(TModels_V<CGetTypeHashable, FIntPoint>, "The structure 'FIntPoint' is used in a TSet but does not have a GetValueTypeHash defined");
+const UECodeGen_Private::FSetPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_OwnedTiles = { "OwnedTiles", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Set, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, OwnedTiles), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_OwnedTiles_MetaData), NewProp_OwnedTiles_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Units_Inner = { "Units", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_AUnitBase_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Units = { "Units", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, Units), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Units_MetaData), NewProp_Units_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Cities_Inner = { "Cities", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_ACity_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Cities = { "Cities", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivilizationManager, Cities), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Cities_MetaData), NewProp_Cities_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UCivilizationManager_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_CivData,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Gold,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Science,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Culture,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_OwnedTiles_ElementProp,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_OwnedTiles,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Units_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Units,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Cities_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UCivilizationManager_Statics::NewProp_Cities,
 };
@@ -448,10 +528,10 @@ UCivilizationManager::~UCivilizationManager() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UCivilizationManager, UCivilizationManager::StaticClass, TEXT("UCivilizationManager"), &Z_Registration_Info_UClass_UCivilizationManager, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCivilizationManager), 4259045287U) },
+		{ Z_Construct_UClass_UCivilizationManager, UCivilizationManager::StaticClass, TEXT("UCivilizationManager"), &Z_Registration_Info_UClass_UCivilizationManager, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCivilizationManager), 2869921468U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h__Script_SProjectNew_276465330(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h__Script_SProjectNew_3511160313(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

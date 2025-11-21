@@ -246,6 +246,11 @@ struct Z_Construct_UClass_AHexGridVisualActor_Statics
 		{ "Category", "HexGridVisualActor" },
 		{ "ModuleRelativePath", "Public/HexGridVisualActor.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BorderISM_MetaData[] = {
+		{ "Category", "HexGridVisualActor" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "Public/HexGridVisualActor.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_Root;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_RiverSplineMeshes_Inner;
@@ -271,6 +276,7 @@ struct Z_Construct_UClass_AHexGridVisualActor_Statics
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_TileScale;
 	static void NewProp_bEnablePerInstanceBiome_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_bEnablePerInstanceBiome;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_BorderISM;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
@@ -309,6 +315,7 @@ void Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_bEnablePerInstanceB
 	((AHexGridVisualActor*)Obj)->bEnablePerInstanceBiome = 1;
 }
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_bEnablePerInstanceBiome = { "bEnablePerInstanceBiome", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(AHexGridVisualActor), &Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_bEnablePerInstanceBiome_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bEnablePerInstanceBiome_MetaData), NewProp_bEnablePerInstanceBiome_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_BorderISM = { "BorderISM", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AHexGridVisualActor, BorderISM), Z_Construct_UClass_UInstancedStaticMeshComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BorderISM_MetaData), NewProp_BorderISM_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AHexGridVisualActor_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_Root,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_RiverSplineMeshes_Inner,
@@ -333,6 +340,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AHexGridV
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_CoordToIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_TileScale,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_bEnablePerInstanceBiome,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexGridVisualActor_Statics::NewProp_BorderISM,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AHexGridVisualActor_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_AHexGridVisualActor_Statics::DependentSingletons[])() = {
@@ -371,10 +379,10 @@ AHexGridVisualActor::~AHexGridVisualActor() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AHexGridVisualActor, AHexGridVisualActor::StaticClass, TEXT("AHexGridVisualActor"), &Z_Registration_Info_UClass_AHexGridVisualActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AHexGridVisualActor), 3665305142U) },
+		{ Z_Construct_UClass_AHexGridVisualActor, AHexGridVisualActor::StaticClass, TEXT("AHexGridVisualActor"), &Z_Registration_Info_UClass_AHexGridVisualActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AHexGridVisualActor), 3109391181U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h__Script_SProjectNew_757761026(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h__Script_SProjectNew_1830719501(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

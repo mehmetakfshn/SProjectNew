@@ -152,6 +152,7 @@ public:
 
     bool LoadGridFromDatabaseWithName(const FString& MapName);
 
+    TArray<FIntPoint> GetNeighbors(int32 X, int32 Y) const;
 
 
     #if WITH_EDITOR
@@ -181,7 +182,7 @@ private:
     /** Bir hex tile merkezinin world offset'ini hesaplar */
     FVector GetHexOffset(int32 X, int32 Y) const;
 
-    TArray<FIntPoint> GetNeighbors(int32 X, int32 Y) const;
+    
 
     
 

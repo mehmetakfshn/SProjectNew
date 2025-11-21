@@ -106,6 +106,8 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool bEnablePerInstanceBiome = true;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UInstancedStaticMeshComponent* BorderISM;
 
 
 

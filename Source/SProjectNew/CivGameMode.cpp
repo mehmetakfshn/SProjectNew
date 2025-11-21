@@ -8,7 +8,7 @@
 #include "Kismet/GameplayStatics.h" // YENÝ: GetActorOfClass için
 #include "CivSaveGame.h"
 #include "PathfindingComponent.h"
-#include "HexGridComponent.h"
+#include "Public/HexGridComponent.h"
 #include "sqlite3.h"
 #include "Database/DatabaseInitializer.h"
 #include "Database/DatabaseReader.h"  
@@ -16,6 +16,8 @@
 #include "Public/UnitData.h"
 #include "Public/CivilizationManager.h"
 #include "Public/CivilizationData.h" 
+#include "Public/HexGridActor.h"
+
 
 
 
@@ -78,6 +80,24 @@ void ACivGameMode::BeginPlay()
         UE_LOG(LogTemp, Error, TEXT("FAILED TO OPEN DB at %s"), *DBPath);
         return;
     }
+
+
+    // PLAYER BAÞKENTÝ
+    SpawnCity(PlayerCivManager, TEXT("Capital"), FIntPoint(30, 30));
+
+    // AI CIV BAÞKENTLERÝ
+    for (int32 i = 0; i < AICivManagers.Num(); i++)
+    {
+        int32 X = 40 + i * 10;
+        int32 Y = 30;
+
+        SpawnCity(AICivManagers[i],
+            FString::Printf(TEXT("AI Capital %d"), i + 1),
+            FIntPoint(X, Y));
+    }
+
+
+
 
     // ======================================================
     // UNIT MANAGER
@@ -342,6 +362,52 @@ AUnitBase* ACivGameMode::SpawnUnitAtTile(TSubclassOf<AUnitBase> UnitClass, FIntP
     return SpawnedUnit;
 }
 
+void ACivGameMode::ClaimTileForCiv(UCivilizationManager* OwnerCiv, const FIntPoint& GridCoords)
+{
+    if (!OwnerCiv)
+        return;
+
+    // 1) Grid actor bul
+    TArray<AActor*> Found;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHexGridActor::StaticClass(), Found);
+
+    if (Found.Num() == 0)
+    {
+        UE_LOG(LogTemp, Error, TEXT("ClaimTileForCiv: HexGridActor not found!"));
+        return;
+    }
+
+    AHexGridActor* GridActor = Cast<AHexGridActor>(Found[0]);
+    if (!GridActor)
+        return;
+
+    UHexGridComponent* HexComp = GridActor->HexGridComponent;
+    if (!HexComp)
+        return;
+
+    // 2) Civ index
+    int32 CivIndex = AllCivs.IndexOfByKey(OwnerCiv);
+    if (CivIndex < 0)
+        return;
+
+    // 3) Tile index
+    int32 Index = GridCoords.Y * HexComp->GridWidth + GridCoords.X;
+    if (!HexComp->GridData.IsValidIndex(Index))
+        return;
+
+    // 4) Tile modify
+    FHexTileData TileCopy = HexComp->GridData[Index];
+    TileCopy.OwnerCivIndex = CivIndex;
+    HexComp->GridData[Index] = TileCopy;
+
+    // 5) Civ runtime
+    OwnerCiv->AddOwnedTile(GridCoords);
+}
+
+
+
+
+
 void ACivGameMode::CreatePlayerCiv()
 {
     PlayerCivManager = NewObject<UCivilizationManager>(this);
@@ -372,6 +438,72 @@ void ACivGameMode::InitUnitFactory()
 
     UE_LOG(LogTemp, Warning, TEXT("UnitFactory initialized"));
 }
+
+
+ACity* ACivGameMode::SpawnCity(UCivilizationManager* OwnerCiv, const FString& CityName, const FIntPoint& GridPos)
+{
+    if (!OwnerCiv)
+        return nullptr;
+
+    UWorld* World = GetWorld();
+    if (!World)
+        return nullptr;
+
+    FVector WorldPos(GridPos.X * 200.f, GridPos.Y * 200.f, 50.f);
+
+    FActorSpawnParameters Params;
+    ACity* NewCity = World->SpawnActor<ACity>(
+        ACity::StaticClass(),
+        WorldPos,
+        FRotator::ZeroRotator,
+        Params
+    );
+
+    if (!NewCity)
+        return nullptr;
+
+    // Þehir property’leri
+    NewCity->CityName = CityName;
+    NewCity->OwnerCivIndex = AllCivs.IndexOfByKey(OwnerCiv);
+    NewCity->GridCoords = GridPos;
+
+    // Civ tarafýna ekle
+    OwnerCiv->AddCity(NewCity);
+
+    // ==============================================================
+    // 1) Þehir merkez tile'ýný civ'e ver
+    // ==============================================================
+    ClaimTileForCiv(OwnerCiv, GridPos);
+
+    // ==============================================================
+    // 2) Komþu tile'larý civ'e ver
+    // ==============================================================
+    
+
+    // GridActor'ý al
+    TArray<AActor*> Found;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHexGridActor::StaticClass(), Found);
+
+    if (Found.Num() > 0)
+    {
+        AHexGridActor* GridActor = Cast<AHexGridActor>(Found[0]);
+        if (GridActor)
+        {
+            UHexGridComponent* HexComp = GridActor->HexGridComponent;
+            if (HexComp)
+            {
+                TArray<FIntPoint> Neighbors = HexComp->GetNeighbors(GridPos.X, GridPos.Y);
+                for (auto& N : Neighbors)
+                {
+                    ClaimTileForCiv(OwnerCiv, N);
+                }
+            }
+        }
+    }
+
+    return NewCity;
+}
+
 
 
 

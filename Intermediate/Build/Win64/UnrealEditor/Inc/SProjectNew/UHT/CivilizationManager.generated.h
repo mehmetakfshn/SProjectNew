@@ -16,12 +16,14 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+class ACity;
 class AUnitBase;
 class UCivilizationData;
 struct FCivInfo;
 
 // ********** Begin Class UCivilizationManager *****************************************************
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execAddCity); \
 	DECLARE_FUNCTION(execAddUnit); \
 	DECLARE_FUNCTION(execOwnsTile); \
 	DECLARE_FUNCTION(execAddOwnedTile); \
@@ -32,7 +34,7 @@ struct FCivInfo;
 
 SPROJECTNEW_API UClass* Z_Construct_UClass_UCivilizationManager_NoRegister();
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_INCLASS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCivilizationManager(); \
 	friend struct Z_Construct_UClass_UCivilizationManager_Statics; \
@@ -43,7 +45,7 @@ public: \
 	DECLARE_SERIALIZER(UCivilizationManager)
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_ENHANCED_CONSTRUCTORS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UCivilizationManager(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	/** Deleted move- and copy-constructors, should never be used */ \
@@ -55,13 +57,13 @@ public: \
 	NO_API virtual ~UCivilizationManager();
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_11_PROLOG
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_GENERATED_BODY \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_13_PROLOG
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_INCLASS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_14_ENHANCED_CONSTRUCTORS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_INCLASS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationManager_h_16_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
