@@ -18,6 +18,51 @@ SPROJECTNEW_API UClass* Z_Construct_UClass_UMapEditorLibrary_NoRegister();
 UPackage* Z_Construct_UPackage__Script_SProjectNew();
 // ********** End Cross Module References **********************************************************
 
+// ********** Begin Class UMapEditorLibrary Function GetAllMapNames ********************************
+struct Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics
+{
+	struct MapEditorLibrary_eventGetAllMapNames_Parms
+	{
+		TArray<FString> ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Map Editor|Database" },
+		{ "ModuleRelativePath", "Public/MapEditorLibrary.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_ReturnValue_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(MapEditorLibrary_eventGetAllMapNames_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::NewProp_ReturnValue_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UMapEditorLibrary, nullptr, "GetAllMapNames", Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::PropPointers), sizeof(Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::MapEditorLibrary_eventGetAllMapNames_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::Function_MetaDataParams), Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::MapEditorLibrary_eventGetAllMapNames_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UMapEditorLibrary::execGetAllMapNames)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(TArray<FString>*)Z_Param__Result=UMapEditorLibrary::GetAllMapNames();
+	P_NATIVE_END;
+}
+// ********** End Class UMapEditorLibrary Function GetAllMapNames **********************************
+
 // ********** Begin Class UMapEditorLibrary Function GetSavedMapList *******************************
 struct Z_Construct_UFunction_UMapEditorLibrary_GetSavedMapList_Statics
 {
@@ -68,6 +113,7 @@ void UMapEditorLibrary::StaticRegisterNativesUMapEditorLibrary()
 {
 	UClass* Class = UMapEditorLibrary::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "GetAllMapNames", &UMapEditorLibrary::execGetAllMapNames },
 		{ "GetSavedMapList", &UMapEditorLibrary::execGetSavedMapList },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -111,6 +157,7 @@ struct Z_Construct_UClass_UMapEditorLibrary_Statics
 #endif // WITH_METADATA
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_UMapEditorLibrary_GetAllMapNames, "GetAllMapNames" }, // 1883757121
 		{ &Z_Construct_UFunction_UMapEditorLibrary_GetSavedMapList, "GetSavedMapList" }, // 2254572410
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -156,10 +203,10 @@ UMapEditorLibrary::~UMapEditorLibrary() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorLibrary_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UMapEditorLibrary, UMapEditorLibrary::StaticClass, TEXT("UMapEditorLibrary"), &Z_Registration_Info_UClass_UMapEditorLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UMapEditorLibrary), 321205168U) },
+		{ Z_Construct_UClass_UMapEditorLibrary, UMapEditorLibrary::StaticClass, TEXT("UMapEditorLibrary"), &Z_Registration_Info_UClass_UMapEditorLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UMapEditorLibrary), 3056920737U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorLibrary_h__Script_SProjectNew_1889853412(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorLibrary_h__Script_SProjectNew_4003809805(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorLibrary_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorLibrary_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

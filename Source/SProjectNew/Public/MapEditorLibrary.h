@@ -12,4 +12,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Map Editor")
     static TArray<FString> GetSavedMapList();
+
+    UFUNCTION(BlueprintCallable, Category = "Map Editor|Database")
+    static TArray<FString> GetAllMapNames();
 };

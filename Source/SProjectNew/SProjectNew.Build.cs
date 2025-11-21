@@ -23,6 +23,7 @@ public class SProjectNew : ModuleRules
 			"Niagara",
 			"UMG",
 			"Slate",
+			"SlateCore",
 			"MediaAssets",
 			"MediaUtils",
 			"Media",

@@ -23,4 +23,7 @@ public:
     // Kolaylýk olsun diye AI sayýsýný da tutalým (SelectedAICivs.Num() ile uyumlu olacak)
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
     int32 NumAICivs = 0;
+
+    UPROPERTY(BlueprintReadWrite, Category = "Game Setup")
+    FString MapToLoad;
 };

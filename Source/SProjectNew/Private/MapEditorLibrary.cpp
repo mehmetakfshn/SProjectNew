@@ -34,4 +34,35 @@ TArray<FString> UMapEditorLibrary::GetSavedMapList()
     return Maps;
 }
 
+TArray<FString> UMapEditorLibrary::GetAllMapNames()
+{
+    TArray<FString> MapNames;
+
+    FString DBPath = FPaths::ProjectContentDir() / TEXT("Data/GameData.db");
+    sqlite3* DB = nullptr;
+
+    if (sqlite3_open(TCHAR_TO_UTF8(*DBPath), &DB) != SQLITE_OK)
+    {
+        return MapNames;
+    }
+
+    const char* Query = "SELECT MapName FROM Maps ORDER BY MapName ASC;";
+    sqlite3_stmt* Stmt = nullptr;
+
+    if (sqlite3_prepare_v2(DB, Query, -1, &Stmt, nullptr) == SQLITE_OK)
+    {
+        while (sqlite3_step(Stmt) == SQLITE_ROW)
+        {
+            const char* NameC = (const char*)sqlite3_column_text(Stmt, 0);
+            if (NameC)
+            {
+                MapNames.Add(UTF8_TO_TCHAR(NameC));
+            }
+        }
+    }
+
+    sqlite3_finalize(Stmt);
+    sqlite3_close(DB);
+    return MapNames;
+}
 

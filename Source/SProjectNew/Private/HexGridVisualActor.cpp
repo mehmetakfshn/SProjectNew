@@ -5,6 +5,9 @@
 #include "Engine/World.h"
 #include "Public/HexGridComponent.h"
 #include "CivGameMode.h"
+#include "Kismet/GameplayStatics.h" // GetActorOfClass için
+#include "Public/HexGridActor.h"
+
 
 // ============================================================
 //  CONSTRUCTOR
@@ -118,11 +121,20 @@ UInstancedStaticMeshComponent* AHexGridVisualActor::GetISMForType(ETileType Tile
 
 void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData)
 {
-    UHexGridComponent* HexComp = FindComponentByClass<UHexGridComponent>();
+    UHexGridComponent* HexComp = nullptr;
+
+    // Sahnedeki AHexGridActor'ü bul
+    AActor* GridActor = UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass());
+    if (GridActor)
+    {
+        // Component'i ondan al
+        HexComp = GridActor->FindComponentByClass<UHexGridComponent>();
+    }
+
     if (!HexComp) {
-        UE_LOG(LogTemp, Error, TEXT("HexComp not found!"));
+        UE_LOG(LogTemp, Error, TEXT("AHexGridVisualActor: HexGridComponent bulunamadi! Sahneye BP_HexGrid koydunuz mu?"));
         return;
-    } 
+    }
 
     // -------------------------------------------------------
     // 0) Grid boyutu ve mapping tablosu

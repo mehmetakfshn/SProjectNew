@@ -18,6 +18,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class UMapEditorLibrary ********************************************************
 #define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorLibrary_h_9_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execGetAllMapNames); \
 	DECLARE_FUNCTION(execGetSavedMapList);
 
 

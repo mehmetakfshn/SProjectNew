@@ -4,7 +4,7 @@
 	DO NOT modify this manually! Edit the corresponding .h files instead!
 ===========================================================================*/
 
-// IWYU pragma: private, include "W_SelectCiv.h"
+// IWYU pragma: private, include "UI/W_SelectCiv.h"
 
 #ifdef SPROJECTNEW_W_SelectCiv_generated_h
 #error "W_SelectCiv.generated.h already included, missing '#pragma once' in W_SelectCiv.h"
@@ -19,15 +19,16 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 struct FCivInfo;
 
 // ********** Begin Class UW_SelectCiv *************************************************************
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execHandleStartGameClicked); \
+	DECLARE_FUNCTION(execOnMapSelectionChanged); \
 	DECLARE_FUNCTION(execOnAICivSelectionChanged); \
 	DECLARE_FUNCTION(execOnCivSelected);
 
 
 SPROJECTNEW_API UClass* Z_Construct_UClass_UW_SelectCiv_NoRegister();
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_INCLASS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUW_SelectCiv(); \
 	friend struct Z_Construct_UClass_UW_SelectCiv_Statics; \
@@ -38,7 +39,7 @@ public: \
 	DECLARE_SERIALIZER(UW_SelectCiv)
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_ENHANCED_CONSTRUCTORS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UW_SelectCiv(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	/** Deleted move- and copy-constructors, should never be used */ \
@@ -50,13 +51,13 @@ public: \
 	NO_API virtual ~UW_SelectCiv();
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_12_PROLOG
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_GENERATED_BODY \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_14_PROLOG
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_INCLASS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h_15_ENHANCED_CONSTRUCTORS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_INCLASS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h_17_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -66,6 +67,6 @@ class UW_SelectCiv;
 // ********** End Class UW_SelectCiv ***************************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_SelectCiv_h
+#define CURRENT_FILE_ID FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

@@ -3,7 +3,7 @@
 #include "UnitBase.h"
 #include "CivGameMode.h"
 #include "Blueprint/UserWidget.h"
-#include "CivHUDWidget.h"
+#include "Public/UI/CivHUDWidget.h"
 #include "PathfindingComponent.h"
 #include "Engine/Engine.h"
 #include "HexGridComponent.h"
@@ -66,6 +66,42 @@ void ACivPlayerController::HandleTileClick(AActor* ActorOnTile, const FVector& T
         if (SelectedUnit)
         {
             AttemptMoveSelectedUnit(TileWorldLocation);
+        }
+    }
+
+    // Þehir Kontrolü
+    ACity* ClickedCity = Cast<ACity>(ActorOnTile);
+    if (ClickedCity)
+    {
+        // Seçili birim varsa hareket etmeye çalýþabilir, yoksa þehri aç
+        if (SelectedUnit == nullptr)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("C++: Þehir Seçildi: %s"), *ClickedCity->CityName);
+
+            if (HUDWidgetInstance)
+            {
+                HUDWidgetInstance->OpenCityDetails(ClickedCity);
+            }
+        }
+        else
+        {
+            // Seçili birim varsa ve þehre týkladýysa oraya hareket etsin
+            AttemptMoveSelectedUnit(TileWorldLocation);
+        }
+        return; // Ýþlem tamam
+    }
+
+    // Boþ Araziye Týklama
+    if (SelectedUnit)
+    {
+        AttemptMoveSelectedUnit(TileWorldLocation);
+    }
+    else
+    {
+        // Hiçbir þey seçili deðilse ve boþ yere týklandýysa panelleri kapat
+        if (HUDWidgetInstance)
+        {
+            HUDWidgetInstance->CloseCityDetails();
         }
     }
 }

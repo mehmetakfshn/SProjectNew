@@ -2,6 +2,8 @@
 #include "Public/HexGridActor.h"
 #include "Public/HexGridVisualActor.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Public/CivGameInstance.h" 
+#include "Kismet/GameplayStatics.h"
 #include "Engine/Texture2D.h"
 #include "Misc/Paths.h"
 #include "sqlite3.h"
@@ -78,6 +80,26 @@ void UHexGridComponent::GenerateGrid()
     UE_LOG(LogTemp, Warning, TEXT("GenerateGrid(): TileWidth=%f TileHeight=%f"), TileWidth, TileHeight);
     UE_LOG(LogTemp, Warning, TEXT("GenerateGrid() CALLED"));
     UE_LOG(LogTemp, Warning, TEXT("GenerateGrid STARTED: %d x %d"), GridWidth, GridHeight);
+
+
+    UCivGameInstance* GameInst = Cast<UCivGameInstance>(UGameplayStatics::GetGameInstance(this));
+    FString TargetMapName = TEXT("");
+
+    if (GameInst && !GameInst->MapToLoad.IsEmpty())
+    {
+        TargetMapName = GameInst->MapToLoad;
+        UE_LOG(LogTemp, Warning, TEXT("GenerateGrid: GameInstance requested map '%s'"), *TargetMapName);
+    }
+
+    // Eðer özel bir map seçilmiþse onu yükle
+    if (!TargetMapName.IsEmpty())
+    {
+        if (LoadGridFromDatabaseWithName(TargetMapName))
+        {
+            UE_LOG(LogTemp, Warning, TEXT("GenerateGrid: Map loaded successfully via Name!"));
+            return;
+        }
+    }
 
     // ============================================================
     // 1) ÖNCE DATABASE CACHE'TEN YÜKLEMEYÝ DENE
