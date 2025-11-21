@@ -89,6 +89,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Civilization|Territory")
 	void ClaimTileForCiv(UCivilizationManager* OwnerCiv, const FIntPoint& GridCoords);
 
-	
+	void ProcessCityGrowth();
 
 };

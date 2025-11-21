@@ -130,8 +130,34 @@ void ACivGameMode::BeginPlay()
 }
 
 
+void ACivGameMode::ProcessCityGrowth()
+{
+    // Grid component'i al
+    AHexGridActor* GridActor = Cast<AHexGridActor>(
+        UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass())
+    );
 
+    if (!GridActor || !GridActor->HexGridComponent)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("ProcessCityGrowth: HexGridComponent bulunamadi."));
+        return;
+    }
 
+    UHexGridComponent* HexComp = GridActor->HexGridComponent;
+
+    // Tüm civ'ler için (player + AI) þehir growth'u iþle
+    for (UCivilizationManager* Civ : AllCivs)
+    {
+        if (!Civ) continue;
+
+        for (ACity* City : Civ->Cities)
+        {
+            if (!City) continue;
+
+            City->ProcessTurn(HexComp);
+        }
+    }
+}
 
 
 void ACivGameMode::EndPlayerTurn()
@@ -146,6 +172,8 @@ void ACivGameMode::EndPlayerTurn()
 		return;
 	}
 	GS->AdvanceTurn(); // örn: 1. Tur  2. Tur
+
+    ProcessCityGrowth(); // þehir büyümesini hesaplýyoruz.
 
 	// 2. YENÝ MANTIK: Sahnede AUnitBase tipindeki TÜM aktörleri bul
 	TArray<AActor*> FoundUnits;
@@ -163,6 +191,7 @@ void ACivGameMode::EndPlayerTurn()
 		}
 	}
 }
+
 
 void ACivGameMode::SaveGameToSlot()
 {
@@ -235,6 +264,7 @@ void ACivGameMode::SaveGameToSlot()
         UE_LOG(LogTemp, Error, TEXT("SAVE BASARISIZ!"));
     }
 }
+
 
 void ACivGameMode::LoadGameFromSlot()
 {
@@ -314,6 +344,7 @@ void ACivGameMode::LoadGameFromSlot()
     UE_LOG(LogTemp, Warning, TEXT("LOAD TAMAMLANDI."));
 }
 
+
 AUnitBase* ACivGameMode::SpawnUnitAtTile(TSubclassOf<AUnitBase> UnitClass, FIntPoint GridCoords)
 {
     if (!UnitClass) return nullptr;
@@ -362,6 +393,7 @@ AUnitBase* ACivGameMode::SpawnUnitAtTile(TSubclassOf<AUnitBase> UnitClass, FIntP
     return SpawnedUnit;
 }
 
+
 void ACivGameMode::ClaimTileForCiv(UCivilizationManager* OwnerCiv, const FIntPoint& GridCoords)
 {
     if (!OwnerCiv)
@@ -405,9 +437,6 @@ void ACivGameMode::ClaimTileForCiv(UCivilizationManager* OwnerCiv, const FIntPoi
 }
 
 
-
-
-
 void ACivGameMode::CreatePlayerCiv()
 {
     PlayerCivManager = NewObject<UCivilizationManager>(this);
@@ -415,6 +444,7 @@ void ACivGameMode::CreatePlayerCiv()
 
     UE_LOG(LogTemp, Warning, TEXT("Created Player Civilization Manager for %s"), *ActivePlayerCiv.Name);
 }
+
 
 void ACivGameMode::CreateAICivs()
 {
@@ -430,6 +460,7 @@ void ACivGameMode::CreateAICivs()
         UE_LOG(LogTemp, Warning, TEXT("Created AI Civilization Manager for: %s"), *AICivs[i].Name);
     }
 }
+
 
 void ACivGameMode::InitUnitFactory()
 {
