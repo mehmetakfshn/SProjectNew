@@ -18,6 +18,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class ACivGameState ************************************************************
 #define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameState_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execSetCurrentTurn); \
+	DECLARE_FUNCTION(execGetCurrentDateText); \
 	DECLARE_FUNCTION(execGetCurrentTurn);
 
 

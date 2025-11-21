@@ -16,17 +16,22 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+class UCivilizationManager;
+class UPathfindingComponent;
+struct FUnitData;
+
 // ********** Begin Class AUnitBase ****************************************************************
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execInitUnit); \
+	DECLARE_FUNCTION(execMoveAlongPath); \
 	DECLARE_FUNCTION(execResetForNewTurn); \
 	DECLARE_FUNCTION(execSpendMovement); \
-	DECLARE_FUNCTION(execCanMove); \
-	DECLARE_FUNCTION(execSetGridCoord);
+	DECLARE_FUNCTION(execCanMove);
 
 
 SPROJECTNEW_API UClass* Z_Construct_UClass_AUnitBase_NoRegister();
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_INCLASS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAUnitBase(); \
 	friend struct Z_Construct_UClass_AUnitBase_Statics; \
@@ -37,7 +42,7 @@ public: \
 	DECLARE_SERIALIZER(AUnitBase)
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_ENHANCED_CONSTRUCTORS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	AUnitBase(AUnitBase&&) = delete; \
 	AUnitBase(const AUnitBase&) = delete; \
@@ -47,13 +52,13 @@ public: \
 	NO_API virtual ~AUnitBase();
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_7_PROLOG
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_GENERATED_BODY \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_12_PROLOG
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_INCLASS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_10_ENHANCED_CONSTRUCTORS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_INCLASS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_UnitBase_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
+using System.IO;
+
 
 public class SProjectNew : ModuleRules
 {
@@ -20,7 +22,12 @@ public class SProjectNew : ModuleRules
 			"GameplayStateTreeModule",
 			"Niagara",
 			"UMG",
-			"Slate"
+			"Slate",
+			"MediaAssets",
+			"MediaUtils",
+			"Media",
+			"MediaIOCore"
+
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
@@ -32,7 +39,8 @@ public class SProjectNew : ModuleRules
 			"SProjectNew/Variant_TwinStick",
 			"SProjectNew/Variant_TwinStick/AI",
 			"SProjectNew/Variant_TwinStick/Gameplay",
-			"SProjectNew/Variant_TwinStick/UI"
+			"SProjectNew/Variant_TwinStick/UI",
+			Path.Combine(ModuleDirectory, "../ThirdParty/SQLite/include")
 		});
 
 		// Uncomment if you are using Slate UI

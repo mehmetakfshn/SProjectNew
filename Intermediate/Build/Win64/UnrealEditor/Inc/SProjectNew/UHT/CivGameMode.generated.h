@@ -16,14 +16,19 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+class AUnitBase;
+
 // ********** Begin Class ACivGameMode *************************************************************
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execSpawnUnitAtTile); \
+	DECLARE_FUNCTION(execLoadGameFromSlot); \
+	DECLARE_FUNCTION(execSaveGameToSlot); \
 	DECLARE_FUNCTION(execEndPlayerTurn);
 
 
 SPROJECTNEW_API UClass* Z_Construct_UClass_ACivGameMode_NoRegister();
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_INCLASS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesACivGameMode(); \
 	friend struct Z_Construct_UClass_ACivGameMode_Statics; \
@@ -34,7 +39,7 @@ public: \
 	DECLARE_SERIALIZER(ACivGameMode)
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_ENHANCED_CONSTRUCTORS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	ACivGameMode(ACivGameMode&&) = delete; \
 	ACivGameMode(const ACivGameMode&) = delete; \
@@ -44,13 +49,13 @@ public: \
 	NO_API virtual ~ACivGameMode();
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_7_PROLOG
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_GENERATED_BODY \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_17_PROLOG
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_INCLASS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_10_ENHANCED_CONSTRUCTORS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_INCLASS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameMode_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

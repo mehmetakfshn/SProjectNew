@@ -16,7 +16,18 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+class AActor;
+class AUnitBase;
+
 // ********** Begin Class ACivPlayerController *****************************************************
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void Server_RequestEndTurn_Implementation(); \
+	DECLARE_FUNCTION(execGetSelectedUnit); \
+	DECLARE_FUNCTION(execHandleTileClick); \
+	DECLARE_FUNCTION(execServer_RequestEndTurn);
+
+
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_CALLBACK_WRAPPERS
 SPROJECTNEW_API UClass* Z_Construct_UClass_ACivPlayerController_NoRegister();
 
 #define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_INCLASS_NO_PURE_DECLS \
@@ -44,6 +55,8 @@ public: \
 #define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_CALLBACK_WRAPPERS \
 	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_INCLASS_NO_PURE_DECLS \
 	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivPlayerController_h_11_ENHANCED_CONSTRUCTORS \
 private: \

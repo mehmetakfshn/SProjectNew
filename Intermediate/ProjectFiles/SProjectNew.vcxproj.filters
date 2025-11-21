@@ -11,7 +11,11 @@
     <None Include="..\..\Source\SProjectNewEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
     <None Include="..\..\.vsconfig" />
+    <None Include="..\..\Source.zip" />
+    <None Include="..\..\SProjectNew.db" />
     <None Include="..\..\UpgradeLog.htm" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
@@ -142,16 +146,52 @@
     <ClInclude Include="..\..\Source\SProjectNew\CivGameState.h">
       <Filter>Source\SProjectNew</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\CivHUDWidget.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\CivHUDWidget.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\SProjectNew\CivPlayerController.cpp">
       <Filter>Source\SProjectNew</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\SProjectNew\CivPlayerController.h">
       <Filter>Source\SProjectNew</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\SProjectNew\HexGridManager.cpp">
+    <ClCompile Include="..\..\Source\SProjectNew\CivSaveGame.cpp">
       <Filter>Source\SProjectNew</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\SProjectNew\HexGridManager.h">
+    <ClInclude Include="..\..\Source\SProjectNew\CivSaveGame.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\CivTypes.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\CivTypes.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\IntroGameMode.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\IntroGameMode.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\MainMenuGameMode.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\MainMenuGameMode.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\MapEditorGameMode.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\MapEditorGameMode.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\PathfindingComponent.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\PathfindingComponent.h">
       <Filter>Source\SProjectNew</Filter>
     </ClInclude>
     <None Include="..\..\Source\SProjectNew\SProjectNew.Build.cs">
@@ -181,11 +221,125 @@
     <ClInclude Include="..\..\Source\SProjectNew\SProjectNewPlayerController.h">
       <Filter>Source\SProjectNew</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\sqlite3.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\SProjectNew\UnitBase.cpp">
       <Filter>Source\SProjectNew</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\SProjectNew\UnitBase.h">
       <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\UnitFactory.cpp">
+      <Filter>Source\SProjectNew</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\UnitFactory.h">
+      <Filter>Source\SProjectNew</Filter>
+    </ClInclude>
+    <Filter Include="Source\SProjectNew\Database">
+      <UniqueIdentifier>{52482DD3-C090-37DD-99C4-EDAFA39E8945}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\SProjectNew\Database\DatabaseInitializer.cpp">
+      <Filter>Source\SProjectNew\Database</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\Database\DatabaseInitializer.h">
+      <Filter>Source\SProjectNew\Database</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SProjectNew\Database\DatabaseReader.cpp">
+      <Filter>Source\SProjectNew\Database</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SProjectNew\Database\DatabaseReader.h">
+      <Filter>Source\SProjectNew\Database</Filter>
+    </ClInclude>
+    <Filter Include="Source\SProjectNew\Private">
+      <UniqueIdentifier>{70C31EA5-1CE7-35B6-9062-8A6835158A8B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\CivGameInstance.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\CivilizationData.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\CivilizationManager.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\HexGridActor.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\HexGridComponent.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\HexGridVisualActor.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\MapEditorLibrary.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\MapEditorPlayerController.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <None Include="..\..\Source\SProjectNew\Private\sqlite3.c">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\W_CivEntry.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\W_SelectCiv.cpp">
+      <Filter>Source\SProjectNew\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\SProjectNew\Private\Managers">
+      <UniqueIdentifier>{197C2469-2CEB-3E88-A5CE-A5963C6C3E38}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\SProjectNew\Private\Managers\UnitManager.cpp">
+      <Filter>Source\SProjectNew\Private\Managers</Filter>
+    </ClCompile>
+    <Filter Include="Source\SProjectNew\Public">
+      <UniqueIdentifier>{6250330E-02D6-3F19-A579-A8D5B35CEAB9}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\CivGameInstance.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\CivilizationData.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\CivilizationManager.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\HexEnums.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\HexGridActor.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\HexGridComponent.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\HexGridVisualActor.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\HexTileData.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\MapEditorLibrary.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\MapEditorPlayerController.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\UnitData.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\W_CivEntry.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\W_SelectCiv.h">
+      <Filter>Source\SProjectNew\Public</Filter>
+    </ClInclude>
+    <Filter Include="Source\SProjectNew\Public\Managers">
+      <UniqueIdentifier>{44394181-5D16-3938-8187-73EB8A15C8E7}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\SProjectNew\Public\Managers\UnitManager.h">
+      <Filter>Source\SProjectNew\Public\Managers</Filter>
     </ClInclude>
     <Filter Include="Source\SProjectNew\Variant_Strategy">
       <UniqueIdentifier>{8EE7F0E4-C805-30CD-8E05-8F9898C2C36E}</UniqueIdentifier>

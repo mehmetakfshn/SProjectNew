@@ -18,6 +18,48 @@ SPROJECTNEW_API UClass* Z_Construct_UClass_ACivGameState_NoRegister();
 UPackage* Z_Construct_UPackage__Script_SProjectNew();
 // ********** End Cross Module References **********************************************************
 
+// ********** Begin Class ACivGameState Function GetCurrentDateText ********************************
+struct Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics
+{
+	struct CivGameState_eventGetCurrentDateText_Parms
+	{
+		FText ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Turn System" },
+		{ "ModuleRelativePath", "CivGameState.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FTextPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FTextPropertyParams Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Text, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CivGameState_eventGetCurrentDateText_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ACivGameState, nullptr, "GetCurrentDateText", Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::PropPointers), sizeof(Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::CivGameState_eventGetCurrentDateText_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::Function_MetaDataParams), Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::CivGameState_eventGetCurrentDateText_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_ACivGameState_GetCurrentDateText()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ACivGameState_GetCurrentDateText_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(ACivGameState::execGetCurrentDateText)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(FText*)Z_Param__Result=P_THIS->GetCurrentDateText();
+	P_NATIVE_END;
+}
+// ********** End Class ACivGameState Function GetCurrentDateText **********************************
+
 // ********** Begin Class ACivGameState Function GetCurrentTurn ************************************
 struct Z_Construct_UFunction_ACivGameState_GetCurrentTurn_Statics
 {
@@ -28,13 +70,7 @@ struct Z_Construct_UFunction_ACivGameState_GetCurrentTurn_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "Turn System" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "/**\n\x09 * Her yerden (\xef\xbf\xbdzellikle UI'dan) mevcut tur say\xef\xbf\xbds\xef\xbf\xbdn\xef\xbf\xbd g\xef\xbf\xbdvenle almak i\xef\xbf\xbdin.\n\x09 */" },
-#endif
 		{ "ModuleRelativePath", "CivGameState.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Her yerden (\xef\xbf\xbdzellikle UI'dan) mevcut tur say\xef\xbf\xbds\xef\xbf\xbdn\xef\xbf\xbd g\xef\xbf\xbdvenle almak i\xef\xbf\xbdin." },
-#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FIntPropertyParams NewProp_ReturnValue;
@@ -66,12 +102,57 @@ DEFINE_FUNCTION(ACivGameState::execGetCurrentTurn)
 }
 // ********** End Class ACivGameState Function GetCurrentTurn **************************************
 
+// ********** Begin Class ACivGameState Function SetCurrentTurn ************************************
+struct Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics
+{
+	struct CivGameState_eventSetCurrentTurn_Parms
+	{
+		int32 NewTurn;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Turn System" },
+		{ "ModuleRelativePath", "CivGameState.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_NewTurn;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::NewProp_NewTurn = { "NewTurn", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CivGameState_eventSetCurrentTurn_Parms, NewTurn), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::NewProp_NewTurn,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ACivGameState, nullptr, "SetCurrentTurn", Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::PropPointers), sizeof(Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::CivGameState_eventSetCurrentTurn_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::Function_MetaDataParams), Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::CivGameState_eventSetCurrentTurn_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_ACivGameState_SetCurrentTurn()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ACivGameState_SetCurrentTurn_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(ACivGameState::execSetCurrentTurn)
+{
+	P_GET_PROPERTY(FIntProperty,Z_Param_NewTurn);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SetCurrentTurn(Z_Param_NewTurn);
+	P_NATIVE_END;
+}
+// ********** End Class ACivGameState Function SetCurrentTurn **************************************
+
 // ********** Begin Class ACivGameState ************************************************************
 void ACivGameState::StaticRegisterNativesACivGameState()
 {
 	UClass* Class = ACivGameState::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "GetCurrentDateText", &ACivGameState::execGetCurrentDateText },
 		{ "GetCurrentTurn", &ACivGameState::execGetCurrentTurn },
+		{ "SetCurrentTurn", &ACivGameState::execSetCurrentTurn },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -115,20 +196,16 @@ struct Z_Construct_UClass_ACivGameState_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentTurnNumber_MetaData[] = {
 		{ "Category", "Turn System" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "/**\n\x09 * Mevcut tur say\xef\xbf\xbds\xef\xbf\xbd.\n\x09 * \"Replicated\" (\xef\xbf\xbdo\xef\xbf\xbd""alt\xef\xbf\xbdlm\xef\xbf\xbd\xef\xbf\xbd) olarak i\xef\xbf\xbd""aretlendi, b\xef\xbf\xbdylece sunucuda de\xef\xbf\xbdi\xef\xbf\xbdti\xef\xbf\xbdinde\n\x09 * otomatik olarak t\xef\xbf\xbdm istemcilere (ve UI'a) bildirilir.\n\x09 */" },
-#endif
 		{ "ModuleRelativePath", "CivGameState.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Mevcut tur say\xef\xbf\xbds\xef\xbf\xbd.\n\"Replicated\" (\xef\xbf\xbdo\xef\xbf\xbd""alt\xef\xbf\xbdlm\xef\xbf\xbd\xef\xbf\xbd) olarak i\xef\xbf\xbd""aretlendi, b\xef\xbf\xbdylece sunucuda de\xef\xbf\xbdi\xef\xbf\xbdti\xef\xbf\xbdinde\notomatik olarak t\xef\xbf\xbdm istemcilere (ve UI'a) bildirilir." },
-#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FIntPropertyParams NewProp_CurrentTurnNumber;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_ACivGameState_GetCurrentTurn, "GetCurrentTurn" }, // 848341369
+		{ &Z_Construct_UFunction_ACivGameState_GetCurrentDateText, "GetCurrentDateText" }, // 1955889199
+		{ &Z_Construct_UFunction_ACivGameState_GetCurrentTurn, "GetCurrentTurn" }, // 2512790880
+		{ &Z_Construct_UFunction_ACivGameState_SetCurrentTurn, "SetCurrentTurn" }, // 23869067
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -186,10 +263,10 @@ ACivGameState::~ACivGameState() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameState_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ACivGameState, ACivGameState::StaticClass, TEXT("ACivGameState"), &Z_Registration_Info_UClass_ACivGameState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACivGameState), 1336620343U) },
+		{ Z_Construct_UClass_ACivGameState, ACivGameState::StaticClass, TEXT("ACivGameState"), &Z_Registration_Info_UClass_ACivGameState, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACivGameState), 1717268611U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameState_h__Script_SProjectNew_3009485966(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameState_h__Script_SProjectNew_2322841018(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameState_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_CivGameState_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

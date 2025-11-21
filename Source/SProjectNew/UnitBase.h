@@ -2,9 +2,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CivTypes.h" // FHexTileData'yý tanýmak için
+#include "Public/UnitData.h"  
 #include "UnitBase.generated.h"
 
-UCLASS()
+// Forward declaration (tamamýný include etmemek için)
+class UPathfindingComponent;
+
+UCLASS(BlueprintType) // BlueprintType ekledik
 class SPROJECTNEW_API AUnitBase : public AActor
 {
 	GENERATED_BODY()
@@ -15,39 +20,63 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+	UCivilizationManager* OwnerCivilization;
+
+	UPROPERTY()
+	FUnitData UnitData;
+
+	UPROPERTY()
+	FIntPoint GridPosition;
+
+
 public:
-	/** Birimin görünür modeli (mesh) */
+	// --- Yeni Tick Fonksiyonu ---
+	virtual void Tick(float DeltaTime) override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Unit")
 	UStaticMeshComponent* UnitMesh;
 
-	/** Birimin o an bulunduðu ýzgara koordinatý */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Unit")
-	FIntPoint CurrentGridCoord;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Unit")
+	FIntPoint CurrentGridCoords;
 
-	/** Birimin her tur baþýnda sahip olacaðý maksimum puan (örn: 2) */
+	/** Birimin hareket hýzý (VInterpTo için) */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Unit|Movement")
+	float MovementSpeed;
+
+	// --- Ýstatistikler (Deðiþiklik Yok) ---
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Unit|Stats")
 	int32 MaxMovementPoints;
 
-	/** Birimin bu turda kalan mevcut puaný */
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Unit|Stats")
 	int32 CurrentMovementPoints;
 
-	/**
-	 * Bu birimin ýzgara koordinatýný ayarlar (hareket için kullanýlacak).
-	 * @param NewCoord Yeni koordinat.
-	 */
-	UFUNCTION(BlueprintCallable, Category = "Unit")
-	void SetGridCoord(FIntPoint NewCoord);
-
-	/** Birimin hareket edip edemeyeceðini kontrol eder */
 	UFUNCTION(BlueprintCallable, Category = "Unit|Stats")
 	bool CanMove() const;
 
-	/** Birim hareket ettiðinde puanýný harcar */
 	UFUNCTION(BlueprintCallable, Category = "Unit|Stats")
 	void SpendMovement(int32 Cost);
 
-	/** Yeni tur baþladýðýnda puanlarý yeniler */
 	UFUNCTION(BlueprintCallable, Category = "Unit|Stats")
 	void ResetForNewTurn();
+
+	UFUNCTION(BlueprintCallable, Category = "Unit|Movement")
+	void MoveAlongPath(
+		const TArray<FIntPoint>& PathCoordinates,
+		UPathfindingComponent* PathfindingComponent,
+		float TileSize
+	);
+
+	UFUNCTION()
+	void InitUnit(UCivilizationManager* OwnerCiv, const FUnitData& Data, const FIntPoint& GridPos);
+
+
+private:
+	// --- Akýcý Hareket (Smooth Movement) için ---
+	bool bIsMoving;
+	int32 CurrentPathIndex;
+	TArray<FVector> WorldPathToFollow;
+
+	/** Yolu çizer (kullanýcýnýn isteði) */
+	void DrawPath();
 };

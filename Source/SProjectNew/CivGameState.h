@@ -12,29 +12,22 @@ class SPROJECTNEW_API ACivGameState : public AGameStateBase
 public:
 	ACivGameState();
 
-	/**
-	 * Deðiþkenlerin að üzerinden (veya sunucudan UI'a) nasýl kopyalanacaðýný
-	 * belirleyen standart Unreal fonksiyonu.
-	 */
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	/**
-	 * Sunucu tarafýnda (GameMode) çaðrýlýr ve tur sayýsýný 1 artýrýr.
-	 */
 	void AdvanceTurn();
 
-	/**
-	 * Her yerden (özellikle UI'dan) mevcut tur sayýsýný güvenle almak için.
-	 */
 	UFUNCTION(BlueprintCallable, Category = "Turn System")
 	int32 GetCurrentTurn() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Turn System")
+	FText GetCurrentDateText() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Turn System")
+	void SetCurrentTurn(int32 NewTurn);
+
+
 protected:
-	/**
-	 * Mevcut tur sayýsý.
-	 * "Replicated" (Çoðaltýlmýþ) olarak iþaretlendi, böylece sunucuda deðiþtiðinde
-	 * otomatik olarak tüm istemcilere (ve UI'a) bildirilir.
-	 */
+	
 	UPROPERTY(VisibleInstanceOnly, Replicated, BlueprintReadOnly, Category = "Turn System")
 	int32 CurrentTurnNumber;
 };
