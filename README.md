@@ -1,7 +1,8 @@
 # 4X STRATEGY GAME REPOSITORY
 
 *"Perseverance and spirit have done wonders in all ages."*
-##### George Washington
+
+**George Washington, Founding Father of United States**
 
 ## Schedule
 * Alpha 1.0 / January 1, 2026
