@@ -3,6 +3,7 @@
 #include "Components/SplineComponent.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Engine/World.h"
+#include "Public/HexGridComponent.h"
 
 // ============================================================
 //  CONSTRUCTOR
@@ -116,6 +117,12 @@ UInstancedStaticMeshComponent* AHexGridVisualActor::GetISMForType(ETileType Tile
 
 void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData)
 {
+    UHexGridComponent* HexComp = FindComponentByClass<UHexGridComponent>();
+    if (!HexComp) {
+        UE_LOG(LogTemp, Error, TEXT("HexComp not found!"));
+        return;
+    } 
+
     // -------------------------------------------------------
     // 0) Grid boyutu ve mapping tablosu
     // -------------------------------------------------------
@@ -361,6 +368,55 @@ void AHexGridVisualActor::BuildFromGridData(const TArray<FHexTileData>& GridData
                 AddTintedInstance(CliffISM, FT);
             }
         }
+
+        // -------------------------------------------------------
+        // BORDER RENDERING
+        // -------------------------------------------------------
+        if (BorderISM)
+        {
+            FVector Center = Tile.WorldPosition;
+
+            float TW = TileScale * 173.f;
+            float TH = TileScale * 200.f;
+
+            for (int32 Edge = 0; Edge < 6; Edge++)
+            {
+                // Komþu koordinat
+                TArray<FIntPoint> Neighbors = HexComp->GetNeighbors(Tile.Coordinates.X, Tile.Coordinates.Y);
+                if (!Neighbors.IsValidIndex(Edge))
+                    continue;
+
+                FIntPoint N = Neighbors[Edge];
+
+
+                // Geçerli koordinat mý?
+                if (!HexComp->IsValidCoords(N.X, N.Y))
+                    continue;
+
+                int32 OtherIndex = N.Y * GridWidth + N.X;
+                if (!GridData.IsValidIndex(OtherIndex))
+                    continue;
+
+                const FHexTileData& OtherTile = GridData[OtherIndex];
+
+                // Eðer komþu tile farklý bir civ'e aitse -> BORDER VAR
+                if (OtherTile.OwnerCivIndex != Tile.OwnerCivIndex)
+                {
+                    FVector Loc = GetEdgeMidpoint(Center, Edge, TW, TH);
+
+                    FTransform FT;
+                    FT.SetLocation(Loc);
+                    FT.SetScale3D(FVector(TileScale));
+
+                    // Border mesh, edge yönüne 60° * Edge dönecek
+                    FRotator Rot(0.f, Edge * 60.f, 0.f);
+                    FT.SetRotation(FQuat(Rot));
+
+                    BorderISM->AddInstance(FT);
+                }
+            }
+        }
+
 
         UE_LOG(LogTemp, Verbose,
             TEXT("Tile (%d,%d) -> WorldPos: %s"),

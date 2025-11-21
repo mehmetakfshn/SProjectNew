@@ -35,4 +35,5 @@ public:
     // Bu civin üretebileceði unit türleri (CivUnits tablosundan)
     UPROPERTY(BlueprintReadOnly)
     TArray<FString> AllowedUnitTypes;
+
 };
