@@ -4,7 +4,7 @@
 
 **George Washington**
 
-## Schedule
+## Schedule 🗓️
 * Alpha 1.0 / January 1, 2026
 * Alpha 2.0 / March 1, 2026
 * Alpha 3.0 / May 1, 2026
