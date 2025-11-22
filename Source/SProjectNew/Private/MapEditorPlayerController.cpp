@@ -46,53 +46,48 @@ void AMapEditorPlayerController::SetRiverDrawMode(bool bEnable)
     bRiverMode = bEnable;
 }
 
+
+void AMapEditorPlayerController::SetBrushSize(int32 NewSize)
+{
+    BrushSize = FMath::Max(1, NewSize);
+    UE_LOG(LogTemp, Warning, TEXT("Brush Size: %d"), BrushSize);
+}
+
+
 void AMapEditorPlayerController::OnLeftMouseClick()
 {
     FHitResult Hit;
-    if (!GetHitResultUnderCursor(ECC_Visibility, false, Hit))
-    {
-        UE_LOG(LogTemp, Warning, TEXT("MapEditor: Mouse hit hiçbir þeye çarpmadý."));
-        return;
-    }
+    if (!GetHitResultUnderCursor(ECC_Visibility, false, Hit)) return;
 
-    // Dünya -> Grid aktörünü bul (C++ AHexGridActor)
-    AHexGridActor* GridActor = Cast<AHexGridActor>(
-        UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass())
-    );
-
-    if (!GridActor)
-    {
-        UE_LOG(LogTemp, Error, TEXT("MapEditor: AHexGridActor sahnede bulunamadi!"));
-        return;
-    }
+    AHexGridActor* GridActor = Cast<AHexGridActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass()));
+    if (!GridActor) return;
 
     UHexGridComponent* HexComp = GridActor->FindComponentByClass<UHexGridComponent>();
-    if (!HexComp)
-    {
-        UE_LOG(LogTemp, Error, TEXT("MapEditor: HexGridComponent bulunamadi!"));
-        return;
-    }
+    if (!HexComp) return;
 
-    // Dünya -> local -> grid koordinatý
     FVector LocalPos = Hit.Location - GridActor->GetActorLocation();
-    FIntPoint GridCoords = HexComp->WorldToGrid(LocalPos);
+    FIntPoint CenterCoords = HexComp->WorldToGrid(LocalPos);
 
-    if (!HexComp->IsValidCoords(GridCoords.X, GridCoords.Y))
-    {
-        UE_LOG(LogTemp, Warning, TEXT("MapEditor: Tiklanan yer grid disinda (%d,%d)."),
-            GridCoords.X, GridCoords.Y);
-        return;
-    }
+    if (!HexComp->IsValidCoords(CenterCoords.X, CenterCoords.Y)) return;
 
+    // --- NEHÝR MODU (Þimdilik Tekli) ---
     if (bRiverMode)
     {
-        // Þimdilik sabit NE kenarýna nehir
-        HexComp->SetRiverAtEdge(GridCoords.X, GridCoords.Y, ERiverEdge::NE, true);
-        HexComp->RequestRebuildVisual();
+        // Nehirler kenar (Edge) bazlý olduðu için fýrça mantýðý zordur, tekli býrakýyoruz.
+        HexComp->SetRiverAtEdge(CenterCoords.X, CenterCoords.Y, ERiverEdge::NE, true);
+        HexComp->RequestRebuildVisual(); // Nehir için rebuild þart
     }
+    // --- FIRÇA ÝLE ZEMÝN BOYAMA ---
     else
     {
-        HexComp->SetTileTypeAt(GridCoords.X, GridCoords.Y, CurrentPaintTileType);
+        // 1. Etkilenen kareleri bul
+        TArray<FIntPoint> TilesToPaint = HexComp->GetTilesInRadius(CenterCoords.X, CenterCoords.Y, BrushSize);
+
+        // 2. Hepsini boya (Hýzlý güncelleme sayesinde kasmaz)
+        for (const FIntPoint& P : TilesToPaint)
+        {
+            HexComp->SetTileTypeAt(P.X, P.Y, CurrentPaintTileType);
+        }
     }
 }
 
@@ -100,39 +95,26 @@ void AMapEditorPlayerController::OnLeftMouseClick()
 void AMapEditorPlayerController::OnRightMouseClick()
 {
     FHitResult Hit;
-    if (!GetHitResultUnderCursor(ECC_Visibility, false, Hit))
-    {
-        UE_LOG(LogTemp, Warning, TEXT("MapEditor: Mouse hit hiçbir þeye çarpmadý (RightClick)."));
-        return;
-    }
+    if (!GetHitResultUnderCursor(ECC_Visibility, false, Hit)) return;
 
-    AHexGridActor* GridActor = Cast<AHexGridActor>(
-        UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass())
-    );
-
-    if (!GridActor)
-    {
-        UE_LOG(LogTemp, Error, TEXT("MapEditor: AHexGridActor sahnede bulunamadi! (RightClick)"));
-        return;
-    }
+    AHexGridActor* GridActor = Cast<AHexGridActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridActor::StaticClass()));
+    if (!GridActor) return;
 
     UHexGridComponent* HexComp = GridActor->FindComponentByClass<UHexGridComponent>();
-    if (!HexComp)
-    {
-        UE_LOG(LogTemp, Error, TEXT("MapEditor: HexGridComponent bulunamadi! (RightClick)"));
-        return;
-    }
+    if (!HexComp) return;
 
     FVector LocalPos = Hit.Location - GridActor->GetActorLocation();
-    FIntPoint GridCoords = HexComp->WorldToGrid(LocalPos);
+    FIntPoint CenterCoords = HexComp->WorldToGrid(LocalPos);
 
-    if (!HexComp->IsValidCoords(GridCoords.X, GridCoords.Y))
+    if (!HexComp->IsValidCoords(CenterCoords.X, CenterCoords.Y)) return;
+
+    // --- FIRÇA ÝLE YÜKSEKLÝK AYARI ---
+    TArray<FIntPoint> TilesToPaint = HexComp->GetTilesInRadius(CenterCoords.X, CenterCoords.Y, BrushSize);
+
+    for (const FIntPoint& P : TilesToPaint)
     {
-        return;
+        HexComp->AddTileHeightLevel(P.X, P.Y, CurrentHeightDelta);
     }
-
-    HexComp->AddTileHeightLevel(GridCoords.X, GridCoords.Y, CurrentHeightDelta);
-    HexComp->RequestRebuildVisual();
 }
 
 void AMapEditorPlayerController::SaveMapWithName(const FString& MapName)

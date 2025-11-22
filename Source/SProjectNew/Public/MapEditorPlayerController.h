@@ -38,7 +38,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Map Editor")
     void LoadMap(const FString& MapName);
 
+    // Fýrça Boyutu (1 = Tek, 2 = Komþular, 3 = Geniþ...)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map Editor")
+    int32 BrushSize = 1;
 
+    UFUNCTION(BlueprintCallable, Category = "Map Editor")
+    void SetBrushSize(int32 NewSize);
 
 
 protected:

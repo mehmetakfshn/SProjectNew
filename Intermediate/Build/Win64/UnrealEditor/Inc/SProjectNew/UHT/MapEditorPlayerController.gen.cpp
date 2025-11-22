@@ -155,6 +155,49 @@ DEFINE_FUNCTION(AMapEditorPlayerController::execSaveMapWithName)
 }
 // ********** End Class AMapEditorPlayerController Function SaveMapWithName ************************
 
+// ********** Begin Class AMapEditorPlayerController Function SetBrushSize *************************
+struct Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics
+{
+	struct MapEditorPlayerController_eventSetBrushSize_Parms
+	{
+		int32 NewSize;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Map Editor" },
+		{ "ModuleRelativePath", "Public/MapEditorPlayerController.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_NewSize;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::NewProp_NewSize = { "NewSize", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(MapEditorPlayerController_eventSetBrushSize_Parms, NewSize), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::NewProp_NewSize,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AMapEditorPlayerController, nullptr, "SetBrushSize", Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::PropPointers), sizeof(Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::MapEditorPlayerController_eventSetBrushSize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::Function_MetaDataParams), Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::MapEditorPlayerController_eventSetBrushSize_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AMapEditorPlayerController::execSetBrushSize)
+{
+	P_GET_PROPERTY(FIntProperty,Z_Param_NewSize);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SetBrushSize(Z_Param_NewSize);
+	P_NATIVE_END;
+}
+// ********** End Class AMapEditorPlayerController Function SetBrushSize ***************************
+
 // ********** Begin Class AMapEditorPlayerController Function SetCurrentHeightDelta ****************
 struct Z_Construct_UFunction_AMapEditorPlayerController_SetCurrentHeightDelta_Statics
 {
@@ -318,6 +361,7 @@ void AMapEditorPlayerController::StaticRegisterNativesAMapEditorPlayerController
 		{ "GetSavedMapList", &AMapEditorPlayerController::execGetSavedMapList },
 		{ "LoadMap", &AMapEditorPlayerController::execLoadMap },
 		{ "SaveMapWithName", &AMapEditorPlayerController::execSaveMapWithName },
+		{ "SetBrushSize", &AMapEditorPlayerController::execSetBrushSize },
 		{ "SetCurrentHeightDelta", &AMapEditorPlayerController::execSetCurrentHeightDelta },
 		{ "SetCurrentTileType", &AMapEditorPlayerController::execSetCurrentTileType },
 		{ "SetRiverDrawMode", &AMapEditorPlayerController::execSetRiverDrawMode },
@@ -361,6 +405,16 @@ struct Z_Construct_UClass_AMapEditorPlayerController_Statics
 		{ "IncludePath", "MapEditorPlayerController.h" },
 		{ "ModuleRelativePath", "Public/MapEditorPlayerController.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BrushSize_MetaData[] = {
+		{ "Category", "Map Editor" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// F\xef\xbf\xbdr\xef\xbf\xbd""a Boyutu (1 = Tek, 2 = Kom\xef\xbf\xbdular, 3 = Geni\xef\xbf\xbd...)\n" },
+#endif
+		{ "ModuleRelativePath", "Public/MapEditorPlayerController.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "F\xef\xbf\xbdr\xef\xbf\xbd""a Boyutu (1 = Tek, 2 = Kom\xef\xbf\xbdular, 3 = Geni\xef\xbf\xbd...)" },
+#endif
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentPaintTileType_MetaData[] = {
 		{ "AllowPrivateAccess", "true" },
 		{ "Category", "Map Editor" },
@@ -377,6 +431,7 @@ struct Z_Construct_UClass_AMapEditorPlayerController_Statics
 		{ "ModuleRelativePath", "Public/MapEditorPlayerController.h" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_BrushSize;
 	static const UECodeGen_Private::FBytePropertyParams NewProp_CurrentPaintTileType_Underlying;
 	static const UECodeGen_Private::FEnumPropertyParams NewProp_CurrentPaintTileType;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_CurrentHeightDelta;
@@ -388,6 +443,7 @@ struct Z_Construct_UClass_AMapEditorPlayerController_Statics
 		{ &Z_Construct_UFunction_AMapEditorPlayerController_GetSavedMapList, "GetSavedMapList" }, // 1400496033
 		{ &Z_Construct_UFunction_AMapEditorPlayerController_LoadMap, "LoadMap" }, // 350235291
 		{ &Z_Construct_UFunction_AMapEditorPlayerController_SaveMapWithName, "SaveMapWithName" }, // 2399524400
+		{ &Z_Construct_UFunction_AMapEditorPlayerController_SetBrushSize, "SetBrushSize" }, // 2358339652
 		{ &Z_Construct_UFunction_AMapEditorPlayerController_SetCurrentHeightDelta, "SetCurrentHeightDelta" }, // 3903553973
 		{ &Z_Construct_UFunction_AMapEditorPlayerController_SetCurrentTileType, "SetCurrentTileType" }, // 551278691
 		{ &Z_Construct_UFunction_AMapEditorPlayerController_SetRiverDrawMode, "SetRiverDrawMode" }, // 2903792452
@@ -398,6 +454,7 @@ struct Z_Construct_UClass_AMapEditorPlayerController_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_BrushSize = { "BrushSize", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMapEditorPlayerController, BrushSize), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BrushSize_MetaData), NewProp_BrushSize_MetaData) };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_CurrentPaintTileType_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_CurrentPaintTileType = { "CurrentPaintTileType", nullptr, (EPropertyFlags)0x0040000000000005, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMapEditorPlayerController, CurrentPaintTileType), Z_Construct_UEnum_SProjectNew_ETileType, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentPaintTileType_MetaData), NewProp_CurrentPaintTileType_MetaData) }; // 197667489
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_CurrentHeightDelta = { "CurrentHeightDelta", nullptr, (EPropertyFlags)0x0040000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMapEditorPlayerController, CurrentHeightDelta), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentHeightDelta_MetaData), NewProp_CurrentHeightDelta_MetaData) };
@@ -407,6 +464,7 @@ void Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_bRiverMode_S
 }
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_bRiverMode = { "bRiverMode", nullptr, (EPropertyFlags)0x0040000000000005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(AMapEditorPlayerController), &Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_bRiverMode_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bRiverMode_MetaData), NewProp_bRiverMode_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AMapEditorPlayerController_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_BrushSize,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_CurrentPaintTileType_Underlying,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_CurrentPaintTileType,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMapEditorPlayerController_Statics::NewProp_CurrentHeightDelta,
@@ -449,10 +507,10 @@ AMapEditorPlayerController::~AMapEditorPlayerController() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorPlayerController_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AMapEditorPlayerController, AMapEditorPlayerController::StaticClass, TEXT("AMapEditorPlayerController"), &Z_Registration_Info_UClass_AMapEditorPlayerController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMapEditorPlayerController), 181364447U) },
+		{ Z_Construct_UClass_AMapEditorPlayerController, AMapEditorPlayerController::StaticClass, TEXT("AMapEditorPlayerController"), &Z_Registration_Info_UClass_AMapEditorPlayerController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMapEditorPlayerController), 3494549254U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorPlayerController_h__Script_SProjectNew_1088902269(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorPlayerController_h__Script_SProjectNew_3796215222(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorPlayerController_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_MapEditorPlayerController_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -1107,7 +1107,7 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
 
     char* ErrMsg = nullptr;
 
-    // Tabloyu oluþtur (Yoksa)
+    // Tabloyu oluþtur (Eðer yoksa)
     const char* CreateSQL =
         "CREATE TABLE IF NOT EXISTS Tiles ("
         " TileID INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -1132,13 +1132,20 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
         " River5 INTEGER DEFAULT 0"
         ");";
 
-    sqlite3_exec(DB, CreateSQL, nullptr, nullptr, nullptr);
+    Result = sqlite3_exec(DB, CreateSQL, nullptr, nullptr, &ErrMsg);
+    if (Result != SQLITE_OK)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] CREATE TABLE FAILED: %s"), *FString(ErrMsg));
+        sqlite3_free(ErrMsg);
+        sqlite3_close(DB);
+        return false;
+    }
 
     // Bu harita ismine ait eski kayýtlarý sil
     FString DeleteSQL = FString::Printf(TEXT("DELETE FROM Tiles WHERE MapName='%s';"), *InMapName);
     sqlite3_exec(DB, TCHAR_TO_UTF8(*DeleteSQL), nullptr, nullptr, nullptr);
 
-    // Ýþlemleri hýzlandýrmak için Transaction baþlat
+    // Transaction
     sqlite3_exec(DB, "BEGIN TRANSACTION;", nullptr, nullptr, nullptr);
 
     const char* InsertSQL =
@@ -1148,7 +1155,15 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     sqlite3_stmt* Stmt = nullptr;
-    sqlite3_prepare_v2(DB, InsertSQL, -1, &Stmt, nullptr);
+    Result = sqlite3_prepare_v2(DB, InsertSQL, -1, &Stmt, nullptr);
+
+    // Hazýrlýk baþarýsýzsa devam etme, kapat ve hata ver!
+    if (Result != SQLITE_OK)
+    {
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] prepare_v2 FAILED: %s"), *FString(sqlite3_errmsg(DB)));
+        sqlite3_close(DB);
+        return false;
+    }
 
     // TileType -> String dönüþüm lambdasý
     auto TileTypeToString = [](ETileType Type) -> FString {
@@ -1383,3 +1398,61 @@ void UHexGridComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyCh
     TileHeight = BaseTileHeight * TileScale;
 }
 #endif
+
+TArray<FIntPoint> UHexGridComponent::GetTilesInRadius(int32 CenterX, int32 CenterY, int32 Radius) const
+{
+    TArray<FIntPoint> Result;
+
+    // Yarýçap 1 veya daha küçükse sadece merkezi döndür (Tekli Fýrça)
+    if (Radius <= 1)
+    {
+        if (IsValidCoords(CenterX, CenterY))
+        {
+            Result.Add(FIntPoint(CenterX, CenterY));
+        }
+        return Result;
+    }
+
+    // --- BFS Algoritmasý ---
+    TSet<FIntPoint> Visited;
+    TArray<FIntPoint> Queue; // Gezilecekler listesi
+
+    FIntPoint Center(CenterX, CenterY);
+
+    // Baþlangýç noktasýný ekle
+    if (IsValidCoords(CenterX, CenterY))
+    {
+        Queue.Add(Center);
+        Visited.Add(Center);
+        Result.Add(Center);
+    }
+
+    // Mesafe takibi için basit bir yapý kullanabiliriz veya katman katman gidebiliriz.
+    // Burada katman (layer) mantýðýyla ilerleyeceðiz.
+
+    for (int32 Step = 0; Step < Radius - 1; ++Step)
+    {
+        int32 TilesInCurrentLayer = Queue.Num();
+
+        // Þu anki katmandaki tüm karelerin komþularýný bul
+        for (int32 i = 0; i < TilesInCurrentLayer; ++i)
+        {
+            FIntPoint Current = Queue[0];
+            Queue.RemoveAt(0); // Baþtan çýkar
+
+            TArray<FIntPoint> Neighbors = GetNeighbors(Current.X, Current.Y);
+
+            for (const FIntPoint& Neighbor : Neighbors)
+            {
+                if (!Visited.Contains(Neighbor))
+                {
+                    Visited.Add(Neighbor);
+                    Queue.Add(Neighbor);
+                    Result.Add(Neighbor);
+                }
+            }
+        }
+    }
+
+    return Result;
+}

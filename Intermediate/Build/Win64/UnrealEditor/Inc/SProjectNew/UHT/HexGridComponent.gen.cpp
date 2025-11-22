@@ -178,6 +178,66 @@ DEFINE_FUNCTION(UHexGridComponent::execGetTileData)
 }
 // ********** End Class UHexGridComponent Function GetTileData *************************************
 
+// ********** Begin Class UHexGridComponent Function GetTilesInRadius ******************************
+struct Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics
+{
+	struct HexGridComponent_eventGetTilesInRadius_Parms
+	{
+		int32 CenterX;
+		int32 CenterY;
+		int32 Radius;
+		TArray<FIntPoint> ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Hex Grid|Utils" },
+		{ "ModuleRelativePath", "Public/HexGridComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_CenterX;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_CenterY;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_Radius;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_CenterX = { "CenterX", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTilesInRadius_Parms, CenterX), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_CenterY = { "CenterY", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTilesInRadius_Parms, CenterY), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_Radius = { "Radius", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTilesInRadius_Parms, Radius), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FIntPoint, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(HexGridComponent_eventGetTilesInRadius_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_CenterX,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_CenterY,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_Radius,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_ReturnValue_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UHexGridComponent, nullptr, "GetTilesInRadius", Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::PropPointers), sizeof(Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::HexGridComponent_eventGetTilesInRadius_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::Function_MetaDataParams), Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::HexGridComponent_eventGetTilesInRadius_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UHexGridComponent::execGetTilesInRadius)
+{
+	P_GET_PROPERTY(FIntProperty,Z_Param_CenterX);
+	P_GET_PROPERTY(FIntProperty,Z_Param_CenterY);
+	P_GET_PROPERTY(FIntProperty,Z_Param_Radius);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(TArray<FIntPoint>*)Z_Param__Result=P_THIS->GetTilesInRadius(Z_Param_CenterX,Z_Param_CenterY,Z_Param_Radius);
+	P_NATIVE_END;
+}
+// ********** End Class UHexGridComponent Function GetTilesInRadius ********************************
+
 // ********** Begin Class UHexGridComponent Function GetTileYieldAt ********************************
 struct Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt_Statics
 {
@@ -733,6 +793,7 @@ void UHexGridComponent::StaticRegisterNativesUHexGridComponent()
 		{ "AddTileHeightLevel", &UHexGridComponent::execAddTileHeightLevel },
 		{ "GenerateGrid", &UHexGridComponent::execGenerateGrid },
 		{ "GetTileData", &UHexGridComponent::execGetTileData },
+		{ "GetTilesInRadius", &UHexGridComponent::execGetTilesInRadius },
 		{ "GetTileYieldAt", &UHexGridComponent::execGetTileYieldAt },
 		{ "GridToWorld", &UHexGridComponent::execGridToWorld },
 		{ "InitializeEditorGrid", &UHexGridComponent::execInitializeEditorGrid },
@@ -918,6 +979,7 @@ struct Z_Construct_UClass_UHexGridComponent_Statics
 		{ &Z_Construct_UFunction_UHexGridComponent_AddTileHeightLevel, "AddTileHeightLevel" }, // 2873296767
 		{ &Z_Construct_UFunction_UHexGridComponent_GenerateGrid, "GenerateGrid" }, // 684746355
 		{ &Z_Construct_UFunction_UHexGridComponent_GetTileData, "GetTileData" }, // 2481321851
+		{ &Z_Construct_UFunction_UHexGridComponent_GetTilesInRadius, "GetTilesInRadius" }, // 798672943
 		{ &Z_Construct_UFunction_UHexGridComponent_GetTileYieldAt, "GetTileYieldAt" }, // 656164117
 		{ &Z_Construct_UFunction_UHexGridComponent_GridToWorld, "GridToWorld" }, // 739618849
 		{ &Z_Construct_UFunction_UHexGridComponent_InitializeEditorGrid, "InitializeEditorGrid" }, // 260932655
@@ -1008,10 +1070,10 @@ UHexGridComponent::~UHexGridComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UHexGridComponent, UHexGridComponent::StaticClass, TEXT("UHexGridComponent"), &Z_Registration_Info_UClass_UHexGridComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UHexGridComponent), 1318634724U) },
+		{ Z_Construct_UClass_UHexGridComponent, UHexGridComponent::StaticClass, TEXT("UHexGridComponent"), &Z_Registration_Info_UClass_UHexGridComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UHexGridComponent), 2740389523U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_2101402034(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_1990507082(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridComponent_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

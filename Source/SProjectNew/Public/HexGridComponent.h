@@ -163,6 +163,8 @@ public:
 
     TArray<FIntPoint> GetNeighbors(int32 X, int32 Y) const;
 
+    UFUNCTION(BlueprintCallable, Category = "Hex Grid|Utils")
+    TArray<FIntPoint> GetTilesInRadius(int32 CenterX, int32 CenterY, int32 Radius) const;
 
     #if WITH_EDITOR
         virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
