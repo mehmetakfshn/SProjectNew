@@ -3,20 +3,8 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "sqlite3.h"
+#include "Public/CivilizationData.h"
 #include "DatabaseReader.generated.h"
-
-USTRUCT(BlueprintType)
-struct FCivInfo
-{
-    GENERATED_BODY()
-
-    UPROPERTY(BlueprintReadOnly) FString Name;
-
-    UPROPERTY(BlueprintReadOnly) FString Leader;
-    UPROPERTY(BlueprintReadOnly) FString ColorPrimary;
-    UPROPERTY(BlueprintReadOnly) FString ColorSecondary;
-    UPROPERTY(BlueprintReadOnly) FString StartingTech;
-};
 
 UCLASS()
 class SPROJECTNEW_API UDatabaseReader : public UObject

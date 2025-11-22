@@ -6,7 +6,7 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "W_CivEntry.h"
-#include "Database/DatabaseReader.h"
+#include "CivilizationData.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
@@ -50,7 +50,7 @@ struct Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateS
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateSignature_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_SProjectNew_eventCivSelectedSignature_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 1142681011
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateSignature_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_SProjectNew_eventCivSelectedSignature_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 2731982406
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateSignature_Statics::NewProp_Info,
 };
@@ -106,7 +106,7 @@ struct Z_Construct_UDelegateFunction_SProjectNew_CivAISelectionChangedSignature_
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_SProjectNew_CivAISelectionChangedSignature__DelegateSignature_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_SProjectNew_eventCivAISelectionChangedSignature_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 1142681011
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_SProjectNew_CivAISelectionChangedSignature__DelegateSignature_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_SProjectNew_eventCivAISelectionChangedSignature_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 2731982406
 void Z_Construct_UDelegateFunction_SProjectNew_CivAISelectionChangedSignature__DelegateSignature_Statics::NewProp_bIsSelected_SetBit(void* Obj)
 {
 	((_Script_SProjectNew_eventCivAISelectionChangedSignature_Parms*)Obj)->bIsSelected = 1;
@@ -255,7 +255,7 @@ struct Z_Construct_UFunction_UW_CivEntry_SetCiv_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UW_CivEntry_SetCiv_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(W_CivEntry_eventSetCiv_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 1142681011
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UW_CivEntry_SetCiv_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(W_CivEntry_eventSetCiv_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 2731982406
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UW_CivEntry_SetCiv_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UW_CivEntry_SetCiv_Statics::NewProp_Info,
 };
@@ -397,7 +397,7 @@ struct Z_Construct_UClass_UW_CivEntry_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UW_CivEntry_HandleAICheckChanged, "HandleAICheckChanged" }, // 19638530
 		{ &Z_Construct_UFunction_UW_CivEntry_HandleClick, "HandleClick" }, // 726486944
-		{ &Z_Construct_UFunction_UW_CivEntry_SetCiv, "SetCiv" }, // 3365105943
+		{ &Z_Construct_UFunction_UW_CivEntry_SetCiv, "SetCiv" }, // 1435289790
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -405,9 +405,9 @@ struct Z_Construct_UClass_UW_CivEntry_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_CivInfo = { "CivInfo", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, CivInfo), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CivInfo_MetaData), NewProp_CivInfo_MetaData) }; // 1142681011
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_OnCivSelected = { "OnCivSelected", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, OnCivSelected), Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_OnCivSelected_MetaData), NewProp_OnCivSelected_MetaData) }; // 4054573958
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_OnAISelectionChanged = { "OnAISelectionChanged", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, OnAISelectionChanged), Z_Construct_UDelegateFunction_SProjectNew_CivAISelectionChangedSignature__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_OnAISelectionChanged_MetaData), NewProp_OnAISelectionChanged_MetaData) }; // 2387123055
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_CivInfo = { "CivInfo", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, CivInfo), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CivInfo_MetaData), NewProp_CivInfo_MetaData) }; // 2731982406
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_OnCivSelected = { "OnCivSelected", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, OnCivSelected), Z_Construct_UDelegateFunction_SProjectNew_CivSelectedSignature__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_OnCivSelected_MetaData), NewProp_OnCivSelected_MetaData) }; // 1538097429
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_OnAISelectionChanged = { "OnAISelectionChanged", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, OnAISelectionChanged), Z_Construct_UDelegateFunction_SProjectNew_CivAISelectionChangedSignature__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_OnAISelectionChanged_MetaData), NewProp_OnAISelectionChanged_MetaData) }; // 2690910648
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_Button_Select = { "Button_Select", nullptr, (EPropertyFlags)0x0020080000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, Button_Select), Z_Construct_UClass_UButton_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Button_Select_MetaData), NewProp_Button_Select_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_Text_CivName = { "Text_CivName", nullptr, (EPropertyFlags)0x0020080000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, Text_CivName), Z_Construct_UClass_UTextBlock_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Text_CivName_MetaData), NewProp_Text_CivName_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UW_CivEntry_Statics::NewProp_CheckBox_IsAI = { "CheckBox_IsAI", nullptr, (EPropertyFlags)0x0020080000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UW_CivEntry, CheckBox_IsAI), Z_Construct_UClass_UCheckBox_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CheckBox_IsAI_MetaData), NewProp_CheckBox_IsAI_MetaData) };
@@ -457,10 +457,10 @@ UW_CivEntry::~UW_CivEntry() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_CivEntry_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UW_CivEntry, UW_CivEntry::StaticClass, TEXT("UW_CivEntry"), &Z_Registration_Info_UClass_UW_CivEntry, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UW_CivEntry), 3964624666U) },
+		{ Z_Construct_UClass_UW_CivEntry, UW_CivEntry::StaticClass, TEXT("UW_CivEntry"), &Z_Registration_Info_UClass_UW_CivEntry, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UW_CivEntry), 2287958581U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_CivEntry_h__Script_SProjectNew_1635807188(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_CivEntry_h__Script_SProjectNew_1182571263(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_CivEntry_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_W_CivEntry_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

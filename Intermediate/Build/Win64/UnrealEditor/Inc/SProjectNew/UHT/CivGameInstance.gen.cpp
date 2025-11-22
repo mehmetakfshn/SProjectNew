@@ -6,7 +6,7 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "CivGameInstance.h"
-#include "Database/DatabaseReader.h"
+#include "CivilizationData.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
@@ -107,9 +107,9 @@ struct Z_Construct_UClass_UCivGameInstance_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_SelectedCiv = { "SelectedCiv", nullptr, (EPropertyFlags)0x0010000000020005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivGameInstance, SelectedCiv), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedCiv_MetaData), NewProp_SelectedCiv_MetaData) }; // 1142681011
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_SelectedAICivs_Inner = { "SelectedAICivs", nullptr, (EPropertyFlags)0x0000000000020000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(0, nullptr) }; // 1142681011
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_SelectedAICivs = { "SelectedAICivs", nullptr, (EPropertyFlags)0x0010000000020005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivGameInstance, SelectedAICivs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedAICivs_MetaData), NewProp_SelectedAICivs_MetaData) }; // 1142681011
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_SelectedCiv = { "SelectedCiv", nullptr, (EPropertyFlags)0x0010000000020005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivGameInstance, SelectedCiv), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedCiv_MetaData), NewProp_SelectedCiv_MetaData) }; // 2731982406
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_SelectedAICivs_Inner = { "SelectedAICivs", nullptr, (EPropertyFlags)0x0000000000020000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(0, nullptr) }; // 2731982406
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_SelectedAICivs = { "SelectedAICivs", nullptr, (EPropertyFlags)0x0010000000020005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivGameInstance, SelectedAICivs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedAICivs_MetaData), NewProp_SelectedAICivs_MetaData) }; // 2731982406
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_NumAICivs = { "NumAICivs", nullptr, (EPropertyFlags)0x0010000000020005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivGameInstance, NumAICivs), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NumAICivs_MetaData), NewProp_NumAICivs_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UCivGameInstance_Statics::NewProp_MapToLoad = { "MapToLoad", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UCivGameInstance, MapToLoad), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MapToLoad_MetaData), NewProp_MapToLoad_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UCivGameInstance_Statics::PropPointers[] = {
@@ -157,10 +157,10 @@ UCivGameInstance::~UCivGameInstance() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivGameInstance_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UCivGameInstance, UCivGameInstance::StaticClass, TEXT("UCivGameInstance"), &Z_Registration_Info_UClass_UCivGameInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCivGameInstance), 2177777267U) },
+		{ Z_Construct_UClass_UCivGameInstance, UCivGameInstance::StaticClass, TEXT("UCivGameInstance"), &Z_Registration_Info_UClass_UCivGameInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCivGameInstance), 3714866041U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivGameInstance_h__Script_SProjectNew_3605707932(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivGameInstance_h__Script_SProjectNew_742048566(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivGameInstance_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivGameInstance_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

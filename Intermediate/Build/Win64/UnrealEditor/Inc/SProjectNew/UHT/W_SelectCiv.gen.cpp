@@ -6,7 +6,7 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "UI/W_SelectCiv.h"
-#include "Database/DatabaseReader.h"
+#include "CivilizationData.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
@@ -89,7 +89,7 @@ struct Z_Construct_UFunction_UW_SelectCiv_OnAICivSelectionChanged_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UW_SelectCiv_OnAICivSelectionChanged_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(W_SelectCiv_eventOnAICivSelectionChanged_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 1142681011
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UW_SelectCiv_OnAICivSelectionChanged_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(W_SelectCiv_eventOnAICivSelectionChanged_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 2731982406
 void Z_Construct_UFunction_UW_SelectCiv_OnAICivSelectionChanged_Statics::NewProp_bIsSelected_SetBit(void* Obj)
 {
 	((W_SelectCiv_eventOnAICivSelectionChanged_Parms*)Obj)->bIsSelected = 1;
@@ -147,7 +147,7 @@ struct Z_Construct_UFunction_UW_SelectCiv_OnCivSelected_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UW_SelectCiv_OnCivSelected_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(W_SelectCiv_eventOnCivSelected_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 1142681011
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UW_SelectCiv_OnCivSelected_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(W_SelectCiv_eventOnCivSelected_Parms, Info), Z_Construct_UScriptStruct_FCivInfo, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Info_MetaData), NewProp_Info_MetaData) }; // 2731982406
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UW_SelectCiv_OnCivSelected_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UW_SelectCiv_OnCivSelected_Statics::NewProp_Info,
 };
@@ -326,8 +326,8 @@ struct Z_Construct_UClass_UW_SelectCiv_Statics
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UW_SelectCiv_HandleStartGameClicked, "HandleStartGameClicked" }, // 1878325186
-		{ &Z_Construct_UFunction_UW_SelectCiv_OnAICivSelectionChanged, "OnAICivSelectionChanged" }, // 598291399
-		{ &Z_Construct_UFunction_UW_SelectCiv_OnCivSelected, "OnCivSelected" }, // 1942944566
+		{ &Z_Construct_UFunction_UW_SelectCiv_OnAICivSelectionChanged, "OnAICivSelectionChanged" }, // 3085536822
+		{ &Z_Construct_UFunction_UW_SelectCiv_OnCivSelected, "OnCivSelected" }, // 1803074587
 		{ &Z_Construct_UFunction_UW_SelectCiv_OnMapSelectionChanged, "OnMapSelectionChanged" }, // 2140558465
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -384,10 +384,10 @@ UW_SelectCiv::~UW_SelectCiv() {}
 struct Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h__Script_SProjectNew_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UW_SelectCiv, UW_SelectCiv::StaticClass, TEXT("UW_SelectCiv"), &Z_Registration_Info_UClass_UW_SelectCiv, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UW_SelectCiv), 2911507746U) },
+		{ Z_Construct_UClass_UW_SelectCiv, UW_SelectCiv::StaticClass, TEXT("UW_SelectCiv"), &Z_Registration_Info_UClass_UW_SelectCiv, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UW_SelectCiv), 1347207602U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h__Script_SProjectNew_2358854557(TEXT("/Script/SProjectNew"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h__Script_SProjectNew_2191852827(TEXT("/Script/SProjectNew"),
 	Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h__Script_SProjectNew_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_UI_W_SelectCiv_h__Script_SProjectNew_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

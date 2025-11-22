@@ -16,10 +16,20 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+// ********** Begin ScriptStruct FCivInfo **********************************************************
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_17_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FCivInfo_Statics; \
+	static class UScriptStruct* StaticStruct(); \
+	typedef FTableRowBase Super;
+
+
+struct FCivInfo;
+// ********** End ScriptStruct FCivInfo ************************************************************
+
 // ********** Begin Class UCivilizationData ********************************************************
 SPROJECTNEW_API UClass* Z_Construct_UClass_UCivilizationData_NoRegister();
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_13_INCLASS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_60_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUCivilizationData(); \
 	friend struct Z_Construct_UClass_UCivilizationData_Statics; \
@@ -30,7 +40,7 @@ public: \
 	DECLARE_SERIALIZER(UCivilizationData)
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_13_ENHANCED_CONSTRUCTORS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_60_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UCivilizationData(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	/** Deleted move- and copy-constructors, should never be used */ \
@@ -42,12 +52,12 @@ public: \
 	NO_API virtual ~UCivilizationData();
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_10_PROLOG
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_13_GENERATED_BODY \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_57_PROLOG
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_60_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_13_INCLASS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_13_ENHANCED_CONSTRUCTORS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_60_INCLASS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_CivilizationData_h_60_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
