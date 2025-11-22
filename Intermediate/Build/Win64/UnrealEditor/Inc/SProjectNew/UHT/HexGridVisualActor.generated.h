@@ -19,13 +19,13 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 struct FHexTileData;
 
 // ********** Begin Class AHexGridVisualActor ******************************************************
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execBuildFromGridData);
 
 
 SPROJECTNEW_API UClass* Z_Construct_UClass_AHexGridVisualActor_NoRegister();
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_INCLASS_NO_PURE_DECLS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAHexGridVisualActor(); \
 	friend struct Z_Construct_UClass_AHexGridVisualActor_Statics; \
@@ -36,7 +36,7 @@ public: \
 	DECLARE_SERIALIZER(AHexGridVisualActor)
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_ENHANCED_CONSTRUCTORS \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	AHexGridVisualActor(AHexGridVisualActor&&) = delete; \
 	AHexGridVisualActor(const AHexGridVisualActor&) = delete; \
@@ -46,13 +46,13 @@ public: \
 	NO_API virtual ~AHexGridVisualActor();
 
 
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_11_PROLOG
-#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_GENERATED_BODY \
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_17_PROLOG
+#define FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_INCLASS_NO_PURE_DECLS \
-	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_14_ENHANCED_CONSTRUCTORS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_INCLASS_NO_PURE_DECLS \
+	FID_Users_akifs_Desktop_SProject_SProjectNew_Source_SProjectNew_Public_HexGridVisualActor_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

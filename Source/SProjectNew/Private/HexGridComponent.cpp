@@ -52,8 +52,6 @@ static FLinearColor ComputeBiomeColor(ETileType Type)
     }
 }
 
-
-
 UHexGridComponent::UHexGridComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
@@ -63,7 +61,6 @@ void UHexGridComponent::BeginPlay()
 {
     Super::BeginPlay();
 }
-
 
 // ====================================================================
 //  GRID GENERATION
@@ -80,7 +77,6 @@ void UHexGridComponent::GenerateGrid()
     UE_LOG(LogTemp, Warning, TEXT("GenerateGrid(): TileWidth=%f TileHeight=%f"), TileWidth, TileHeight);
     UE_LOG(LogTemp, Warning, TEXT("GenerateGrid() CALLED"));
     UE_LOG(LogTemp, Warning, TEXT("GenerateGrid STARTED: %d x %d"), GridWidth, GridHeight);
-
 
     UCivGameInstance* GameInst = Cast<UCivGameInstance>(UGameplayStatics::GetGameInstance(this));
     FString TargetMapName = TEXT("");
@@ -101,51 +97,37 @@ void UHexGridComponent::GenerateGrid()
         }
     }
 
-    // ============================================================
     // 1) ÖNCE DATABASE CACHE'TEN YÜKLEMEYÝ DENE
-    // ============================================================
     if (bUseDatabaseCache)
     {
         if (LoadGridFromDatabase())
         {
-            UE_LOG(LogTemp, Warning,
-                TEXT("GenerateGrid(): Loaded %d tiles from SQL cache"),
-                GridData.Num());
-            return; // SQL'den yüklendiyse heightmap'e gerek yok
+            UE_LOG(LogTemp, Warning, TEXT("GenerateGrid(): Loaded %d tiles from SQL cache"), GridData.Num());
+            return;
         }
         else
         {
-            UE_LOG(LogTemp, Warning,
-                TEXT("GenerateGrid(): No valid SQL cache found -> Will generate and then save to DB"));
+            UE_LOG(LogTemp, Warning, TEXT("GenerateGrid(): No valid SQL cache found -> Will generate and then save to DB"));
         }
     }
 
-    // ============================================================
     // 2) EARTH HEIGHTMAP MODU
-    // ============================================================
     if (bUseEarthHeightmap && EarthHeightmapTexture)
     {
-        UE_LOG(LogTemp, Warning,
-            TEXT("GenerateGrid(): Earth heightmap modunda çalýþýyor"));
+        UE_LOG(LogTemp, Warning, TEXT("GenerateGrid(): Earth heightmap modunda çalýþýyor"));
 
-        GenerateGridFromEarthHeightmap();   // Earth'ten üret
+        GenerateGridFromEarthHeightmap();
 
-        UE_LOG(LogTemp, Warning,
-            TEXT("GenerateGrid(): Earth heightmap tamamlandý (%d tiles)"),
-            GridData.Num());
+        UE_LOG(LogTemp, Warning, TEXT("GenerateGrid(): Earth heightmap tamamlandý (%d tiles)"), GridData.Num());
 
-        // Eðer SQL cache kullanýlýyorsa, þimdi DB'ye kaydedelim
         if (bUseDatabaseCache)
         {
             SaveGridToDatabase();
         }
-
         return;
     }
 
-    // ============================================================
     // 3) FALLBACK — NORMAL MODE (TÜM GRASS)
-    // ============================================================
     for (int32 X = 0; X < GridWidth; X++)
     {
         for (int32 Y = 0; Y < GridHeight; Y++)
@@ -162,13 +144,8 @@ void UHexGridComponent::GenerateGrid()
         }
     }
 
-    UE_LOG(LogTemp, Warning,
-        TEXT("GenerateGrid DONE: %d tiles created (fallback flat grasses)"),
-        GridData.Num());
+    UE_LOG(LogTemp, Warning, TEXT("GenerateGrid DONE: %d tiles created (fallback flat grasses)"), GridData.Num());
 }
-
-
-
 
 // ====================================================================
 //  GRID TO WORLD 
@@ -187,10 +164,6 @@ FVector UHexGridComponent::GridToWorld(int32 X, int32 Y) const
 
     return FVector(worldX, worldY, 0.f);
 }
-
-
-
-
 
 // ====================================================================
 //  WORLD TO GRID
@@ -236,20 +209,16 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
         return;
     }
 
-    // --------------------- HEIGHT CONFIG ---------------------
     constexpr int32 MaxHeightLevels = 8;
     constexpr float HeightStep = 100.0f;
-    // ---------------------------------------------------------
 
     GridData.Empty();
     GridData.Reserve(GridWidth * GridHeight);
 
-    // -------------------- TILE GENERATION --------------------
     for (int32 Y = 0; Y < GridHeight; ++Y)
     {
         for (int32 X = 0; X < GridWidth; ++X)
         {
-            // 1) Heightmap pixel sampling
             const float U = (GridWidth > 1) ? (float)X / (float)(GridWidth - 1) : 0.f;
             const float V = (GridHeight > 1) ? (float)Y / (float)(GridHeight - 1) : 0.f;
 
@@ -259,10 +228,8 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
             const FColor Pixel = Pixels[PixelY * TexWidth + PixelX];
             const float Height01 = static_cast<float>(Pixel.R) / 255.0f;
 
-            // 2) Terrain type selection (height + latitude)
             const ETileType TileType = ChooseTileTypeFromHeightAndLat(Height01, Y);
 
-            // 3) Height-level -> World Z offset
             int32 HeightLevel = 0;
             float WorldZ = 0.f;
 
@@ -273,7 +240,6 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
                     0,
                     MaxHeightLevels
                 );
-
                 WorldZ = HeightLevel * HeightStep;
             }
 
@@ -285,9 +251,6 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
                 bIsHill = true;
             }
 
-            // ============================================================
-            //  BIOME COLOR TABLE 
-            // ============================================================
             auto GetBiomeColor = [&](ETileType Type) -> FLinearColor
                 {
                     switch (Type)
@@ -303,7 +266,6 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
                     }
                 };
 
-            // 4) Tile struct doldurma
             FHexTileData Tile;
             Tile.Coordinates = FIntPoint(X, Y);
             Tile.TileType = TileType;
@@ -313,29 +275,22 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
             Tile.bIsHill = bIsHill;
             Tile.BiomeColor = GetBiomeColor(TileType);
 
-
             FVector WorldPos = GridToWorld(X, Y);
             WorldPos.Z += WorldZ;
             Tile.WorldPosition = WorldPos;
 
-            // 5) Cost hesaplama
             switch (TileType)
             {
             case ETileType::TT_Water:
                 Tile.Cost = 9999;
                 break;
-
             case ETileType::TT_Mountain:
                 Tile.Cost = 5;
                 break;
-
             case ETileType::TT_Desert:
-                // Çöl ama hill ise daha da pahalý
                 Tile.Cost = Tile.bIsHill ? 4 : 2;
                 break;
-
             default:
-                // Grass / Plains / Tundra / Snow için
                 Tile.Cost = Tile.bIsHill ? 3 : 1;
                 break;
             }
@@ -345,9 +300,7 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
 
     RawImageData->Unlock();
 
-    //------------------------------------------------------------
-    // COAST DETECTION PASS
-    //------------------------------------------------------------
+    // COAST DETECTION
     for (FHexTileData& Tile : GridData)
     {
         if (Tile.TileType == ETileType::TT_Water)
@@ -356,12 +309,10 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
         const int32 X = Tile.Coordinates.X;
         const int32 Y = Tile.Coordinates.Y;
 
-        // CoastEdges arrayin düzgün olmasý için her tile için 6 eleman aç
         Tile.CoastEdges.Init(false, 6);
 
         TArray<FIntPoint> Neighbors = GetNeighbors(X, Y);
 
-        // Her komþuya bak ? birden fazla coast edge olabilir
         for (int32 n = 0; n < Neighbors.Num(); n++)
         {
             const FIntPoint& P = Neighbors[n];
@@ -370,28 +321,18 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
             if (GridData[NIndex].TileType == ETileType::TT_Water)
             {
                 Tile.bIsCoast = true;
-                Tile.CoastEdges[n] = true;   // coast kenarýný iþaretle
+                Tile.CoastEdges[n] = true;
             }
         }
     }
 
-    // Rivers coasttan sonra
     GenerateAllRivers();
-
-
-    //------------------------------------------------------------
-    // (LAKE / OCEAN PASS
-    //------------------------------------------------------------
-
     DetectLakesAndOceans();
-
 
     UE_LOG(LogTemp, Warning, TEXT("GenerateGridFromEarthHeightmap: %d x %d heightmap'ten %d tile üretildi"),
         TexWidth, TexHeight, GridData.Num());
 
-    // ============================================================================
-    // CLIFF DETECTION PASS
-    // ============================================================================
+    // CLIFF DETECTION
     for (int32 i = 0; i < GridData.Num(); i++)
     {
         FHexTileData& Tile = GridData[i];
@@ -415,7 +356,6 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
 
             int HeightDiff = FMath::Abs(Tile.HeightLevel - NTile.HeightLevel);
 
-            // Water ile land arasýnda cliff olmaz
             bool bInvalidPair =
                 (Tile.TileType == ETileType::TT_Water && NTile.TileType != ETileType::TT_Water) ||
                 (Tile.TileType != ETileType::TT_Water && NTile.TileType == ETileType::TT_Water);
@@ -430,7 +370,6 @@ void UHexGridComponent::GenerateGridFromEarthHeightmap()
     RecalculateAllTileYields();
 }
 
-
 bool UHexGridComponent::SaveGridToDatabase() const
 {
     FString DBPath = FPaths::ProjectContentDir() / TEXT("Data/GameData.db");
@@ -439,14 +378,12 @@ bool UHexGridComponent::SaveGridToDatabase() const
     int Result = sqlite3_open(TCHAR_TO_UTF8(*DBPath), &DB);
     if (Result != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] SQLite open FAILED: %s"),
-            *FString(sqlite3_errmsg(DB)));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] SQLite open FAILED: %s"), *FString(sqlite3_errmsg(DB)));
         return false;
     }
 
     char* ErrMsg = nullptr;
 
-    // CREATE TABLE (River kolonlarý dahil)
     const char* CreateSQL =
         "CREATE TABLE IF NOT EXISTS Tiles ("
         " TileID INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -460,42 +397,34 @@ bool UHexGridComponent::SaveGridToDatabase() const
         " Height01 REAL,"
         " HeightLevel INTEGER,"
         " WorldZ REAL,"
-
-        // RIVER EDGES
         " River_NE INTEGER DEFAULT 0,"
         " River_E  INTEGER DEFAULT 0,"
         " River_SE INTEGER DEFAULT 0,"
         " River_SW INTEGER DEFAULT 0,"
         " River_W  INTEGER DEFAULT 0,"
         " River_NW INTEGER DEFAULT 0"
-
         ");";
 
     Result = sqlite3_exec(DB, CreateSQL, nullptr, nullptr, &ErrMsg);
     if (Result != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] CREATE TABLE FAILED: %s"),
-            *FString(ErrMsg));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] CREATE TABLE FAILED: %s"), *FString(ErrMsg));
         sqlite3_free(ErrMsg);
         sqlite3_close(DB);
         return false;
     }
 
-    // Eski tile kayýtlarýný sil
     Result = sqlite3_exec(DB, "DELETE FROM Tiles;", nullptr, nullptr, &ErrMsg);
     if (Result != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] DELETE FAILED: %s"),
-            *FString(ErrMsg));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] DELETE FAILED: %s"), *FString(ErrMsg));
         sqlite3_free(ErrMsg);
         sqlite3_close(DB);
         return false;
     }
 
-    // Transaction baþlat
     sqlite3_exec(DB, "BEGIN TRANSACTION;", nullptr, nullptr, nullptr);
 
-    // INSERT SQL (River kolonlarý dahil)
     const char* InsertSQL =
         "INSERT INTO Tiles (X, Y, TileType, Resource, OwnerCiv, Improvement, Cost, "
         " Height01, HeightLevel, WorldZ, "
@@ -506,13 +435,11 @@ bool UHexGridComponent::SaveGridToDatabase() const
     Result = sqlite3_prepare_v2(DB, InsertSQL, -1, &Stmt, nullptr);
     if (Result != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] prepare_v2 FAILED: %s"),
-            *FString(sqlite3_errmsg(DB)));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] prepare_v2 FAILED: %s"), *FString(sqlite3_errmsg(DB)));
         sqlite3_close(DB);
         return false;
     }
 
-    // TileType -> string dönüþümü
     auto TileTypeToString = [](ETileType Type) -> FString
         {
             switch (Type)
@@ -528,7 +455,6 @@ bool UHexGridComponent::SaveGridToDatabase() const
             }
         };
 
-    // Tile kayýt döngüsü
     for (const FHexTileData& Tile : GridData)
     {
         sqlite3_reset(Stmt);
@@ -539,13 +465,11 @@ bool UHexGridComponent::SaveGridToDatabase() const
         sqlite3_bind_int(Stmt, 1, Tile.Coordinates.X);
         sqlite3_bind_int(Stmt, 2, Tile.Coordinates.Y);
         sqlite3_bind_text(Stmt, 3, TCHAR_TO_UTF8(*TypeStr), -1, SQLITE_TRANSIENT);
-
         sqlite3_bind_int(Stmt, 4, Tile.Cost);
         sqlite3_bind_double(Stmt, 5, Tile.Height01);
         sqlite3_bind_int(Stmt, 6, Tile.HeightLevel);
         sqlite3_bind_double(Stmt, 7, Tile.WorldPosition.Z);
 
-        // River edges
         sqlite3_bind_int(Stmt, 8, Tile.RiverEdges.IsValidIndex(0) ? (Tile.RiverEdges[0] ? 1 : 0) : 0);
         sqlite3_bind_int(Stmt, 9, Tile.RiverEdges.IsValidIndex(1) ? (Tile.RiverEdges[1] ? 1 : 0) : 0);
         sqlite3_bind_int(Stmt, 10, Tile.RiverEdges.IsValidIndex(2) ? (Tile.RiverEdges[2] ? 1 : 0) : 0);
@@ -556,24 +480,17 @@ bool UHexGridComponent::SaveGridToDatabase() const
         Result = sqlite3_step(Stmt);
         if (Result != SQLITE_DONE)
         {
-            UE_LOG(LogTemp, Error, TEXT("[Tiles] INSERT FAILED: %s"),
-                *FString(sqlite3_errmsg(DB)));
+            UE_LOG(LogTemp, Error, TEXT("[Tiles] INSERT FAILED: %s"), *FString(sqlite3_errmsg(DB)));
         }
     }
 
     sqlite3_finalize(Stmt);
-
-    // Commit
     sqlite3_exec(DB, "COMMIT;", nullptr, nullptr, nullptr);
     sqlite3_close(DB);
 
-    UE_LOG(LogTemp, Warning, TEXT("[Tiles] Saved %d tiles to DB (%s)"),
-        GridData.Num(),
-        *DBPath);
-
+    UE_LOG(LogTemp, Warning, TEXT("[Tiles] Saved %d tiles to DB (%s)"), GridData.Num(), *DBPath);
     return true;
 }
-
 
 bool UHexGridComponent::LoadGridFromDatabase()
 {
@@ -583,14 +500,11 @@ bool UHexGridComponent::LoadGridFromDatabase()
     int Result = sqlite3_open(TCHAR_TO_UTF8(*DBPath), &DB);
     if (Result != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] SQLite open FAILED (Load): %s"),
-            *FString(sqlite3_errmsg(DB)));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] SQLite open FAILED (Load): %s"), *FString(sqlite3_errmsg(DB)));
         return false;
     }
 
     char* ErrMsg = nullptr;
-
-    // Tiles tablosu kac kayit var?
     int TileCount = 0;
 
     auto CountCallback = [](void* Data, int ColCount, char** ColValues, char** ColNames) -> int
@@ -603,13 +517,7 @@ bool UHexGridComponent::LoadGridFromDatabase()
             return 0;
         };
 
-    Result = sqlite3_exec(
-        DB,
-        "SELECT COUNT(*) FROM Tiles;",
-        CountCallback,
-        &TileCount,
-        &ErrMsg
-    );
+    Result = sqlite3_exec(DB, "SELECT COUNT(*) FROM Tiles;", CountCallback, &TileCount, &ErrMsg);
 
     if (Result != SQLITE_OK)
     {
@@ -626,19 +534,16 @@ bool UHexGridComponent::LoadGridFromDatabase()
         return false;
     }
 
-    // RIVER kolonlarý dahil SELECT
     const char* SelectSQL =
         "SELECT X, Y, TileType, Cost, Height01, HeightLevel, WorldZ, "
         " River_NE, River_E, River_SE, River_SW, River_W, River_NW "
         "FROM Tiles;";
 
     sqlite3_stmt* Stmt = nullptr;
-
     Result = sqlite3_prepare_v2(DB, SelectSQL, -1, &Stmt, nullptr);
     if (Result != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] SELECT prepare_v2 FAILED: %s"),
-            *FString(sqlite3_errmsg(DB)));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles] SELECT prepare_v2 FAILED: %s"), *FString(sqlite3_errmsg(DB)));
         sqlite3_close(DB);
         return false;
     }
@@ -660,14 +565,12 @@ bool UHexGridComponent::LoadGridFromDatabase()
     {
         int X = sqlite3_column_int(Stmt, 0);
         int Y = sqlite3_column_int(Stmt, 1);
-
         const char* TypeText = (const char*)sqlite3_column_text(Stmt, 2);
         int Cost = sqlite3_column_int(Stmt, 3);
         float Height01 = static_cast<float>(sqlite3_column_double(Stmt, 4));
         int32 HeightLevel = sqlite3_column_int(Stmt, 5);
         float WorldZ = static_cast<float>(sqlite3_column_double(Stmt, 6));
 
-        // River kolonlarý (0–1)
         int River_NE = sqlite3_column_int(Stmt, 7);
         int River_E = sqlite3_column_int(Stmt, 8);
         int River_SE = sqlite3_column_int(Stmt, 9);
@@ -681,19 +584,14 @@ bool UHexGridComponent::LoadGridFromDatabase()
         FHexTileData Tile;
         Tile.Coordinates = FIntPoint(X, Y);
         Tile.TileType = TileType;
-
-        // Height & Z
         Tile.Height01 = Height01;
         Tile.HeightLevel = HeightLevel;
 
         FVector WorldPos = GridToWorld(X, Y);
         WorldPos.Z = WorldZ;
         Tile.WorldPosition = WorldPos;
-
-        // Cost
         Tile.Cost = (Cost > 0) ? Cost : 1;
 
-        // RiverEdges Set (6 adet)
         Tile.RiverEdges.SetNum(6);
         Tile.RiverEdges[0] = (River_NE != 0);
         Tile.RiverEdges[1] = (River_E != 0);
@@ -708,34 +606,25 @@ bool UHexGridComponent::LoadGridFromDatabase()
     sqlite3_finalize(Stmt);
     sqlite3_close(DB);
 
-    UE_LOG(LogTemp, Warning, TEXT("[Tiles] Loaded %d tiles from DB."),
-        GridData.Num());
+    UE_LOG(LogTemp, Warning, TEXT("[Tiles] Loaded %d tiles from DB."), GridData.Num());
 
-    // CLIFF PASS
     for (FHexTileData& Tile : GridData)
     {
         Tile.CliffEdges.Init(false, 6);
         Tile.bHasCliff = false;
-
         int32 X = Tile.Coordinates.X;
         int32 Y = Tile.Coordinates.Y;
-
         TArray<FIntPoint> Neighbors = GetNeighbors(X, Y);
 
         for (int32 n = 0; n < Neighbors.Num(); n++)
         {
             const FIntPoint& P = Neighbors[n];
             int32 nIndex = P.Y * GridWidth + P.X;
-
-            if (!GridData.IsValidIndex(nIndex))
-                continue;
+            if (!GridData.IsValidIndex(nIndex)) continue;
 
             const FHexTileData& NTile = GridData[nIndex];
             int HeightDiff = FMath::Abs(Tile.HeightLevel - NTile.HeightLevel);
-
-            bool bInvalidPair =
-                (Tile.TileType == ETileType::TT_Water && NTile.TileType != ETileType::TT_Water) ||
-                (Tile.TileType != ETileType::TT_Water && NTile.TileType == ETileType::TT_Water);
+            bool bInvalidPair = (Tile.TileType == ETileType::TT_Water && NTile.TileType != ETileType::TT_Water) || (Tile.TileType != ETileType::TT_Water && NTile.TileType == ETileType::TT_Water);
 
             if (!bInvalidPair && HeightDiff >= 2)
             {
@@ -745,36 +634,20 @@ bool UHexGridComponent::LoadGridFromDatabase()
         }
     }
 
-    // Hill flag'lerini HeightLevel ve TileType'a göre yeniden hesapla
     for (FHexTileData& Tile : GridData)
     {
         Tile.bIsHill = false;
-
-        if (Tile.TileType != ETileType::TT_Water &&
-            Tile.TileType != ETileType::TT_Mountain &&
-            Tile.HeightLevel >= 1 && Tile.HeightLevel <= 3)
+        if (Tile.TileType != ETileType::TT_Water && Tile.TileType != ETileType::TT_Mountain && Tile.HeightLevel >= 1 && Tile.HeightLevel <= 3)
         {
             Tile.bIsHill = true;
         }
 
-        // Cost'larý da ayný kurala göre normalize edelim
         switch (Tile.TileType)
         {
-        case ETileType::TT_Water:
-            Tile.Cost = 9999;
-            break;
-
-        case ETileType::TT_Mountain:
-            Tile.Cost = 5;
-            break;
-
-        case ETileType::TT_Desert:
-            Tile.Cost = Tile.bIsHill ? 4 : 2;
-            break;
-
-        default:
-            Tile.Cost = Tile.bIsHill ? 3 : 1;
-            break;
+        case ETileType::TT_Water:    Tile.Cost = 9999; break;
+        case ETileType::TT_Mountain: Tile.Cost = 5; break;
+        case ETileType::TT_Desert:   Tile.Cost = Tile.bIsHill ? 4 : 2; break;
+        default:                     Tile.Cost = Tile.bIsHill ? 3 : 1; break;
         }
     }
 
@@ -782,76 +655,26 @@ bool UHexGridComponent::LoadGridFromDatabase()
     return GridData.Num() > 0;
 }
 
-
-
-
 ETileType UHexGridComponent::ChooseTileTypeFromHeightAndLat(float Height01, int32 GridY) const
 {
-    // --- 1) Enlem hesabý (0 = güney, 1 = kuzey) ---
-    const float Lat01 = (GridHeight > 1)
-        ? static_cast<float>(GridY) / static_cast<float>(GridHeight - 1)
-        : 0.5f;
-
-    // Ekvator = 0.0, Kutuplar = 1.0 olacak þekilde normalize
+    const float Lat01 = (GridHeight > 1) ? static_cast<float>(GridY) / static_cast<float>(GridHeight - 1) : 0.5f;
     const float LatAbs = FMath::Abs(Lat01 - 0.5f) * 2.0f;
-
-    // --- 2) Basit sýcaklýk modeli ---
-    // Ekvator sýcak Kutuplar soðuk
     float Temperature = 1.0f - LatAbs;
-
-    // Yükseklik arttýkça soður (daðlar karla kaplanacak)
     Temperature -= Height01 * 0.35f;
     Temperature = FMath::Clamp(Temperature, 0.0f, 1.0f);
 
-    // ---------------------------------------------------
-    // --- 3) Su / Dað kararýný önce ver (kritik önem) ---
-    // ---------------------------------------------------
-
-    if (Height01 < SeaLevelThreshold)
-    {
-        return ETileType::TT_Water;
-    }
-
+    if (Height01 < SeaLevelThreshold) return ETileType::TT_Water;
     if (Height01 >= MountainThreshold)
     {
-        // Çok yüksek + çok soðuk = karla kaplý dað
-        if (Temperature < 0.25f)
-        {
-            return ETileType::TT_Snow;
-        }
+        if (Temperature < 0.25f) return ETileType::TT_Snow;
         return ETileType::TT_Mountain;
     }
 
-    // ---------------------------------------------------
-    // --- 4) Kara Biome Daðýlýmý ---
-    // ---------------------------------------------------
-
-    // ÇÖL: Sýcak + orta yükseklik + ekvatora yakýnlýk
-    // DesertLatitude = 25 derece normalize et
-    const float DesertBand = DesertLatitude / 90.0f; // 25/90 = 0.27 mesela
-    const float DesertZone = 1.0f - DesertBand;      // 0.73 ? ekvator
-
-    if (Temperature > 0.60f && LatAbs < DesertBand)
-    {
-        return ETileType::TT_Desert;
-    }
-
-    // TUNDRA / SNOW (yüksek enlem veya düþük sýcaklýk)
-    if (Temperature < 0.18f)
-    {
-        return ETileType::TT_Snow;
-    }
-
-    if (Temperature < 0.32f)
-    {
-        return ETileType::TT_Tundra;
-    }
-
-    // PLAINS vs GRASS ayrýmý (yükseklik varyasyonu)
-    if (Height01 > 0.55f)
-    {
-        return ETileType::TT_Grass;
-    }
+    const float DesertBand = DesertLatitude / 90.0f;
+    if (Temperature > 0.60f && LatAbs < DesertBand) return ETileType::TT_Desert;
+    if (Temperature < 0.18f) return ETileType::TT_Snow;
+    if (Temperature < 0.32f) return ETileType::TT_Tundra;
+    if (Height01 > 0.55f) return ETileType::TT_Grass;
 
     return ETileType::TT_Plains;
 }
@@ -859,10 +682,8 @@ ETileType UHexGridComponent::ChooseTileTypeFromHeightAndLat(float Height01, int3
 TArray<FIntPoint> UHexGridComponent::GetNeighbors(int32 X, int32 Y) const
 {
     TArray<FIntPoint> Result;
-
     const bool bIsOdd = (Y % 2 != 0);
 
-    // Odd-row offset hex grid neighbors
     if (bIsOdd)
     {
         Result.Add(FIntPoint(X - 1, Y));
@@ -882,7 +703,6 @@ TArray<FIntPoint> UHexGridComponent::GetNeighbors(int32 X, int32 Y) const
         Result.Add(FIntPoint(X, Y + 1));
     }
 
-    // Grid bounds kontrolü
     Result.RemoveAll([this](const FIntPoint& P)
         {
             return P.X < 0 || P.Y < 0 || P.X >= GridWidth || P.Y >= GridHeight;
@@ -905,29 +725,22 @@ void UHexGridComponent::InitializeEditorGrid()
         {
             const int32 Index = Y * GridWidth + X;
             FHexTileData& Tile = GridData[Index];
-
             Tile.Coordinates = FIntPoint(X, Y);
-
             Tile.TileType = ETileType::TT_Grass;
-
             Tile.HeightLevel = 0;
             Tile.Height01 = 0.f;
             Tile.WorldPosition = GridToWorld(X, Y);
             Tile.WorldPosition.Z = 0.f;
-
             Tile.bIsHill = false;
             Tile.bIsCoast = false;
             Tile.bIsLake = false;
             Tile.bIsOcean = false;
-
             Tile.RiverEdges.Init(false, 6);
             Tile.CoastEdges.Init(false, 6);
-
             Tile.BiomeColor = ComputeBiomeColor(Tile.TileType);
             Tile.Cost = ComputeTileCost(Tile);
         }
     }
-
     UE_LOG(LogTemp, Log, TEXT("InitializeEditorGrid: %dx%d grid olusturuldu."), GridWidth, GridHeight);
     RecalculateAllTileYields();
 }
@@ -939,76 +752,90 @@ bool UHexGridComponent::IsValidCoords(int32 X, int32 Y) const
 
 FHexTileData UHexGridComponent::GetTileData(int32 X, int32 Y) const
 {
-    if (!IsValidCoords(X, Y))
-    {
-        return FHexTileData();
-    }
-
+    if (!IsValidCoords(X, Y)) return FHexTileData();
     const int32 Index = Y * GridWidth + X;
-    if (!GridData.IsValidIndex(Index))
-    {
-        return FHexTileData();
-    }
-
+    if (!GridData.IsValidIndex(Index)) return FHexTileData();
     return GridData[Index];
 }
 
+// =================================================================================
+// [GÜNCELLEME - OPTÝMÝZASYON]
+// Zemin boyama iþlemi artýk anlýk çalýþacak (Tüm map'i rebuild etmeden)
+// =================================================================================
 void UHexGridComponent::SetTileTypeAt(int32 X, int32 Y, ETileType NewType)
 {
-    if (!IsValidCoords(X, Y))
-        return;
-
+    if (!IsValidCoords(X, Y)) return;
     const int32 Index = Y * GridWidth + X;
-    if (!GridData.IsValidIndex(Index))
-        return;
+    if (!GridData.IsValidIndex(Index)) return;
 
     FHexTileData& Tile = GridData[Index];
-
     Tile.TileType = NewType;
-
-    Tile.bIsHill =
-        (NewType != ETileType::TT_Water &&
-            NewType != ETileType::TT_Mountain &&
-            Tile.HeightLevel > 0);
-
+    Tile.bIsHill = (NewType != ETileType::TT_Water && NewType != ETileType::TT_Mountain && Tile.HeightLevel > 0);
     Tile.BiomeColor = ComputeBiomeColor(NewType);
     Tile.Cost = ComputeTileCost(Tile);
+
+    // --- HIZLI GÖRSEL GÜNCELLEME ---
+    AHexGridActor* GridActor = Cast<AHexGridActor>(GetOwner());
+    if (GridActor)
+    {
+        AActor* VisualActor = UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridVisualActor::StaticClass());
+        AHexGridVisualActor* HexVisual = Cast<AHexGridVisualActor>(VisualActor);
+
+        if (HexVisual)
+        {
+            // Tek kareyi anýnda güncelle
+            HexVisual->UpdateSingleTileVisual(Index, Tile);
+        }
+        else
+        {
+            // Visual bulunamazsa fallback
+            GridActor->RebuildVisual();
+        }
+    }
 }
 
+// =================================================================================
+// [GÜNCELLEME - OPTÝMÝZASYON]
+// Yükseklik ayarý (Sað Týk) da artýk anlýk çalýþacak!
+// =================================================================================
 void UHexGridComponent::SetTileHeightLevel(int32 X, int32 Y, int32 NewHeightLevel)
 {
-    if (!IsValidCoords(X, Y))
-        return;
-
+    if (!IsValidCoords(X, Y)) return;
     const int32 Index = Y * GridWidth + X;
-    if (!GridData.IsValidIndex(Index))
-        return;
+    if (!GridData.IsValidIndex(Index)) return;
 
     FHexTileData& Tile = GridData[Index];
-
     const int32 Clamped = FMath::Clamp(NewHeightLevel, 0, EDITOR_MAX_HEIGHT_LEVELS);
     Tile.HeightLevel = Clamped;
     Tile.Height01 = static_cast<float>(Clamped) / static_cast<float>(EDITOR_MAX_HEIGHT_LEVELS);
-
-    // Yüksekliði world Z'ye yansýt
     Tile.WorldPosition.Z = TileHeight * Tile.HeightLevel;
 
-    Tile.bIsHill =
-        (Tile.TileType != ETileType::TT_Water &&
-            Tile.TileType != ETileType::TT_Mountain &&
-            Tile.HeightLevel > 0);
-
+    Tile.bIsHill = (Tile.TileType != ETileType::TT_Water && Tile.TileType != ETileType::TT_Mountain && Tile.HeightLevel > 0);
     Tile.Cost = ComputeTileCost(Tile);
+
+    // --- HIZLI GÖRSEL GÜNCELLEME ---
+    AHexGridActor* GridActor = Cast<AHexGridActor>(GetOwner());
+    if (GridActor)
+    {
+        AActor* VisualActor = UGameplayStatics::GetActorOfClass(GetWorld(), AHexGridVisualActor::StaticClass());
+        AHexGridVisualActor* HexVisual = Cast<AHexGridVisualActor>(VisualActor);
+
+        if (HexVisual)
+        {
+            HexVisual->UpdateSingleTileVisual(Index, Tile);
+        }
+        else
+        {
+            GridActor->RebuildVisual();
+        }
+    }
 }
 
 void UHexGridComponent::AddTileHeightLevel(int32 X, int32 Y, int32 DeltaLevels)
 {
-    if (!IsValidCoords(X, Y))
-        return;
-
+    if (!IsValidCoords(X, Y)) return;
     const int32 Index = Y * GridWidth + X;
-    if (!GridData.IsValidIndex(Index))
-        return;
+    if (!GridData.IsValidIndex(Index)) return;
 
     const int32 NewLevel = GridData[Index].HeightLevel + DeltaLevels;
     SetTileHeightLevel(X, Y, NewLevel);
@@ -1016,19 +843,12 @@ void UHexGridComponent::AddTileHeightLevel(int32 X, int32 Y, int32 DeltaLevels)
 
 void UHexGridComponent::SetRiverAtEdge(int32 X, int32 Y, ERiverEdge Edge, bool bHasRiver)
 {
-    if (!IsValidCoords(X, Y))
-        return;
-
+    if (!IsValidCoords(X, Y)) return;
     const int32 Index = Y * GridWidth + X;
-    if (!GridData.IsValidIndex(Index))
-        return;
+    if (!GridData.IsValidIndex(Index)) return;
 
     FHexTileData& Tile = GridData[Index];
-
-    if (Tile.RiverEdges.Num() != 6)
-    {
-        Tile.RiverEdges.Init(false, 6);
-    }
+    if (Tile.RiverEdges.Num() != 6) Tile.RiverEdges.Init(false, 6);
 
     const int32 EdgeIndex = static_cast<int32>(Edge);
     if (Tile.RiverEdges.IsValidIndex(EdgeIndex))
@@ -1045,16 +865,16 @@ void UHexGridComponent::RequestRebuildVisual()
         UE_LOG(LogTemp, Warning, TEXT("RequestRebuildVisual: Owner AHexGridActor degil."));
         return;
     }
-
     GridActor->RebuildVisual();
 }
 
-
+// ============================================================
+//  LAKE & OCEAN DETECTION
+// ============================================================
 void UHexGridComponent::DetectLakesAndOceans()
 {
-    auto GetIndex = [&](int32 X, int32 Y)
-        {
-            return Y * GridWidth + X;
+    auto GetIndex = [&](int32 X, int32 Y) {
+        return Y * GridWidth + X;
         };
 
     TSet<int32> Visited;
@@ -1065,27 +885,22 @@ void UHexGridComponent::DetectLakesAndOceans()
         {
             const int32 StartIndex = GetIndex(X, Y);
 
-            // Su deðilse geç
-            if (GridData[StartIndex].TileType != ETileType::TT_Water)
-                continue;
+            // Su deðilse veya zaten iþlendiyse geç
+            if (GridData[StartIndex].TileType != ETileType::TT_Water) continue;
+            if (Visited.Contains(StartIndex)) continue;
 
-            // Zaten iþlendiyse geç
-            if (Visited.Contains(StartIndex))
-                continue;
-
-            // Yeni water region baþlatýyoruz
             TArray<int32> Stack;
             TArray<int32> RegionTiles;
             Stack.Add(StartIndex);
 
             bool bTouchesBorder = false;
 
+            // Flood Fill Algoritmasý
             while (Stack.Num() > 0)
             {
                 int32 Current = Stack.Pop();
 
-                if (Visited.Contains(Current))
-                    continue;
+                if (Visited.Contains(Current)) continue;
 
                 Visited.Add(Current);
                 RegionTiles.Add(Current);
@@ -1093,13 +908,12 @@ void UHexGridComponent::DetectLakesAndOceans()
                 const int32 CX = Current % GridWidth;
                 const int32 CY = Current / GridWidth;
 
-                // Harita sýnýrýna deðiyor mu? Ocean
+                // Harita sýnýrýna deðiyorsa bu bir Okyanustur
                 if (CX == 0 || CY == 0 || CX == GridWidth - 1 || CY == GridHeight - 1)
                 {
                     bTouchesBorder = true;
                 }
 
-                // Komþularý ekle
                 TArray<FIntPoint> Neighbors = GetNeighbors(CX, CY);
                 for (const FIntPoint& P : Neighbors)
                 {
@@ -1111,7 +925,7 @@ void UHexGridComponent::DetectLakesAndOceans()
                 }
             }
 
-            // Bu bölgedeki tüm tilelarý iþaretle
+            // Bölgedeki tüm karolarý iþaretle
             for (int32 Index : RegionTiles)
             {
                 if (bTouchesBorder)
@@ -1127,11 +941,15 @@ void UHexGridComponent::DetectLakesAndOceans()
             }
         }
     }
-
-    UE_LOG(LogTemp, Warning, TEXT("DetectLakesAndOceans(): Lake/Ocean tespiti tamamlandý."));
+    UE_LOG(LogTemp, Warning, TEXT("DetectLakesAndOceans(): Tamamlandý."));
 }
 
-int32 OppositeRiverEdge(int32 EdgeIndex)
+// ============================================================
+//  RIVER SYSTEM
+// ============================================================
+
+// Statik yardýmcý fonksiyon
+static int32 OppositeRiverEdge(int32 EdgeIndex)
 {
     switch (EdgeIndex)
     {
@@ -1153,20 +971,17 @@ TArray<int32> UHexGridComponent::FindRiverSources() const
     {
         const FHexTileData& Tile = GridData[Index];
 
-        // Civ5 yaklaþýmý: Hill veya Mountain
-        if (Tile.HeightLevel < 3)
-            continue;
-
-        if (Tile.TileType == ETileType::TT_Water)
-            continue;
+        // Nehirler yüksek yerlerden baþlar (Hill veya Mountain)
+        if (Tile.HeightLevel < 3) continue;
+        if (Tile.TileType == ETileType::TT_Water) continue;
 
         int32 X = Tile.Coordinates.X;
         int32 Y = Tile.Coordinates.Y;
 
         TArray<FIntPoint> Neighbors = GetNeighbors(X, Y);
-
         bool bHasLowerNeighbor = false;
 
+        // Kendisinden daha alçak bir komþusu var mý?
         for (int32 n = 0; n < Neighbors.Num(); ++n)
         {
             const FIntPoint& P = Neighbors[n];
@@ -1183,50 +998,44 @@ TArray<int32> UHexGridComponent::FindRiverSources() const
         }
 
         if (bHasLowerNeighbor)
+        {
             Sources.Add(Index);
+        }
     }
-
     return Sources;
 }
 
 void UHexGridComponent::GenerateRiverFromSource(int32 StartIndex)
 {
     TSet<int32> Visited;
-
     int32 Current = StartIndex;
 
     while (true)
     {
-        if (Visited.Contains(Current))
-            return; // loop engellendi
-
+        if (Visited.Contains(Current)) return; // Döngü engelleme
         Visited.Add(Current);
 
         const FHexTileData& Tile = GridData[Current];
+
+        // Suya ulaþtýysa nehir biter
+        if (Tile.TileType == ETileType::TT_Water) return;
+
         int32 X = Tile.Coordinates.X;
         int32 Y = Tile.Coordinates.Y;
-
-        // Eðer suya ulaþýldýysa nehir biter
-        if (Tile.TileType == ETileType::TT_Water)
-            return;
-
-        // Komþular
         TArray<FIntPoint> Neighbors = GetNeighbors(X, Y);
 
         int32 BestIndex = -1;
         int32 LowestHeight = Tile.HeightLevel;
 
-        // En düþük komþuyu bul
+        // En uygun (en alçak) komþuyu bul
         for (int32 n = 0; n < Neighbors.Num(); ++n)
         {
             const FIntPoint& P = Neighbors[n];
             int32 nIndex = P.Y * GridWidth + P.X;
 
-            if (!GridData.IsValidIndex(nIndex))
-                continue;
+            if (!GridData.IsValidIndex(nIndex)) continue;
 
             const FHexTileData& NTile = GridData[nIndex];
-
             if (NTile.HeightLevel < LowestHeight)
             {
                 LowestHeight = NTile.HeightLevel;
@@ -1234,10 +1043,10 @@ void UHexGridComponent::GenerateRiverFromSource(int32 StartIndex)
             }
         }
 
-        if (BestIndex == -1)
-            return; // akacak daha düþük yer yok -> nehir biter
+        // Akacak yer yoksa bitir
+        if (BestIndex == -1) return;
 
-        // River edge mapping
+        // Hangi kenardan akacaðýný bul
         int32 NeighborSlot = -1;
         for (int32 n = 0; n < Neighbors.Num(); ++n)
         {
@@ -1249,40 +1058,40 @@ void UHexGridComponent::GenerateRiverFromSource(int32 StartIndex)
             }
         }
 
-        if (NeighborSlot < 0)
-            return;
+        if (NeighborSlot < 0) return;
 
+        // Nehir verisini iþle (Hem bu tile'a hem komþuya)
         int32 Edge = NeighborToRiverEdge[NeighborSlot];
         int32 OppEdge = OppositeRiverEdge(Edge);
 
-        // RiverEdges set et
         GridData[Current].RiverEdges[Edge] = true;
         GridData[BestIndex].RiverEdges[OppEdge] = true;
 
-        // Bir sonraki tile
+        // Akýþa devam et
         Current = BestIndex;
     }
 }
 
 void UHexGridComponent::GenerateAllRivers()
 {
-    // Önce tüm river bilgilerini temizle
+    // Önce temizle
     for (FHexTileData& T : GridData)
     {
         T.RiverEdges.Init(false, 6);
     }
 
-    // Kaynaklarý bul
     TArray<int32> Sources = FindRiverSources();
-
     UE_LOG(LogTemp, Warning, TEXT("RIVER: Found %d sources"), Sources.Num());
 
-    // Her kaynaktan bir nehir oluþtur
     for (int32 Src : Sources)
     {
         GenerateRiverFromSource(Src);
     }
 }
+
+// ============================================================
+//  DATABASE SAVE / LOAD
+// ============================================================
 
 bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) const
 {
@@ -1298,7 +1107,7 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
 
     char* ErrMsg = nullptr;
 
-    // CREATE TABLE (struct ile birebir uyumlu)
+    // Tabloyu oluþtur (Yoksa)
     const char* CreateSQL =
         "CREATE TABLE IF NOT EXISTS Tiles ("
         " TileID INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -1315,36 +1124,23 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
         " IsOcean INTEGER,"
         " IsHill INTEGER,"
         " HasCliff INTEGER,"
-
-        // 6 tane RiverEdges
         " River0 INTEGER DEFAULT 0,"
         " River1 INTEGER DEFAULT 0,"
         " River2 INTEGER DEFAULT 0,"
         " River3 INTEGER DEFAULT 0,"
         " River4 INTEGER DEFAULT 0,"
         " River5 INTEGER DEFAULT 0"
-
         ");";
 
-    Result = sqlite3_exec(DB, CreateSQL, nullptr, nullptr, &ErrMsg);
-    if (Result != SQLITE_OK)
-    {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] CREATE TABLE FAILED: %s"), *FString(ErrMsg));
-        sqlite3_free(ErrMsg);
-        sqlite3_close(DB);
-        return false;
-    }
+    sqlite3_exec(DB, CreateSQL, nullptr, nullptr, nullptr);
 
-    // Bu haritaya ait eski kayýtlarý sil
-    {
-        FString DeleteSQL = FString::Printf(TEXT("DELETE FROM Tiles WHERE MapName='%s';"), *InMapName);
-        sqlite3_exec(DB, TCHAR_TO_UTF8(*DeleteSQL), nullptr, nullptr, nullptr);
-    }
+    // Bu harita ismine ait eski kayýtlarý sil
+    FString DeleteSQL = FString::Printf(TEXT("DELETE FROM Tiles WHERE MapName='%s';"), *InMapName);
+    sqlite3_exec(DB, TCHAR_TO_UTF8(*DeleteSQL), nullptr, nullptr, nullptr);
 
-    // Transaction
+    // Ýþlemleri hýzlandýrmak için Transaction baþlat
     sqlite3_exec(DB, "BEGIN TRANSACTION;", nullptr, nullptr, nullptr);
 
-    // INSERT komutu
     const char* InsertSQL =
         "INSERT INTO Tiles (MapName, X, Y, TileType, Height01, HeightLevel, WorldZ, Cost, "
         " IsCoast, IsLake, IsOcean, IsHill, HasCliff, "
@@ -1352,31 +1148,23 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     sqlite3_stmt* Stmt = nullptr;
-    Result = sqlite3_prepare_v2(DB, InsertSQL, -1, &Stmt, nullptr);
-    if (Result != SQLITE_OK)
-    {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles] prepare_v2 FAILED: %s"), *FString(sqlite3_errmsg(DB)));
-        sqlite3_close(DB);
-        return false;
-    }
+    sqlite3_prepare_v2(DB, InsertSQL, -1, &Stmt, nullptr);
 
-    // TileType ? string
-    auto TileTypeToString = [](ETileType Type) -> FString
-        {
-            switch (Type)
-            {
-            case ETileType::TT_Grass:    return TEXT("Grass");
-            case ETileType::TT_Desert:   return TEXT("Desert");
-            case ETileType::TT_Mountain: return TEXT("Mountain");
-            case ETileType::TT_Water:    return TEXT("Water");
-            case ETileType::TT_Plains:   return TEXT("Plains");
-            case ETileType::TT_Tundra:   return TEXT("Tundra");
-            case ETileType::TT_Snow:     return TEXT("Snow");
-            default:                     return TEXT("Grass");
-            }
+    // TileType -> String dönüþüm lambdasý
+    auto TileTypeToString = [](ETileType Type) -> FString {
+        switch (Type) {
+        case ETileType::TT_Grass:    return TEXT("Grass");
+        case ETileType::TT_Desert:   return TEXT("Desert");
+        case ETileType::TT_Mountain: return TEXT("Mountain");
+        case ETileType::TT_Water:    return TEXT("Water");
+        case ETileType::TT_Plains:   return TEXT("Plains");
+        case ETileType::TT_Tundra:   return TEXT("Tundra");
+        case ETileType::TT_Snow:     return TEXT("Snow");
+        default:                     return TEXT("Grass");
+        }
         };
 
-    // Tüm tile'larý yaz
+    // Verileri döngüyle ekle
     for (const FHexTileData& Tile : GridData)
     {
         sqlite3_reset(Stmt);
@@ -1385,7 +1173,6 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
         FString TypeStr = TileTypeToString(Tile.TileType);
 
         sqlite3_bind_text(Stmt, 1, TCHAR_TO_UTF8(*InMapName), -1, SQLITE_TRANSIENT);
-
         sqlite3_bind_int(Stmt, 2, Tile.Coordinates.X);
         sqlite3_bind_int(Stmt, 3, Tile.Coordinates.Y);
         sqlite3_bind_text(Stmt, 4, TCHAR_TO_UTF8(*TypeStr), -1, SQLITE_TRANSIENT);
@@ -1401,27 +1188,21 @@ bool UHexGridComponent::SaveGridToDatabaseWithName(const FString& InMapName) con
         sqlite3_bind_int(Stmt, 12, Tile.bIsHill ? 1 : 0);
         sqlite3_bind_int(Stmt, 13, Tile.bHasCliff ? 1 : 0);
 
-        // RiverEdges (0..5)
-        for (int32 i = 0; i < 6; i++)
+        // Nehir kenarlarý
+        for (int i = 0; i < 6; i++)
         {
-            int value = (Tile.RiverEdges.IsValidIndex(i) && Tile.RiverEdges[i]) ? 1 : 0;
-            sqlite3_bind_int(Stmt, 14 + i, value);
+            int val = (Tile.RiverEdges.IsValidIndex(i) && Tile.RiverEdges[i]) ? 1 : 0;
+            sqlite3_bind_int(Stmt, 14 + i, val);
         }
 
-        Result = sqlite3_step(Stmt);
-        if (Result != SQLITE_DONE)
-        {
-            UE_LOG(LogTemp, Error, TEXT("[Tiles] INSERT FAILED: %s"), *FString(sqlite3_errmsg(DB)));
-        }
+        sqlite3_step(Stmt);
     }
 
     sqlite3_finalize(Stmt);
     sqlite3_exec(DB, "COMMIT;", nullptr, nullptr, nullptr);
     sqlite3_close(DB);
 
-    UE_LOG(LogTemp, Warning, TEXT("[Tiles] Saved %d tiles to DB as map '%s' (%s)"),
-        GridData.Num(), *InMapName, *DBPath);
-
+    UE_LOG(LogTemp, Warning, TEXT("[Tiles] Saved %d tiles to DB as map '%s'"), GridData.Num(), *InMapName);
     return true;
 }
 
@@ -1430,16 +1211,12 @@ bool UHexGridComponent::LoadGridFromDatabaseWithName(const FString& InMapName)
     FString DBPath = FPaths::ProjectContentDir() / TEXT("Data/GameData.db");
     sqlite3* DB = nullptr;
 
-    int Result = sqlite3_open(TCHAR_TO_UTF8(*DBPath), &DB);
-    if (Result != SQLITE_OK)
+    if (sqlite3_open(TCHAR_TO_UTF8(*DBPath), &DB) != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles-Load] SQLite open FAILED: %s"), *FString(sqlite3_errmsg(DB)));
+        UE_LOG(LogTemp, Error, TEXT("[Tiles-Load] SQLite open FAILED"));
         return false;
     }
 
-    // =============================
-    // 1. Query hazýrlanýyor
-    // =============================
     FString Query = FString::Printf(
         TEXT("SELECT X, Y, TileType, Height01, HeightLevel, WorldZ, Cost, "
             "IsCoast, IsLake, IsOcean, IsHill, HasCliff, "
@@ -1449,42 +1226,33 @@ bool UHexGridComponent::LoadGridFromDatabaseWithName(const FString& InMapName)
     );
 
     sqlite3_stmt* Stmt = nullptr;
-    Result = sqlite3_prepare_v2(DB, TCHAR_TO_UTF8(*Query), -1, &Stmt, nullptr);
-    if (Result != SQLITE_OK)
+    if (sqlite3_prepare_v2(DB, TCHAR_TO_UTF8(*Query), -1, &Stmt, nullptr) != SQLITE_OK)
     {
-        UE_LOG(LogTemp, Error, TEXT("[Tiles-Load] prepare_v2 FAILED: %s"), *FString(sqlite3_errmsg(DB)));
         sqlite3_close(DB);
         return false;
     }
 
-    // =============================
-    // 2. GridData temizle
-    // =============================
     GridData.Empty();
     GridData.SetNum(GridWidth * GridHeight);
 
-    auto StringToTileType = [](const FString& S) -> ETileType
-        {
-            if (S == "Grass") return ETileType::TT_Grass;
-            if (S == "Desert") return ETileType::TT_Desert;
-            if (S == "Mountain") return ETileType::TT_Mountain;
-            if (S == "Water") return ETileType::TT_Water;
-            if (S == "Plains") return ETileType::TT_Plains;
-            if (S == "Tundra") return ETileType::TT_Tundra;
-            if (S == "Snow") return ETileType::TT_Snow;
-            return ETileType::TT_Grass;
+    auto StringToTileType = [](const FString& S) -> ETileType {
+        if (S == "Grass") return ETileType::TT_Grass;
+        if (S == "Desert") return ETileType::TT_Desert;
+        if (S == "Mountain") return ETileType::TT_Mountain;
+        if (S == "Water") return ETileType::TT_Water;
+        if (S == "Plains") return ETileType::TT_Plains;
+        if (S == "Tundra") return ETileType::TT_Tundra;
+        if (S == "Snow") return ETileType::TT_Snow;
+        return ETileType::TT_Grass;
         };
 
-    // =============================
-    // 3. Kayýtlarý oku ? GridData doldur
-    // =============================
-    while ((Result = sqlite3_step(Stmt)) == SQLITE_ROW)
+    while (sqlite3_step(Stmt) == SQLITE_ROW)
     {
         int X = sqlite3_column_int(Stmt, 0);
         int Y = sqlite3_column_int(Stmt, 1);
 
-        const char* TileStrC = reinterpret_cast<const char*>(sqlite3_column_text(Stmt, 2));
-        FString TileStr = TileStrC ? UTF8_TO_TCHAR(TileStrC) : TEXT("Grass");
+        const char* TypeText = (const char*)sqlite3_column_text(Stmt, 2);
+        FString TileStr = TypeText ? UTF8_TO_TCHAR(TypeText) : TEXT("Grass");
 
         double Height01 = sqlite3_column_double(Stmt, 3);
         int HeightLevel = sqlite3_column_int(Stmt, 4);
@@ -1497,23 +1265,18 @@ bool UHexGridComponent::LoadGridFromDatabaseWithName(const FString& InMapName)
         int IsHill = sqlite3_column_int(Stmt, 10);
         int HasCliff = sqlite3_column_int(Stmt, 11);
 
+        // Nehirleri oku
         bool Rivers[6];
-        Rivers[0] = sqlite3_column_int(Stmt, 12) == 1;
-        Rivers[1] = sqlite3_column_int(Stmt, 13) == 1;
-        Rivers[2] = sqlite3_column_int(Stmt, 14) == 1;
-        Rivers[3] = sqlite3_column_int(Stmt, 15) == 1;
-        Rivers[4] = sqlite3_column_int(Stmt, 16) == 1;
-        Rivers[5] = sqlite3_column_int(Stmt, 17) == 1;
-
-        int Index = Y * GridWidth + X;
-        if (!GridData.IsValidIndex(Index))
+        for (int i = 0; i < 6; i++)
         {
-            UE_LOG(LogTemp, Warning, TEXT("[Tiles-Load] INVALID TILE INDEX: %d (%d,%d)"), Index, X, Y);
-            continue;
+            Rivers[i] = (sqlite3_column_int(Stmt, 12 + i) == 1);
         }
 
-        FHexTileData& Tile = GridData[Index];
+        // Ýndeks kontrolü
+        int Index = Y * GridWidth + X;
+        if (!GridData.IsValidIndex(Index)) continue;
 
+        FHexTileData& Tile = GridData[Index];
         Tile.Coordinates = FIntPoint(X, Y);
         Tile.TileType = StringToTileType(TileStr);
         Tile.Height01 = Height01;
@@ -1521,32 +1284,35 @@ bool UHexGridComponent::LoadGridFromDatabaseWithName(const FString& InMapName)
         Tile.WorldPosition.Z = WorldZ;
         Tile.Cost = Cost;
 
-        Tile.bIsCoast = IsCoast == 1;
-        Tile.bIsLake = IsLake == 1;
-        Tile.bIsOcean = IsOcean == 1;
-        Tile.bIsHill = IsHill == 1;
-        Tile.bHasCliff = HasCliff == 1;
+        Tile.bIsCoast = (IsCoast == 1);
+        Tile.bIsLake = (IsLake == 1);
+        Tile.bIsOcean = (IsOcean == 1);
+        Tile.bIsHill = (IsHill == 1);
+        Tile.bHasCliff = (HasCliff == 1);
 
         Tile.RiverEdges.SetNum(6);
         for (int i = 0; i < 6; i++)
+        {
             Tile.RiverEdges[i] = Rivers[i];
+        }
+
+        // Yüklenen tile için Biyom rengini de ayarla
+        Tile.BiomeColor = ComputeBiomeColor(Tile.TileType);
     }
 
     sqlite3_finalize(Stmt);
     sqlite3_close(DB);
 
-    // =============================
-    // 4. Görseli yeniden oluþtur
-    // =============================
-    UE_LOG(LogTemp, Warning, TEXT("[Tiles-Load] Loaded map '%s'. Requesting visual rebuild..."), *InMapName);
+    UE_LOG(LogTemp, Warning, TEXT("[Tiles-Load] Loaded map '%s'."), *InMapName);
 
-    // GridData doldu, þimdi sadece görseli yeniden kurduruyoruz
     RequestRebuildVisual();
-
-
     RecalculateAllTileYields();
     return true;
 }
+
+// ============================================================
+//  YIELD SYSTEM
+// ============================================================
 
 void UHexGridComponent::GetTileYieldAt(int32 X, int32 Y, int32& OutFood, int32& OutProduction, int32& OutGold) const
 {
@@ -1555,15 +1321,13 @@ void UHexGridComponent::GetTileYieldAt(int32 X, int32 Y, int32& OutFood, int32& 
     OutGold = 0;
 
     const int32 Index = Y * GridWidth + X;
-    if (!GridData.IsValidIndex(Index))
+    if (GridData.IsValidIndex(Index))
     {
-        return;
+        const FHexTileData& Tile = GridData[Index];
+        OutFood = Tile.BaseFood;
+        OutProduction = Tile.BaseProduction;
+        OutGold = Tile.BaseGold;
     }
-
-    const FHexTileData& Tile = GridData[Index];
-    OutFood = Tile.BaseFood;
-    OutProduction = Tile.BaseProduction;
-    OutGold = Tile.BaseGold;
 }
 
 void UHexGridComponent::RecalculateAllTileYields()
@@ -1580,68 +1344,28 @@ void UHexGridComponent::CalculateBaseYieldForTile(FHexTileData& Tile) const
     int32 Prod = 0;
     int32 Gold = 0;
 
-    // 1) Temel terrain'e göre baþlangýç deðerleri
     switch (Tile.TileType)
     {
-    case ETileType::TT_Grass:
-        Food = 2; Prod = 0; Gold = 0;
-        break;
-    case ETileType::TT_Plains:
-        Food = 1; Prod = 1; Gold = 0;
-        break;
-    case ETileType::TT_Desert:
-        Food = 0; Prod = 0; Gold = 1;
-        break;
-    case ETileType::TT_Tundra:
-        Food = 1; Prod = 0; Gold = 0;
-        break;
-    case ETileType::TT_Snow:
-        Food = 0; Prod = 0; Gold = 0;
-        break;
-    case ETileType::TT_Mountain:
-        // Þimdilik tamamen "unproductive" sayalým
-        Food = 0; Prod = 0; Gold = 0;
-        break;
-    case ETileType::TT_Water:
-        // Water için alttaki bIsLake/bIsOcean/bIsCoast'e göre ayarlayacaðýz
-        Food = 1; Prod = 0; Gold = 1;
-        break;
-    default:
-        break;
+    case ETileType::TT_Grass:    Food = 2; break;
+    case ETileType::TT_Plains:   Food = 1; Prod = 1; break;
+    case ETileType::TT_Desert:   Gold = 1; break;
+    case ETileType::TT_Tundra:   Food = 1; break;
+    case ETileType::TT_Water:    Food = 1; Gold = 1; break;
+    default:                     break;
     }
 
-    // 2) Hill bonusu (Civ tarzý: +1 Prod, gerekirse Food'u kýsmak istersin)
+    // Tepe bonusu
     if (Tile.bIsHill && Tile.TileType != ETileType::TT_Mountain && Tile.TileType != ETileType::TT_Water)
     {
         Prod += 1;
-        // Ýstersen burada Food-- yapýp 0'ýn altýna düþmesini engelleyebilirsin
-        // Food = FMath::Max(Food - 1, 0);
     }
 
-    // 3) Su tipine göre ince ayar
+    // Su türü bonusu
     if (Tile.TileType == ETileType::TT_Water)
     {
-        if (Tile.bIsLake)
-        {
-            // Göl: yüksek Food, az Gold
-            Food = 2;
-            Prod = 0;
-            Gold = 0;
-        }
-        else if (Tile.bIsOcean)
-        {
-            // Okyanus: biraz food + gold
-            Food = 1;
-            Prod = 0;
-            Gold = 2;
-        }
-        else if (Tile.bIsCoast)
-        {
-            // Kýyý: dengeli
-            Food = 1;
-            Prod = 0;
-            Gold = 1;
-        }
+        if (Tile.bIsLake) { Food = 2; Prod = 0; Gold = 0; }
+        else if (Tile.bIsOcean) { Food = 1; Prod = 0; Gold = 2; }
+        else if (Tile.bIsCoast) { Food = 1; Prod = 0; Gold = 1; }
     }
 
     Tile.BaseFood = Food;
@@ -1649,17 +1373,13 @@ void UHexGridComponent::CalculateBaseYieldForTile(FHexTileData& Tile) const
     Tile.BaseGold = Gold;
 }
 
-
-
-
-
 #if WITH_EDITOR
 void UHexGridComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
     Super::PostEditChangeProperty(PropertyChangedEvent);
 
+    // Editörde deðiþken deðiþirse grid ölçülerini güncelle
     TileWidth = BaseTileWidth * TileScale;
     TileHeight = BaseTileHeight * TileScale;
 }
 #endif
-

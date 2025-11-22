@@ -6,15 +6,19 @@
 #include "HexGridVisualActor.generated.h"
 
 class USplineMeshComponent;
+class UInstancedStaticMeshComponent;
 
+struct FVisualInstanceHandle
+{
+    UInstancedStaticMeshComponent* ISMComp;
+    int32 InstanceIndex;
+};
 
 UCLASS()
 class SPROJECTNEW_API AHexGridVisualActor : public AActor
 {
     GENERATED_BODY()
 
-public:
-    AHexGridVisualActor();
 
 protected:
     virtual void BeginPlay() override;
@@ -27,6 +31,12 @@ protected:
 
 
 public:
+
+    AHexGridVisualActor();
+
+    // Sadece tek bir kareyi günceller
+    void UpdateSingleTileVisual(int32 GridIndex, const FHexTileData& NewData);
+
 
     // ============================================================
     //  MESH COMPONENTS (RENK / TERRAIN KATMANLARI)
@@ -123,5 +133,11 @@ private:
         const TArray<int32>& InCoordToIndex );
 
     FVector GetEdgeMidpoint(const FVector& Center, int32 EdgeIndex, float TileWidth, float TileHeight) const;
+
+    // Grid Index -> Visual Handle eþleþmesi
+    TMap<int32, FVisualInstanceHandle> VisualMap;
+
+    // Yardýmcý: Instance ekler ve VisualMap'e kaydeder
+    void AddTintedInstance(UInstancedStaticMeshComponent* ISM, const FTransform& T, const FLinearColor& Color, int32 GridIndex);
 
 };

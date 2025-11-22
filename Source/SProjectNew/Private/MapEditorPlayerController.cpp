@@ -88,13 +88,12 @@ void AMapEditorPlayerController::OnLeftMouseClick()
     {
         // Þimdilik sabit NE kenarýna nehir
         HexComp->SetRiverAtEdge(GridCoords.X, GridCoords.Y, ERiverEdge::NE, true);
+        HexComp->RequestRebuildVisual();
     }
     else
     {
         HexComp->SetTileTypeAt(GridCoords.X, GridCoords.Y, CurrentPaintTileType);
     }
-
-    HexComp->RequestRebuildVisual();
 }
 
 

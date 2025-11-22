@@ -150,7 +150,7 @@ void UW_SelectCiv::HandleStartGameClicked()
 			*SelectedMapName, *SelectedCiv.Name, GI->NumAICivs);
 
 		// 4. Level'ý Yükle
-		UGameplayStatics::OpenLevel(this, FName("Lvl_World"));
+		UGameplayStatics::OpenLevel(this, FName("Lvl_TopDown"));
 	}
 	else
 	{
